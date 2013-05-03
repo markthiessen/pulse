@@ -42,12 +42,14 @@ PulseApp.controller('IndexCtrl', ['$scope', '$rootScope', function($scope, $root
 	};
 
 	function notify(message) {
-	  if (window.webkitNotifications.checkPermission() > 0) {
-	    RequestPermission(notify);
-	  } else {
-	    notification = window.webkitNotifications.createNotification('/images/icon.png', message.text, '');
-	    notification.show();
-	  }
+		if(window.webkitNotifications){
+		  if (window.webkitNotifications.checkPermission() > 0) {
+		    RequestPermission(notify);
+		  } else {
+		    notification = window.webkitNotifications.createNotification('/images/icon.png', message.text, '');
+		    notification.show();
+		  }
+		}
 	}
 
 	 var socket = io.connect();
