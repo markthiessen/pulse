@@ -14,4 +14,21 @@ var PulseApp = angular.module('PulseApp', ['ngResource'])
 		method: 'GET',
 		cache:false
 	});
+
+
+	$rootScope.needsAlertPermissions;
+	function updatePermissions(){
+		if(window.webkitNotifications){
+			if(window.webkitNotifications.checkPermission() > 0)
+				$rootScope.needsAlertPermissions = true;
+		}
+		else{
+			$rootScope.needsAlertPermissions = false;
+		}
+	}
+	updatePermissions();
+
+	$rootScope.enableNotifications = function(){
+		window.webkitNotifications.requestPermission(updatePermissions);
+	}
 }]);

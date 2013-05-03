@@ -1,5 +1,6 @@
 PulseApp.controller('IndexCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
 	
+
 	function refreshMessages(){
 		$rootScope.Messages.query({ver:new Date().getMilliseconds()},function(result){
 			$scope.messages = result;
@@ -24,43 +25,35 @@ PulseApp.controller('IndexCtrl', ['$scope', '$rootScope', function($scope, $root
 			return 'stale';
 	};
 
+	var lastMsg = null;
 	$scope.newMessage = new $rootScope.Messages();
 	$scope.postNewMessage = function(){
 		var copy = angular.copy($scope.newMessage);
 		copy.time = new Date();
-		copy.$save(function(){
-			$scope.messages.unshift(copy);
-			$scope.newMessage.text='';
-		}, function(err){
-			console.log(err);
-		});
+		if(copy.text){
+			lastMsg = copy.text;
+			copy.$save(function(){
+				$scope.messages.unshift(copy);
+				$scope.newMessage.text='';
+			}, function(err){
+				console.log(err);
+			});
+		}
 	};
 
-	function requestPermission(){
-		if (window.webkitNotifications)
-			if( window.webkitNotifications.checkPermission() == 0) { // 0 is PERMISSION_ALLOWED
-		    // function defined in step 2
-		    window.webkitNotifications.createNotification(
-		        'icon.png', 'Notification Title', 'Notification content...');
-		  } else {
-		    window.webkitNotifications.requestPermission();
-		  }
+	function notify(message) {
+	  if (window.webkitNotifications.checkPermission() > 0) {
+	    RequestPermission(notify);
+	  } else {
+	    notification = window.webkitNotifications.createNotification('/images/icon.png', message.text, '');
+	    notification.show();
+	  }
 	}
-	requestPermission();
-
-	function notify(){
-		if (window.webkitNotifications) {
-		   window.webkitNotifications.createNotification(
-        	null, 'Notification Title', 'Notification content...');
-		}
-		else {
-		  console.log("Notifications are not supported for this Browser/OS version yet.");
-		}
-	}
-	//notify();
 
 	 var socket = io.connect('http://localhost:3001');
-	 socket.on('new', function(data){
+	 socket.on('new', function(message){
 	 	refreshMessages();
+	 	if(message.text!=lastMsg)
+		 	notify(message);
 	 });
 }]);

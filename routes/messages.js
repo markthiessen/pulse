@@ -16,7 +16,6 @@ io.sockets.on('connection', function(socket){
 
 var messages = [];
 
-
 exports.list = function(req, res){
   
   res.send(messages);
@@ -30,8 +29,10 @@ exports.add = function(req, res){
 	}
 	setTimeout(function(){
 		purgeOldMessages();
-		sockets.forEach(function(socket){
-			socket.emit('new', messages);
+		sockets.filter(function(socket){
+			return socket!=
+		}).forEach(function(socket){
+			socket.emit('new', message);
 		});
 	},10);
 	res.send();
