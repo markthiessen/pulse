@@ -10,5 +10,8 @@ var PulseApp = angular.module('PulseApp', ['ngResource'])
 		});
 }])
 .run(['$rootScope', '$resource', function($rootScope, $resource){
-	$rootScope.Messages = $resource('/messages/:id');
+	$rootScope.Messages = $resource('/messages/:id', {}, {
+		method: 'GET',
+		cache:false
+	});
 }]);

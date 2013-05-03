@@ -1,8 +1,9 @@
 PulseApp.controller('IndexCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
-
 	
 	function refreshMessages(){
-		$scope.messages = $rootScope.Messages.query();
+		$rootScope.Messages.query({ver:new Date().getMilliseconds()},function(result){
+			$scope.messages = result;
+		});
 	}
 	refreshMessages();
 
@@ -25,22 +26,25 @@ PulseApp.controller('IndexCtrl', ['$scope', '$rootScope', function($scope, $root
 
 	$scope.newMessage = new $rootScope.Messages();
 	$scope.postNewMessage = function(){
-		$scope.newMessage.$save(function(){
+		var copy = angular.copy($scope.newMessage);
+		copy.time = new Date();
+		copy.$save(function(){
+			$scope.messages.unshift(copy);
 			$scope.newMessage.text='';
-			refreshMessages();
 		}, function(err){
 			console.log(err);
 		});
 	};
 
 	function requestPermission(){
-		if (window.webkitNotifications.checkPermission() == 0) { // 0 is PERMISSION_ALLOWED
-	    // function defined in step 2
-	    window.webkitNotifications.createNotification(
-	        'icon.png', 'Notification Title', 'Notification content...');
-	  } else {
-	    window.webkitNotifications.requestPermission();
-	  }
+		if (window.webkitNotifications)
+			if( window.webkitNotifications.checkPermission() == 0) { // 0 is PERMISSION_ALLOWED
+		    // function defined in step 2
+		    window.webkitNotifications.createNotification(
+		        'icon.png', 'Notification Title', 'Notification content...');
+		  } else {
+		    window.webkitNotifications.requestPermission();
+		  }
 	}
 	requestPermission();
 
@@ -54,4 +58,9 @@ PulseApp.controller('IndexCtrl', ['$scope', '$rootScope', function($scope, $root
 		}
 	}
 	//notify();
+
+	 var socket = io.connect('http://localhost:3001');
+	 socket.on('new', function(data){
+	 	refreshMessages();
+	 });
 }]);

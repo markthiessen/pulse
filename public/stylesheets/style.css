@@ -12,6 +12,9 @@ a {
     margin-top: 50px;
   }
 }
+.navbar {
+  opacity: 0.9;
+}
 .navbar .brand {
   margin-left: 0px;
 }
@@ -59,4 +62,7 @@ a {
 }
 .add-message-section .footer {
   clear: both;
+}
+input {
+  outline: none;
 }
