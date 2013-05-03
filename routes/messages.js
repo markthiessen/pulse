@@ -29,9 +29,19 @@ exports.add = function(req, res){
 		messages.unshift(message);
 	}
 	setTimeout(function(){
+		purgeOldMessages();
 		sockets.forEach(function(socket){
 			socket.emit('new', messages);
 		});
-	});
+	},10);
 	res.send();
 };
+
+function purgeOldMessages(){
+	var now = new Date();
+	var anHourAgo = new Date();
+	anHourAgo = now.setTime(now.getTime() + (-60 * 60 * 1000));
+	messages = messages.filter(function(message){
+		return message.time > anHourAgo;
+	});
+}
