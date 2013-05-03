@@ -1,1 +1,26 @@
-hello!
+
+<div class="row">
+
+	<div class="span12">
+		<ul class="messages">
+			<li class="add-message-section">
+				<form class="control-group" ng-submit="postNewMessage()">
+					<div class="controls">
+						<div class="input-append">
+							<input type="text" ng-model="newMessage.text"/>
+							<a class="btn add-on" ng-click="postNewMessage()">Post!</a>
+						</div>
+					</div>
+				</form>
+				
+				<div class="footer"></div>
+			</li>
+			<li ng-repeat="message in messages" class="message {{getFreshness(message)}}" >
+				<p>
+					{{message.text}}
+				</p>
+				<span class="timeago" timeago time="message.time">...</abbr>
+			</li>
+		</ul>
+	</div>
+</div>

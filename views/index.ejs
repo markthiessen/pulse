@@ -2,15 +2,30 @@
 <html>
   <head>
     <title><%= title %></title>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body ng-app="PulseApp">
-    <h1><%= title %></h1>
-    <div ng-view>
+  	<div class="navbar navbar-fixed-top">
+  		<div class="navbar-inner">
+  			<div class="brand">
+  				<div class="brand-inner">
+  					<span><%= title %></span>
+  				</div>
+  			</div>
+		</div>
+  	</div>
+    <div class="container">
+    	<div ng-view>
+    	</div>    	
     </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script src='/javascripts/vendor/moment.js'></script>
     <script src='/javascripts/vendor/angular.js'></script>
     <script src='/javascripts/vendor/angular-resource.js'></script>
     <script src='/javascripts/app/app.js'></script>
     <script src='/javascripts/app/controllers/index.js'></script>
+    <script src='/javascripts/app/directives/timeago.js'></script>
   </body>
 </html>

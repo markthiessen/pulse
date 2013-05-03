@@ -1,4 +1,4 @@
-var PulseApp = angular.module('PulseApp', [])
+var PulseApp = angular.module('PulseApp', ['ngResource'])
 .config(['$routeProvider', function($routeProvider){
 	$routeProvider
 		.when('/', {
@@ -9,7 +9,6 @@ var PulseApp = angular.module('PulseApp', [])
 			redirectTo:'/'
 		});
 }])
-.run(['$rootScope', function($rootScope){
-	
-
+.run(['$rootScope', '$resource', function($rootScope, $resource){
+	$rootScope.Messages = $resource('/messages/:id');
 }]);
