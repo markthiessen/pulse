@@ -1,9 +1,13 @@
 {
-  "name": "pulse",
-  "description": "live feed for short-lived announcements",
+  "name": "application-name",
   "version": "0.0.1",
   "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
-    "express": "3.x"
+    "express": "3.2.1",
+    "ejs": "*",
+    "less-middleware": "*"
   }
 }
