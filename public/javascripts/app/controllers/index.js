@@ -50,7 +50,7 @@ PulseApp.controller('IndexCtrl', ['$scope', '$rootScope', function($scope, $root
 	  }
 	}
 
-	 var socket = io.connect('http://localhost:3001');
+	 var socket = io.connect();
 	 socket.on('new', function(message){
 	 	refreshMessages();
 	 	if(message.text!=lastMsg)

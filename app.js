@@ -35,6 +35,30 @@ app.get('/messages', messages.list);
 
 app.post('/messages', messages.add);
 
-http.createServer(app).listen(app.get('port'), function(){
+var server = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+
+//notifications
+var io = require('socket.io').listen(server);
+
+var sockets = [];
+io.sockets.on('connection', function(socket){
+	console.log('Client connected');
+	sockets.push(socket);
+
+	socket.on('end', function() {
+		console.log('Socket closed');
+	    var i = sockets.indexOf(socket);
+	    global_sockets_list.splice(i, 1);
+	    socket.close();
+	});
+});
+
+messages.setNotifyCallback(notifyAllClients);
+function notifyAllClients(message){
+	sockets.forEach(function(socket){
+		socket.emit('new', message);
+	});
+}
