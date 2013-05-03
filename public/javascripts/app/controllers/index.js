@@ -8,14 +8,14 @@ PulseApp.controller('IndexCtrl', ['$scope', '$rootScope', function($scope, $root
 
 	$scope.getFreshness = function(message){
 		var now = new Date();
-		var tenMinutesAgo = new Date();
-		tenMinutesAgo.setTime(now.getTime() +(-10*60*1000));
+		var fifteenMinutesAgo = new Date();
+		fifteenMinutesAgo.setTime(now.getTime() +(-15*60*1000));
 		
 		var anHourAgo = new Date();
 		anHourAgo.setTime(now.getTime() +(-60*60*1000));
 
 		var messageTime = new Date(Date.parse(message.time));
-		if(messageTime> tenMinutesAgo)
+		if(messageTime> fifteenMinutesAgo)
 			return 'fresh';
 		else if(messageTime>anHourAgo)
 			return 'old';
@@ -32,4 +32,26 @@ PulseApp.controller('IndexCtrl', ['$scope', '$rootScope', function($scope, $root
 			console.log(err);
 		});
 	};
+
+	function requestPermission(){
+		if (window.webkitNotifications.checkPermission() == 0) { // 0 is PERMISSION_ALLOWED
+	    // function defined in step 2
+	    window.webkitNotifications.createNotification(
+	        'icon.png', 'Notification Title', 'Notification content...');
+	  } else {
+	    window.webkitNotifications.requestPermission();
+	  }
+	}
+	requestPermission();
+
+	function notify(){
+		if (window.webkitNotifications) {
+		   window.webkitNotifications.createNotification(
+        	null, 'Notification Title', 'Notification content...');
+		}
+		else {
+		  console.log("Notifications are not supported for this Browser/OS version yet.");
+		}
+	}
+	//notify();
 }]);
