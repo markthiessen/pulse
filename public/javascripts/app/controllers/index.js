@@ -1,5 +1,6 @@
 PulseApp.controller('IndexCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
 	
+$rootScope.activeView='Announcements';
 
 	function refreshMessages(){
 		$rootScope.Messages.query({ver:new Date().getMilliseconds()},function(result){

@@ -5,11 +5,17 @@ var PulseApp = angular.module('PulseApp', ['ngResource'])
 			templateUrl: '/javascripts/app/views/index.html',
 			controller: 'IndexCtrl'
 		})
+		.when('/chat', {
+			templateUrl: '/javascripts/app/views/chat.html',
+			controller: 'ChatCtrl'
+		})
 		.otherwise({
 			redirectTo:'/'
 		});
 }])
 .run(['$rootScope', '$resource', function($rootScope, $resource){
+	$rootScope.activeView='';
+	
 	$rootScope.Messages = $resource('/messages/:id', {}, {
 		method: 'GET',
 		cache:false

@@ -20,6 +20,14 @@
 		</div>
   	</div>
     <div class="container">
+      <div class="row"> 
+        <div class="span12" style="text-align:center">
+        <div class="btn-group">
+          <a href="/" class="btn" ng-class="{active: activeView=='Announcements'}">Announcements</a>
+          <a href="#/chat" class="btn" ng-class="{active: activeView=='Chat'}">Chat</a>
+        </div>
+      </div>
+      </div>
     	<div ng-view>
     	</div>    	
     </div>
@@ -31,6 +39,8 @@
     <script src='/javascripts/vendor/angular-resource.js'></script>
     <script src='/javascripts/app/app.js'></script>
     <script src='/javascripts/app/controllers/index.js'></script>
+    <script src='/javascripts/app/controllers/chat.js'></script>
     <script src='/javascripts/app/directives/timeago.js'></script>
+    <script src='/javascripts/app/directives/autoscroll.js'></script>
   </body>
 </html>

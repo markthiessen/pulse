@@ -66,3 +66,30 @@ a {
 input {
   outline: none;
 }
+ul.chat-messages {
+  margin-bottom: 50px;
+  border: 1px solid #EFEFEF;
+  height: 400px;
+  overflow-y: auto;
+}
+ul.chat-messages li .content {
+  background: #2f96b4;
+  color: white;
+  margin: 3px;
+  display: inline-block;
+  margin-left: 10px;
+  position: relative;
+  padding: 8px;
+}
+ul.chat-messages li .content:after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: -8px;
+  border-style: solid;
+  border-width: 8px 8px 8px 0;
+  border-color: transparent #2f96b4;
+  display: block;
+  width: 0;
+  z-index: 1;
+}
