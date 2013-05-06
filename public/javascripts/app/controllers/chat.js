@@ -6,7 +6,7 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', function($scope, $rootS
 	$scope.message = '';
 	$scope.addMessage = function(){
 		if($scope.message){
-			$scope.messages.push($scope.message);
+			$scope.messages.push({text: $scope.message, time: new Date()});
 			$scope.message = '';
 		}
 	};
