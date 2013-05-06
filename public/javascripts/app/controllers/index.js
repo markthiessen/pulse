@@ -53,8 +53,7 @@ $rootScope.activeView='Announcements';
 		}
 	}
 
-	 var socket = io.connect();
-	 socket.on('new', function(message){
+	 $rootScope.socket.on('new', function(message){
 	 	refreshMessages();
 	 	if(message.text!=lastMsg)
 		 	notify(message);

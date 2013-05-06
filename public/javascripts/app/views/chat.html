@@ -1,20 +1,20 @@
 <div class="row">
 	<div class="span12">
-		<ul class="chat-messages" autoscroll watch-item="messages">
-			<li ng-repeat="message in messages track by $id($index)">
+		<ul class="chat-messages" autoscroll watch-item="chatMessages">
+			<li ng-repeat="message in chatMessages track by $id($index)">
+				<span>{{message.user}}</span>
 				<div class="content">
 				<p>{{message.text}}</p>
 			</div>
 				<span class="timeago" timeago time="message.time">...</span>
 			</li>
 		</ul>
-		<form name="chat" ng-submit="addMessage()">
+		<form ng-submit="addMessage()">
+			<input type="text" ng-model="user" style="width:300px;" placeholder="your name"/>
 			<div class="input-append">
-			<input type="text" ng-model="message"/>
-			<a class="btn add-on" ng-click="addMessage()">Send</a>
-
-			</div>
-			
+				<input type="text" ng-model="message" placeholder="your message"/>
+				<input type="submit" class="btn add-on" value="Send"/>
+			</div>			
 		<form>
 	</div>
 </div>

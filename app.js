@@ -6,6 +6,7 @@
 var express = require('express')
   , routes = require('./routes')
   , messages = require('./routes/messages')
+  , chat = require('./routes/chat')
   , http = require('http')
   , path = require('path');
 
@@ -34,6 +35,7 @@ app.get('/', routes.index);
 app.get('/messages', messages.list);
 
 app.post('/messages', messages.add);
+app.post('/chat', chat.add);
 
 var server = http.createServer(app).listen(app.get('port'), function(){
   //console.log('Express server listening on port ' + app.get('port'));
@@ -61,3 +63,11 @@ function notifyAllClients(message){
 		socket.emit('new', message);
 	});
 }
+
+chat.setNotifyCallback(notifyAllChatClients);
+function notifyAllChatClients(message){
+	sockets.forEach(function(socket){
+		socket.emit('newchatmessage', message);
+	});
+}
+

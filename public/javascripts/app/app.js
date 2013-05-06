@@ -15,12 +15,25 @@ var PulseApp = angular.module('PulseApp', ['ngResource'])
 }])
 .run(['$rootScope', '$resource', function($rootScope, $resource){
 	$rootScope.activeView='';
-	
+
 	$rootScope.Messages = $resource('/messages/:id', {}, {
 		method: 'GET',
 		cache:false
 	});
 
+
+	$rootScope.chatMessages = [];
+		$rootScope.ChatMessage = $resource('/chat/:id', {},{
+		method: 'GET',
+		cache:false
+	});
+		
+	$rootScope.socket = io.connect();
+	$rootScope.socket.on('newchatmessage', function(message){
+		$rootScope.$apply(function(){
+	 		$rootScope.chatMessages.push(message);
+		});
+	 });
 
 	$rootScope.needsAlertPermissions;
 	function updatePermissions(){
@@ -32,4 +45,6 @@ var PulseApp = angular.module('PulseApp', ['ngResource'])
 		window.webkitNotifications.requestPermission(updatePermissions);
 		updatePermissions();
 	}
+
+
 }]);
