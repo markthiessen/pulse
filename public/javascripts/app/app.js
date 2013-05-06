@@ -18,17 +18,12 @@ var PulseApp = angular.module('PulseApp', ['ngResource'])
 
 	$rootScope.needsAlertPermissions;
 	function updatePermissions(){
-		if(window.webkitNotifications){
-			if(window.webkitNotifications.checkPermission() > 0)
-				$rootScope.needsAlertPermissions = true;
-		}
-		else{
-			$rootScope.needsAlertPermissions = false;
-		}
+		$rootScope.needsAlertPermissions = window.webkitNotifications && (window.webkitNotifications.checkPermission() > 0);
 	}
 	updatePermissions();
 
 	$rootScope.enableNotifications = function(){
 		window.webkitNotifications.requestPermission(updatePermissions);
+		updatePermissions();
 	}
 }]);

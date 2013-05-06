@@ -16,7 +16,7 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
-app.use(express.logger('dev'));
+//app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
@@ -36,16 +36,15 @@ app.get('/messages', messages.list);
 app.post('/messages', messages.add);
 
 var server = http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+  //console.log('Express server listening on port ' + app.get('port'));
 });
 
 
 //notifications
-var io = require('socket.io').listen(server);
+var io = require('socket.io').listen(server, { log: false });
 
 var sockets = [];
 io.sockets.on('connection', function(socket){
-	console.log('Client connected');
 	sockets.push(socket);
 
 	socket.on('end', function() {
