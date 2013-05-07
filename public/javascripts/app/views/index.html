@@ -5,20 +5,20 @@
 				<form class="control-group" ng-submit="postNewMessage()">
 					<div class="controls">
 						<div class="input-append">
-							<input type="text" placeholder="What's haaaappening?" ng-model="newMessage.text"/>
+							<input type="text" placeholder="What's haaaappening?" ng-model="newMessage"/>
 							<a class="btn add-on" ng-click="postNewMessage()">Post!</a>
 						</div>
 					</div>
 				</form>				
 				<div class="footer"></div>
 			</li>
-			<li ng-repeat="message in messages" class="message {{getFreshness(message)}}" >
+			<li ng-repeat="announcement in announcements" class="message {{getFreshness(announcement)}}" >
 				<p>
-					{{message.text}}
+					{{announcement.text}}
 				</p>
-				<span class="timeago" timeago time="message.time">...</abbr>
+				<span class="timeago" timeago time="announcement.time">...</abbr>
 			</li>
-			<li ng-show="messages.length==0" class="message stale">
+			<li ng-show="announcements.length==0" class="message stale">
 				<p>
 					No recent announcements...
 				</p>

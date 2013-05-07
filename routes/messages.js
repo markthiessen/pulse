@@ -14,7 +14,7 @@ exports.add = function(req, res){
 	var message = req.body;
 	if(message.text){
 		message.time = new Date();
-		messages.unshift(message);
+		messages.push(message);
 	}
 	setTimeout(function(){
 		purgeOldMessages();

@@ -1,13 +1,8 @@
-PulseApp.controller('IndexCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
+PulseApp.controller('IndexCtrl', ['$scope', '$rootScope', '$announcementService', function($scope, $rootScope, $announcementService){
 	
-$rootScope.activeView='Announcements';
+	$rootScope.activeView='Announcements';
 
-	function refreshMessages(){
-		$rootScope.Messages.query({ver:new Date().getMilliseconds()},function(result){
-			$scope.messages = result;
-		});
-	}
-	refreshMessages();
+	$scope.announcements = $announcementService.announcements;
 
 	$scope.getFreshness = function(message){
 		var now = new Date();
@@ -26,36 +21,12 @@ $rootScope.activeView='Announcements';
 			return 'stale';
 	};
 
+
 	var lastMsg = null;
-	$scope.newMessage = new $rootScope.Messages();
+	$scope.newMessage = '';
 	$scope.postNewMessage = function(){
-		var copy = angular.copy($scope.newMessage);
-		copy.time = new Date();
-		if(copy.text){
-			lastMsg = copy.text;
-			copy.$save(function(){
-				$scope.messages.unshift(copy);
-				$scope.newMessage.text='';
-			}, function(err){
-				console.log(err);
-			});
-		}
+		$announcementService.add($scope.newMessage);
+		$scope.newMessage='';
 	};
 
-	function notify(message) {
-		if(window.webkitNotifications){
-		  if (window.webkitNotifications.checkPermission() > 0) {
-		    RequestPermission(notify);
-		  } else {
-		    notification = window.webkitNotifications.createNotification('/images/icon.png', message.text, '');
-		    notification.show();
-		  }
-		}
-	}
-
-	 $rootScope.socket.on('new', function(message){
-	 	refreshMessages();
-	 	if(message.text!=lastMsg)
-		 	notify(message);
-	 });
 }]);

@@ -1,19 +1,21 @@
-PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
+PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', function($scope, $rootScope, $chatService){
 	$rootScope.activeView='Chat';
 
+	$scope.chatMessages = $chatService.chatMessages;
 
 	$scope.message = '';
-	$scope.user = 'anony-mouse';
 	$scope.addMessage = function(){
 		if($scope.message){
-			var message = new $rootScope.ChatMessage();
+			var message = new $chatService.ChatMessage();
 			message.text = $scope.message;
 			message.user = $scope.user;
 			message.$save();
 			$scope.message='';
 		}
 	};
-
 	
-
+	$scope.$watch('user', function(newVal){
+		if(newVal)
+			window.localStorage.setItem('pulseUsername', newVal);
+	});
 }]);
