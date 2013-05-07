@@ -3,9 +3,10 @@
 		<ul class="chat-messages" autoscroll watch-item="chatMessages">
 			<li ng-repeat="message in chatMessages track by $id($index)">
 				<span>{{message.user}}</span>
-				<div class="content">
-				<p>{{message.text}}</p>
-			</div>
+				<div class="content" autocolor="message.user">
+					<p>{{message.text}}</p>
+					<div class="aftercontent"></div>
+				</div>
 				<span class="timeago" timeago time="message.time">...</span>
 			</li>
 		</ul>

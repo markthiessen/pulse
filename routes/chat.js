@@ -1,3 +1,4 @@
+var crypto = require('crypto');
 var messages = [];
 
 var notifyCallback=function(){}
@@ -16,6 +17,8 @@ exports.add = function(req, res){
 		message.time = new Date();
 		messages.push(message);
 
+	messages.push(message);
+
 		setTimeout(function(){
 			purgeOldMessages();
 			notifyCallback(message);
@@ -29,3 +32,8 @@ function purgeOldMessages(){
 	if(messages.length>100)
 		messages.splice(0, 1);
 }
+
+String.prototype.paddingLeft = function (paddingValue) {
+   return String(paddingValue + this).slice(-paddingValue.length);
+};
+
