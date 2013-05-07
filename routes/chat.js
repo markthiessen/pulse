@@ -30,8 +30,3 @@ function purgeOldMessages(){
 	if(messages.length>100)
 		messages.splice(0, 1);
 }
-
-String.prototype.paddingLeft = function (paddingValue) {
-   return String(paddingValue + this).slice(-paddingValue.length);
-};
-
