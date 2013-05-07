@@ -17,8 +17,6 @@ exports.add = function(req, res){
 		message.time = new Date();
 		messages.push(message);
 
-	messages.push(message);
-
 		setTimeout(function(){
 			purgeOldMessages();
 			notifyCallback(message);
