@@ -15,12 +15,12 @@ exports.add = function(req, res){
 	if(message.text){
 		message.time = new Date();
 		messages.push(message);
-	}
-	setTimeout(function(){
-		purgeOldMessages();
-		notifyCallback(message);
+		setTimeout(function(){
+			purgeOldMessages();
+			notifyCallback(message);
 
-	},10);
+		},10);
+	}
 	res.send();
 };
 

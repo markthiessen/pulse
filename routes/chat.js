@@ -14,14 +14,14 @@ exports.add = function(req, res){
 	var message = req.body;
 	if(message.text){
 		message.time = new Date();
+		messages.push(message);
+
+		setTimeout(function(){
+			purgeOldMessages();
+			notifyCallback(message);
+
+		}, 10);
 	}
-	messages.push(message);
-
-	setTimeout(function(){
-		purgeOldMessages();
-		notifyCallback(message);
-
-	}, 10);
 	res.send();
 };
 
