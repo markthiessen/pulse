@@ -2,7 +2,9 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', functio
 	$rootScope.activeView='Chat';
 
 	$scope.chatMessages = $chatService.chatMessages;
-
+	
+	$scope.user= window.localStorage.getItem('pulseUsername') || 'anony-mouse';
+	
 	$scope.message = '';
 	$scope.addMessage = function(){
 		if($scope.message){
@@ -15,7 +17,8 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', functio
 	};
 	
 	$scope.$watch('user', function(newVal){
-		if(newVal)
+		if(newVal){
 			window.localStorage.setItem('pulseUsername', newVal);
-	});
+		}
+	}, true);
 }]);
