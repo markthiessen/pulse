@@ -8,7 +8,11 @@ PulseApp.factory('$chatService', ['$socket', '$resource', '$rootScope',
 
 	var chatService = {
 		chatMessages: [],
-		ChatMessage: restService
+		ChatMessage: restService,
+		updateName: function(name){
+			$socket.emit('updatename', {username: name});
+		},
+		users: []
 	};
 
 	restService.query({ver:new Date().getMilliseconds()},function(results){
@@ -17,10 +21,23 @@ PulseApp.factory('$chatService', ['$socket', '$resource', '$rootScope',
 		})		
 	});
 
+	$socket.on('connect', function(){
+		chatService.updateName($rootScope.user);
+	});
+
 	$socket.on('newchatmessage', function(message){
  		chatService.chatMessages.push(message);
-		 $rootScope.$apply();
+		$rootScope.$apply();
 	 });
+
+	$socket.on('users', function(data){
+		chatService.users.length=0;
+		data.forEach(function(user){
+			chatService.users.push(user);
+		});
+		$rootScope.$apply();
+	});
+
 
 	return chatService;
 }]);

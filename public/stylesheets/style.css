@@ -110,3 +110,15 @@ ul.chat-messages .timeago {
   margin-left: 8px;
   color: #CCC;
 }
+.user-list {
+  list-style: none;
+  margin-left: 0;
+}
+.user-list li {
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  padding: 8px 10px;
+  display: inline-block;
+  float: left;
+  margin: 10px 10px 10px 0;
+}

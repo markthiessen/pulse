@@ -14,6 +14,9 @@ var PulseApp = angular.module('PulseApp', ['ngResource'])
 		});
 }])
 .run(['$rootScope', '$resource', function($rootScope, $resource){
+
+	$rootScope.user= window.localStorage.getItem('pulseUsername') || 'anony-mouse';
+	
 	$rootScope.activeView='';
 
 	$rootScope.needsAlertPermissions;

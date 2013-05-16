@@ -49,26 +49,38 @@ var io = require('socket.io').listen(server, { log: false });
 var sockets = [];
 io.sockets.on('connection', function(socket){
 	sockets.push(socket);
+	socket.username = 'anony-mouse_'+sockets.length;
 
-	socket.on('end', function() {
-		console.log('Socket closed');
+	socket.on('disconnect', function() {
 	    var i = sockets.indexOf(socket);
-	    global_sockets_list.splice(i, 1);
-	    socket.close();
+	    sockets.splice(i, 1);
+	    setTimeout(broadcastUsers, 10);	
+	});
+
+	socket.on('updatename', function(data){
+		socket.username = data.username;	
+		setTimeout(broadcastUsers, 10);	
 	});
 });
 
-messages.setNotifyCallback(notifyAllClients);
-function notifyAllClients(message){
-	sockets.forEach(function(socket){
-		socket.emit('new', message);
+function broadcastUsers(){	
+	var users = sockets.map(function(socket){
+		return socket.username;
 	});
+	io.sockets.emit('users', users);
 }
 
-chat.setNotifyCallback(notifyAllChatClients);
-function notifyAllChatClients(message){
-	sockets.forEach(function(socket){
-		socket.emit('newchatmessage', message);
-	});
-}
+messages.setNotifyCallback(
+	function(message){
+		io.sockets.emit('new', message);
+	}
+);
+
+
+chat.setNotifyCallback(
+	function notifyAllChatClients(message){
+		io.sockets.emit('newchatmessage', message);
+	}
+);
+
 

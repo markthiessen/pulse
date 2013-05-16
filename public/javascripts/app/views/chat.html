@@ -17,5 +17,10 @@
 				<input type="submit" class="btn add-on" value="Send"/>
 			</div>			
 		<form>
+		<ul class="user-list">
+			<li ng-repeat="user in users" autocolor="user">
+				<i class="icon-user icon-white"></i>&nbsp;<span>{{user}}</span>
+			</li>
+		</ul>
 	</div>
 </div>
