@@ -12,17 +12,19 @@ PulseApp.directive('message', [function(){
 			if(matches)
 				matches.forEach(function(match){
 					var index = text.indexOf(match);
-					newString.push(text.substr(0, index));
+					if(index>=0){
+						newString.push(text.substr(0, index));
 
-					newString.push(
-						angular.element('<a>').attr({'href':match,'target':'_blank'})
-							.html(
-								angular.element('<img class="img-polaroid">').attr('src', match)
-							)
-					);
+						newString.push(
+							angular.element('<a>').attr({'href':match,'target':'_blank'})
+								.html(
+									angular.element('<img class="img-polaroid">').attr('src', match)
+								)
+						);
 
 
-					text = text.substr(index+match.length);
+						text = text.substr(index+match.length);
+					}
 				});
 			else
 				newString[0] = text;			
