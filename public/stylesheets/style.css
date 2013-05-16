@@ -105,6 +105,11 @@ ul.chat-messages li .aftercontent {
 ul.chat-messages p {
   margin-bottom: 0;
 }
+ul.chat-messages li img {
+  max-height: 80px;
+  margin: 3px;
+  border-radius: 1px;
+}
 ul.chat-messages .timeago {
   font-size: 8px;
   margin-left: 8px;
@@ -120,5 +125,5 @@ ul.chat-messages .timeago {
   padding: 8px 10px;
   display: inline-block;
   float: left;
-  margin: 10px 10px 10px 0;
+  margin: 5px 5px 5px 0;
 }
