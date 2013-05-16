@@ -94,7 +94,7 @@ ul.chat-messages{
 	li .aftercontent 
 		{
 			position: absolute;
-			top: 9px;
+			top: 30%;
 			left: -8px;
 			border-style: solid;
 			border-width: 8px 8px 8px 0;
@@ -110,6 +110,10 @@ ul.chat-messages{
 		max-height:80px;
 		margin:3px;
 		border-radius:1px;
+		transition: max-height linear 0.1s;
+	}
+	li img:hover{
+		max-height:200px;
 	}
 	.timeago{
 		font-size:8px;
