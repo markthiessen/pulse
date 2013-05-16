@@ -26,8 +26,8 @@ PulseApp.directive('message', [function(){
 						text = text.substr(index+match.length);
 					}
 				});
-			else
-				newString[0] = text;			
+
+			newString.push(text);			
 
 			newString.forEach(function(item){
 				if(typeof(item)=='string')
