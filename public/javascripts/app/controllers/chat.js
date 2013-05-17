@@ -6,6 +6,8 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', functio
 
 	$scope.user = $rootScope.user;
 	
+	$scope.autoScroll=true;
+
 	$scope.message = '';
 	$scope.addMessage = function(){
 		if($scope.message){

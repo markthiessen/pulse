@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="span12">
-		<ul class="chat-messages" autoscroll watch-item="chatMessages">
+		<ul class="chat-messages" autoscroll watch-item="chatMessages" watch-enabled="autoScroll">
 			<li ng-repeat="message in chatMessages track by $id($index)">
 				<span>{{message.user}}</span>
 				<div class="content" autocolor="message.user">
@@ -10,7 +10,11 @@
 				<span class="timeago" timeago time="message.time">...</span>
 			</li>
 		</ul>
-		<form ng-submit="addMessage()">
+		<div class="autoScrollToggle">
+			<input id="watchToggle" type="checkbox" ng-model="autoScroll"/>
+			<label for="watchToggle">auto-scroll</label>			
+		</div>
+		<form class="message-form" ng-submit="addMessage()">
 			<input type="text" ng-model="user" style="width:200px;" placeholder="your name"/>
 			<div class="input-append">
 				<input type="text" ng-model="message" placeholder="your message"/>
