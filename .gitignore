@@ -20,6 +20,8 @@ lib-cov
 *.pid
 *.gz
 
+*.zip
+
 pids
 logs
 results
