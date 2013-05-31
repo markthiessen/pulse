@@ -12,6 +12,9 @@ PulseApp.factory('$chatService', ['$socket', '$resource', '$rootScope',
 		updateName: function(name){
 			$socket.emit('updatename', {username: name});
 		},
+		sendTypingNotification: function(){
+			$socket.emit('typing', {username: name});
+		},
 		users: []
 	};
 
@@ -36,6 +39,14 @@ PulseApp.factory('$chatService', ['$socket', '$resource', '$rootScope',
 			chatService.users.push(user);
 		});
 		$rootScope.$apply();
+	});
+
+	$socket.on('usertyping', function(data){
+		var id = data.id;
+		chatService.users.forEach(function(user){
+			if(user.id==id)
+				user.lastTyped=moment();
+		});
 	});
 
 

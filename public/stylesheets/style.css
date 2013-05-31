@@ -3,6 +3,8 @@ html {
   padding: 0;
   margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  height: calc(50%);
+  background: #FAFAFA;
 }
 a {
   color: #00B7FF;
@@ -67,6 +69,7 @@ input {
   outline: none;
 }
 ul.chat-messages {
+  background: white;
   position: relative;
   margin-top: 10px;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -144,4 +147,17 @@ ul.chat-messages .timeago {
   display: inline-block;
   float: left;
   margin: 5px 5px 5px 0;
+}
+.typing {
+  display: block;
+  opacity: 0;
+  color: #393939;
+  position: absolute;
+  top: 0px;
+  left: 18px;
+  transition: opacity ease 0.25s;
+}
+.typing.visible {
+  display: block;
+  opacity: 1.0;
 }

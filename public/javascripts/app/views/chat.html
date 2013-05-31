@@ -17,13 +17,14 @@
 		<form class="message-form" ng-submit="addMessage()">
 			<input type="text" ng-model="user" style="width:200px;" placeholder="your name"/>
 			<div class="input-append">
-				<input type="text" ng-model="message" placeholder="your message"/>
+				<input type="text" ng-model="message" placeholder="your message" ng-change="notifyTyping()"/>
 				<input type="submit" class="btn add-on" value="Send"/>
 			</div>			
 		<form>
 		<ul class="user-list">
-			<li ng-repeat="user in users track by $id($index)" autocolor="user">
-				<i class="icon-user icon-white"></i>&nbsp;<span>{{user}}</span>
+			<li style="position:relative" ng-repeat="user in users track by $id($index)" autocolor="user.name">
+				<i class="icon-user icon-white"></i>&nbsp;<span>{{user.name}}</span> 
+				<i class="typing icon-comment icon-white" typing-watcher="user.lastTyped"></i>
 			</li>
 		</ul>
 	</div>

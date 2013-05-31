@@ -46,10 +46,20 @@ var server = http.createServer(app).listen(app.get('port'), function(){
 //notifications
 var io = require('socket.io').listen(server, { log: false });
 
+var socketCounter = 0;
+function getNextSocketId(){
+	socketCounter++;
+	if(socketCounter>=10000)
+		socketCounter=1;
+	return socketCounter;
+}
+
+
 var sockets = [];
 io.sockets.on('connection', function(socket){
 	sockets.push(socket);
 	socket.username = 'anony-mouse_'+sockets.length;
+	socket.sockid = getNextSocketId();
 
 	socket.on('disconnect', function() {
 	    var i = sockets.indexOf(socket);
@@ -61,11 +71,15 @@ io.sockets.on('connection', function(socket){
 		socket.username = data.username;	
 		setTimeout(broadcastUsers, 10);	
 	});
+
+	socket.on('typing', function(){
+		io.sockets.emit('usertyping', {id: socket.sockid});
+	});
 });
 
 function broadcastUsers(){	
 	var users = sockets.map(function(socket){
-		return socket.username;
+		return {name: socket.username, id: socket.sockid};
 	});
 	io.sockets.emit('users', users);
 }

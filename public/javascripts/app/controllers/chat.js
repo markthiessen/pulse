@@ -26,4 +26,14 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', functio
 		}
 		$chatService.updateName(newVal || 'no_name');
 	}, true);
+
+	var lastTypingNotification = moment().subtract('s', 3);
+	$scope.notifyTyping = function(){
+		var threeSecondsAgo = moment().subtract('s', 3);
+		if(threeSecondsAgo>lastTypingNotification){
+			lastTypingNotification=moment();
+			$chatService.sendTypingNotification();
+			console.log('changed');
+		}
+	}
 }]);
