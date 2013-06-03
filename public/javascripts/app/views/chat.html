@@ -22,7 +22,7 @@
 			</div>			
 		<form>
 		<ul class="user-list">
-			<li style="position:relative" ng-repeat="user in users track by $id($index)" autocolor="user.name">
+			<li style="position:relative" ng-repeat="user in users track by $id($index)" autocolor="user.name" autofade="user.lastTyped">
 				<i class="icon-user icon-white"></i>&nbsp;<span>{{user.name}}</span> 
 				<i class="typing icon-comment icon-white" typing-watcher="user.lastTyped"></i>
 			</li>

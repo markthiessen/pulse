@@ -7,25 +7,39 @@ PulseApp.directive('message', [function(){
 		transclude: false,
 		link: function(scope, elm, attrs){
 			var text = scope.$eval(attrs.text);
-			var matches = text.match(/(https?:\/\/\S*\.(?:png|jpg|gif))/i);
+			var imageMatches = text.match(/(https?:\/\/\S*\.(?:png|jpg|gif))/gi);
 			var newString = [];
-			if(matches)
+
+			function replaceMatchesWithAnchors(matches, images){
 				matches.forEach(function(match){
 					var index = text.indexOf(match);
 					if(index>=0){
 						newString.push(text.substr(0, index));
-
-						newString.push(
-							angular.element('<a>').attr({'href':match,'target':'_blank'})
-								.html(
-									angular.element('<img class="img-polaroid">').attr('src', match)
-								)
-						);
-
-
+						if(images){
+							newString.push(
+								angular.element('<a>').attr({'href':match,'target':'_blank'})
+									.html(
+										angular.element('<img class="img-polaroid">').attr('src', match)
+									)
+							);
+						}
+						else{
+							newString.push(
+								angular.element('<a>').attr({'href':match,'target':'_blank'}).text(match)
+							);
+						}
 						text = text.substr(index+match.length);
 					}
 				});
+			}
+
+			if(imageMatches)
+				replaceMatchesWithAnchors(imageMatches, true);
+			else{
+				var urlMatches= text.match(/(https?:\/\/\S*)/gi);
+				if(urlMatches)
+					replaceMatchesWithAnchors(urlMatches, false);
+			}
 
 			newString.push(text);			
 

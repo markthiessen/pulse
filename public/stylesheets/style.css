@@ -93,6 +93,10 @@ ul.chat-messages li .content {
   position: relative;
   padding: 8px;
 }
+ul.chat-messages li .content a {
+  color: white;
+  text-decoration: underline;
+}
 ul.chat-messages li .aftercontent {
   position: absolute;
   top: 30%;

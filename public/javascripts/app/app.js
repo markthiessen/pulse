@@ -29,6 +29,4 @@ var PulseApp = angular.module('PulseApp', ['ngResource'])
 		window.webkitNotifications.requestPermission(updatePermissions);
 		updatePermissions();
 	}
-
-
 }]);
