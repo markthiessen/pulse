@@ -1,4 +1,4 @@
-PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', function($scope, $rootScope, $chatService){
+PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageInfoService', function($scope, $rootScope, $chatService, $pageInfoService){
 	$rootScope.activeView='Chat';
 
 	$scope.chatMessages = $chatService.chatMessages;
@@ -26,6 +26,10 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', functio
 		}
 		$chatService.updateName(newVal || 'no_name');
 	}, true);
+	
+	$scope.$watch('chatMessages', function(newVal){
+		$pageInfoService.enableNewMessageNotification();
+	}, true);
 
 	var lastTypingNotification = moment().subtract('s', 3);
 	$scope.notifyTyping = function(){
@@ -35,5 +39,9 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', functio
 			$chatService.sendTypingNotification();
 			console.log('changed');
 		}
+	}
+
+	$scope.clearNotifications = function(){
+		$pageInfoService.disableNewMessageNotification();
 	}
 }]);
