@@ -1,10 +1,10 @@
 PulseApp.factory('$announcementService', ['$socket', '$resource', '$rootScope',
 	 function($socket, $resource, $rootScope){
 	
-	var restService = $resource('/messages/:id', {},{
+	var restService = $resource('/messages/:id', {},{get:{
 			method: 'GET',
 			cache:false
-		});
+		}});
 
 	var lastMsg = '';
 	var announcementService = {
