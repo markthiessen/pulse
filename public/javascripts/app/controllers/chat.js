@@ -28,7 +28,8 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 	}, true);
 	
 	$scope.$watch('chatMessages', function(newVal){
-		$pageInfoService.enableNewMessageNotification();
+		if(newVal.length>0)
+			$pageInfoService.enableNewMessageNotification();
 	}, true);
 
 	var lastTypingNotification = moment().subtract('s', 3);

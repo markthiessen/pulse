@@ -1,14 +1,18 @@
-PulseApp.factory('$pageInfoService',function(){
+PulseApp.factory('$pageInfoService',['$document', function($document){
+
+
 	var pageInfoService = {
 		enableNewMessageNotification: function(){
-				if(document.title.substring(document.title.length-1) != "*")
-					document.title=document.title + "*";
+				var currentTitle = $document.attr('title');
+				if(currentTitle.substring(currentTitle.length-1) != "*")
+					$document.attr('title', currentTitle + "*");
 		},
 		disableNewMessageNotification: function(){
-				if(document.title.substring(document.title.length-1) == "*")
-					document.title = document.title.substring(0, document.title.length - 1);
+				var currentTitle = $document.attr('title');
+				if(currentTitle.substring(currentTitle.length-1) == "*")
+					$document.attr('title', currentTitle.substring(0, currentTitle.length - 1));
 		}
 	};
 
 	return pageInfoService;
-});
+}]);
