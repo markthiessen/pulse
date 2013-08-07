@@ -1,5 +1,4 @@
-<div class="row" ng-mousemove="clearNotifications()">
-	<div class="span12">
+<div class="row chat-view col-lg-12" ng-mousemove="clearNotifications()">
 		<ul class="chat-messages" autoscroll watch-item="chatMessages" watch-enabled="autoScroll">
 			<li ng-repeat="message in chatMessages track by $id($index)">
 				<span>{{message.user}}</span>
@@ -14,18 +13,23 @@
 			<input id="watchToggle" type="checkbox" ng-model="autoScroll"/>
 			<label for="watchToggle">auto-scroll</label>			
 		</div>
-		<form class="message-form" ng-submit="addMessage()">
-			<input type="text" ng-model="user" style="width:200px;" placeholder="your name"/>
-			<div class="input-append">
-				<input type="text" ng-model="message" placeholder="your message" ng-change="notifyTyping()"/>
-				<input type="submit" class="btn add-on" value="Send"/>
-			</div>			
+		<form class="chat-form form-vertical" ng-submit="addMessage()">
+			<div class="form-group">
+				<input class="form-control input" type="text" ng-model="user" placeholder="your name"/>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<input class="form-control" type="text" ng-model="message" placeholder="your message" ng-change="notifyTyping()"/>
+					<span class="input-group-btn">
+						<button type="submit" class="btn btn-default">Send</button>	
+					</span>			
+				</div>	
+			</div>
 		<form>
 		<ul class="user-list">
 			<li style="position:relative" ng-repeat="user in users track by $id($index)" autocolor="user.name" autofade="user.lastTyped">
-				<i class="icon-user icon-white"></i>&nbsp;<span>{{user.name}}</span> 
-				<i class="typing icon-comment icon-white" typing-watcher="user.lastTyped"></i>
+				<i class="glyphicon glyphicon-user glyphicon-white"></i>&nbsp;<span>{{user.name}}</span> 
+				<i class="typing glyphicon glyphicon-comment glyphicon-white" typing-watcher="user.lastTyped"></i>
 			</li>
 		</ul>
-	</div>
 </div>

@@ -1,18 +1,16 @@
-body,
 html {
   padding: 0;
   margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  height: calc(50%);
+  height: 100%;
+  background: #FAFAFA;
+}
+body {
+  height: calc(100% - 60px);
   background: #FAFAFA;
 }
 a {
   color: #00B7FF;
-}
-@media (min-width: 980px) {
-  .container {
-    margin-top: 50px;
-  }
 }
 .navbar {
   opacity: 0.9;
@@ -75,7 +73,7 @@ ul.chat-messages {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   border-radius: 3px;
   border: 1px solid #cccccc;
-  height: 400px;
+  height: calc(100% - 280px);
   overflow-y: auto;
   padding: 10px;
   list-style: none;
@@ -137,9 +135,6 @@ ul.chat-messages .timeago {
 .autoScrollToggle label {
   margin-right: 5px;
 }
-.message-form {
-  margin-top: 50px;
-}
 .user-list {
   list-style: none;
   margin-left: 0;
@@ -164,4 +159,14 @@ ul.chat-messages .timeago {
 .typing.visible {
   display: block;
   opacity: 1.0;
+}
+.container {
+  height: 100%;
+  margin-top: 60px;
+}
+.main-view {
+  height: calc(100% - 50px);
+}
+.chat-view {
+  height: 100%;
 }
