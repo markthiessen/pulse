@@ -77,7 +77,6 @@ ul.chat-messages {
   overflow-y: auto;
   padding: 10px;
   list-style: none;
-  margin-right: 25px;
 }
 ul.chat-messages li {
   position: relative;
@@ -169,4 +168,7 @@ ul.chat-messages .timeago {
 }
 .chat-view {
   height: 100%;
+}
+.name-box {
+  max-width: 200px;
 }
