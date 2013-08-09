@@ -75,6 +75,13 @@ io.sockets.on('connection', function(socket){
 	socket.on('typing', function(){
 		io.sockets.emit('usertyping', {id: socket.sockid});
 	});
+
+	socket.on('likeMessage', function(data){
+		var message = chat.likeMessage(data.id);
+		console.log(message);
+		if(message)
+			io.sockets.emit('updateMessageLikes', {id: message.id, likes: message.likes});	
+	});
 });
 
 function broadcastUsers(){	

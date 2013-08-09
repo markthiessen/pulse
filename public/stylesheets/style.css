@@ -149,10 +149,10 @@ ul.chat-messages .timeago {
 .typing {
   display: block;
   opacity: 0;
-  color: #393939;
   position: absolute;
-  top: 0px;
-  left: 18px;
+  top: 2px;
+  left: 22px;
+  font-size: 10px;
   transition: opacity ease 0.25s;
 }
 .typing.visible {

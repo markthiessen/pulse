@@ -15,6 +15,9 @@ PulseApp.factory('$chatService', ['$socket', '$resource', '$rootScope',
 		sendTypingNotification: function(){
 			$socket.emit('typing', {username: name});
 		},
+		likeMessage: function(id){
+			$socket.emit('likeMessage', {id: id});
+		},
 		users: []
 	};
 
@@ -47,6 +50,24 @@ PulseApp.factory('$chatService', ['$socket', '$resource', '$rootScope',
 			if(user.id==id)
 				user.lastTyped=moment();
 		});
+	});
+
+	function findMessageById(id){
+		var messages = chatService.chatMessages;
+		for(var i=0; i<messages.length;i++){
+			var message = messages[i];
+			if(message.id==id)
+				return message;
+		}
+	}
+
+
+	$socket.on('updateMessageLikes', function(data){
+		var message = findMessageById(data.id);
+		if(message){
+			message.likes = data.likes;
+			$rootScope.$apply();
+		}
 	});
 
 
