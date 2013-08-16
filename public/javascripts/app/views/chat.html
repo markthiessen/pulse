@@ -7,7 +7,7 @@
 					<div class="aftercontent"></div>
 				</div>
 				<span class="timeago" timeago time="message.time">...</span>
-				<a type="button" class="glyphicon glyphicon-heart-empty" onselectstart="return false" style=" text-decoration:none; cursor: pointer;" ng-click="likeMessage(message.id)"></a>
+				<a type="button" class="glyphicon glyphicon-heart-empty" onselectstart="return false" style=" text-decoration:none; cursor: pointer;" ng-click="likeMessage(message.id)" ng-class="{nolikes: message.likes==0}"></a>
 				<span ng-show="message.likes>0" style="font-size:10px; font-weight:bold; position:relative; top:-3px;">+{{message.likes}}</span>
 			</li>
 		</ul>

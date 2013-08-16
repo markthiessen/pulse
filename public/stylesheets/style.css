@@ -172,3 +172,6 @@ ul.chat-messages .timeago {
 .name-box {
   max-width: 200px;
 }
+.nolikes {
+  opacity: 0.15;
+}
