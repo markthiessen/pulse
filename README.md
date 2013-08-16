@@ -13,6 +13,8 @@ Features:
     - most recent messages at the top
     - messages older than 15 minutes are dim, and older than 30 minutes are dimmer
     - messages older than 1 hour are purged
-3. Live update 
+3. Chat room
+    - simple, clean real-time chat w/ support for images + links
+4. Live update 
     - connected clients notified when new messages come in
     - use browser features where available to make this better (ie. webkit notifications/toasts)
