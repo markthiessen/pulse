@@ -3,7 +3,7 @@ PulseApp.directive('message', [function(){
 	return {
 		restrict: 'E',
 		replace: true,
-		template: '<div></div>',
+		template: '<div class="chat-message"></div>',
 		transclude: false,
 		link: function(scope, elm, attrs){
 			var text = scope.$eval(attrs.text);
