@@ -19,7 +19,7 @@ PulseApp.directive('message', [function(){
 							newString.push(
 								angular.element('<a>').attr({'href':match,'target':'_blank'})
 									.html(
-										angular.element('<img class="img-polaroid">').attr('src', match)
+										angular.element('<img class="img-polaroid">').attr('src', match).attr('onerror', 'this.src="/images/notfound.jpg"')
 									)
 							);
 						}
