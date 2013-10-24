@@ -1,4 +1,4 @@
-PulseApp.directive('message', [function(){
+PulseApp.directive('message', ['$emojify', function($emojify){
 
 	return {
 		restrict: 'E',
@@ -48,7 +48,10 @@ PulseApp.directive('message', [function(){
 					elm.append(angular.element('<span>').text(item));
 				else
 					elm.append(item);
-			})
+			});
+
+			$emojify.run(elm[0]);
+
 		}
 	};
 

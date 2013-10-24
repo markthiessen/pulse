@@ -1,5 +1,5 @@
 <div class="row chat-view col-lg-12" ng-mousemove="clearNotifications()">
-		<ul class="chat-messages" autoscroll watch-item="chatMessages" watch-enabled="autoScroll">
+		<ul id="chatMessages" class="chat-messages" autoscroll watch-item="chatMessages" watch-enabled="autoScroll">
 			<li ng-repeat="message in chatMessages track by $id($index)">
 				<span>{{message.user}}</span>
 				<div class="content" autocolor="message.user">
