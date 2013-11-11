@@ -12,7 +12,6 @@ PulseApp.factory('$emojify', ['$rootScope',
 
 		return {
 			run: function(elm){
-				console.log('hello');
 				emojify.run(elm);
 			}
 		};

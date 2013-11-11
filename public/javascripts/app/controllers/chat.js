@@ -7,8 +7,6 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 
 		$scope.user = $rootScope.user;
 		
-		$scope.autoScroll=true;
-
 		$scope.message = '';
 		$scope.addMessage = function(){
 			if($scope.message){
@@ -39,7 +37,6 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 			if(threeSecondsAgo>lastTypingNotification){
 				lastTypingNotification=moment();
 				$chatService.sendTypingNotification();
-				console.log('changed');
 			}
 		}
 

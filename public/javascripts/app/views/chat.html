@@ -11,10 +11,6 @@
 				<span ng-show="message.likes>0" style="font-size:10px; font-weight:bold; position:relative; top:-3px;">+{{message.likes}}</span>
 			</li>
 		</ul>
-		<div class="autoScrollToggle">
-			<input id="watchToggle" type="checkbox" ng-model="autoScroll"/>
-			<label for="watchToggle">auto-scroll</label>			
-		</div>
 		<form class="chat-form form-vertical" ng-submit="addMessage()">
 			<div class="form-group">
 				<input class="form-control name-box" type="text" ng-model="user" placeholder="your name"/>
