@@ -1,4 +1,4 @@
-PulseApp.directive('message', ['$emojify', function($emojify){
+PulseApp.directive('message', ['$emojify', '$modalService', function($emojify, $modalService){
 
 	return {
 		restrict: 'E',
@@ -17,10 +17,13 @@ PulseApp.directive('message', ['$emojify', function($emojify){
 						newString.push(text.substr(0, index));
 						if(images){
 							newString.push(
-								angular.element('<a>').attr({'href':match,'target':'_blank'})
+								angular.element('<a>').attr({'href':'#'})
 									.html(
 										angular.element('<img class="img-polaroid">').attr('src', match).attr('onerror', 'this.src="/images/notfound.jpg"')
-									)
+									).click(function(e){
+										e.preventDefault();
+										$modalService.showInModal(angular.element(this).children()[0], match);
+									})
 							);
 						}
 						else{

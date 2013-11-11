@@ -112,10 +112,6 @@ ul.chat-messages li img {
   max-height: 80px;
   margin: 3px;
   border-radius: 1px;
-  transition: max-height linear 0.1s;
-}
-ul.chat-messages li img:hover {
-  max-height: 200px;
 }
 ul.chat-messages .timeago {
   font-size: 8px;
@@ -176,5 +172,23 @@ ul.chat-messages .timeago {
   opacity: 0.15;
 }
 .chat-message {
+  -ms-word-break: break-all;
+  word-break: break-all;
+  /* Non standard for webkit */
+
   word-break: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}
+#detail-modal .modal-body {
+  width: auto;
+  max-width: 100%;
+}
+#detail-modal .modal-body img {
+  max-width: 100%;
+}
+.modal-backdrop {
+  opacity: 0;
+  background: #2a6496;
 }
