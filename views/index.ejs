@@ -8,28 +8,36 @@
     <link rel='stylesheet' href='/stylesheets/emojify.css' />
   </head>
   <body ng-app="PulseApp">
-  	<div class="navbar navbar-fixed-top">
-  			<div class="navbar-brand">
-  				<div class="brand-inner">
+    <div id="body-wrapper">
+      <div class="navbar navbar-fixed-top">
+        <div class="navbar-brand">
+          <div class="brand-inner">
             <img src="/images/icon.png" style="height:15px;"/>
-  					<span><%= title %></span>
-  				</div>
-        <div class="pull-right" style="margin:5px; position:absolute; right:0; top:0;" ng-show="needsAlertPermissions">
-          <a class="btn btn-warning" ng-click="enableNotifications()">Enable Notifications!</a>
-      </div>
-		</div>
-  	</div>
-    <div class="container">
-      <div class="row"> 
-        <div class="col-lg-12" style="text-align:center">
-        <div class="btn-group">
-          <a href="#/" class="btn btn-default" ng-class="{active: activeView=='Announcements'}"><i class="icon-exclamation-sign"></i>&nbsp;Announcements</a>
-          <a href="#/chat" class="btn btn-default" ng-class="{active: activeView=='Chat'}"><i class="icon-comment"></i>&nbsp;Chat</a>
+            <span><%= title %></span>
+          </div>
+          <div class="pull-right" style="margin:5px; position:absolute; right:0; top:0;" ng-show="needsAlertPermissions">
+            <a class="btn btn-warning" ng-click="enableNotifications()">Enable Notifications!</a>
+          </div>
         </div>
       </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12" style="text-align:center">
+            <div class="btn-group">
+              <a href="#/" class="btn btn-default" ng-class="{active: activeView=='Announcements'}"><i class="icon-exclamation-sign"></i>&nbsp;Announcements</a>
+              <a href="#/chat" class="btn btn-default" ng-class="{active: activeView=='Chat'}"><i class="icon-comment"></i>&nbsp;Chat</a>
+            </div>
+          </div>
+        </div>
+        <div ng-view class="main-view">
+        </div>
       </div>
-    	<div ng-view class="main-view">
-    	</div>    	
+    </div>
+    <div id="footer">
+      <a href="https://github.com/markthiessen/pulse" alt="Fork me on GitHub">
+        <span class="octocat"></span>
+      </a>
+    </div>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>

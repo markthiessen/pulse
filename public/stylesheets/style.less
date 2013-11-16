@@ -21,6 +21,40 @@ a {
 	list-style:none;
 }
 
+.container {
+    height:100%;
+}
+
+#body-wrapper{
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px;
+    padding: 0 0 60px;
+
+    .container{
+        margin-top: 60px;
+    }
+}
+
+#footer{
+    height: 60px;
+    border-top: 1px solid #ddd;
+
+    .octocat{
+        position: absolute;
+        margin-top: 10px;
+        left: 50%;
+        margin-left: -16px;
+        height: 32px;
+        width: 32px;
+        background-image: url(/images/github-mark.png);
+        opacity: 0.3;
+    }
+    .octocat:hover{
+        opacity: 0.2;
+    }
+}
+
 .message{
 	color:white; 
 	text-shadow: 0 1px 1px rgba(0,0,0,0.2);
@@ -156,11 +190,6 @@ ul.chat-messages{
 		display:block;
 		opacity:1.0;
 	}	
-}
-
-.container{
-	height:100%;	
-	margin-top: 60px;
 }
 
 .main-view{
