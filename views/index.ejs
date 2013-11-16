@@ -31,29 +31,6 @@
     	<div ng-view class="main-view">
     	</div>    	
     </div>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src='/javascripts/vendor/moment.js'></script>
-    <script src='/javascripts/vendor/crypto.js'></script>
-    <script src='/javascripts/vendor/angular.js'></script>
-    <script src='/javascripts/vendor/angular-resource.js'></script>
-    <script src='/javascripts/vendor/emojify.js'></script>
-    <script src='/javascripts/app/app.js'></script>
-    <script src='/javascripts/app/services/chatService.js'></script>
-    <script src='/javascripts/app/services/pageInfoService.js'></script>
-    <script src='/javascripts/app/services/announcementService.js'></script>
-    <script src='/javascripts/app/services/socket.js'></script>
-    <script src='/javascripts/app/services/modalService.js'></script>
-    <script src='/javascripts/app/services/colorHash.js'></script>
-    <script src='/javascripts/app/services/emojify.js'></script>
-    <script src='/javascripts/app/controllers/index.js'></script>
-    <script src='/javascripts/app/controllers/chat.js'></script>
-    <script src='/javascripts/app/directives/timeago.js'></script>
-    <script src='/javascripts/app/directives/autoscroll.js'></script>
-    <script src='/javascripts/app/directives/message.js'></script>
-    <script src='/javascripts/app/directives/autocolor.js'></script>
-    <script src='/javascripts/app/directives/autofade.js'></script>
-    <script src='/javascripts/app/directives/typing.js'></script>
+    <% include _scripts.ejs %>
   </body>
 </html>
