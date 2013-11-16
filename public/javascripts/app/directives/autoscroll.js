@@ -1,4 +1,4 @@
-PulseApp.directive('autoscroll', ['$timeout', function($timeout){
+PulseApp.directive('autoscroll', ['$timeout', '$document', '$window', function($timeout, $document, $window){
 	return {
 		link: function(scope, elm, attrs){
 
@@ -6,24 +6,23 @@ PulseApp.directive('autoscroll', ['$timeout', function($timeout){
 
 			function scroll(){
 				if(atBottom)
-					elm[0].scrollTop=elm[0].scrollHeight;
+					$document[0].body.scrollTop=$document[0].body.scrollHeight;
 			}
 
 			var timeout;
 			function autoscroll(){		
 				scroll();	
-				timeout = $timeout(autoscroll, 250);	
+				timeout = $timeout(autoscroll, 1000);	
 			}
 			autoscroll();
 
 			scope.$watch(attrs.watchItem, scroll, true);
 
-			var container = angular.element(elm);
-			container.scroll(function(e){	
-				var height = container.height();
-		        var scrollHeight = container[0].scrollHeight;
-		        var st = container.scrollTop();
-		        atBottom = (st >= scrollHeight - height - 100);			
+			angular.element($window).scroll(function(e){	
+				var height = angular.element($window).height();
+		        var st = $document[0].body.scrollTop;
+		        var scrollHeight = $document[0].body.scrollHeight;
+		        atBottom = (st >= scrollHeight -height);			
 			});
 
 			scope.$on('destroy', function(e){
