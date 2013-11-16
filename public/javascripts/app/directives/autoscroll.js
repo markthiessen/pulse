@@ -22,7 +22,7 @@ PulseApp.directive('autoscroll', ['$timeout', '$document', '$window', function($
 				var height = angular.element($window).height();
 		        var st = $document[0].body.scrollTop;
 		        var scrollHeight = $document[0].body.scrollHeight;
-		        atBottom = (st >= scrollHeight -height);			
+		        atBottom = (st >= scrollHeight -height -100);			
 			});
 
 			scope.$on('destroy', function(e){

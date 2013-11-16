@@ -3,9 +3,6 @@ html {
   margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-body {
-  background: url('/images/pulse.gif') repeat-x;
-}
 a {
   color: #00B7FF;
 }
