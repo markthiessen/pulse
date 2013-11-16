@@ -12,7 +12,7 @@ PulseApp.directive('autoscroll', ['$timeout', '$document', '$window', function($
 			var timeout;
 			function autoscroll(){		
 				scroll();	
-				timeout = $timeout(autoscroll, 1000);	
+				timeout = $timeout(autoscroll, 250);	
 			}
 			autoscroll();
 

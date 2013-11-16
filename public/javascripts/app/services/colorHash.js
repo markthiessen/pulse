@@ -8,6 +8,15 @@ PulseApp.factory('$colorHash', function(){
 	    return str;
 	}
 
+	function hexToRgb(hex) {
+	    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+	    return result ? [
+	        parseInt(result[1], 16),
+	        parseInt(result[2], 16),
+	        parseInt(result[3], 16)]
+	     : null;
+	}
+
 	return {
 		getColor: function(inputText) {
 		    var maxBrightness=250; // int btwn 0 and 765
@@ -37,8 +46,10 @@ PulseApp.factory('$colorHash', function(){
 		    for (var y=0;y<3;y++) {
 		        outputHex = outputHex + pad(intsOut[y].toString(16), 2);
 		    }
-		    
-		    return outputHex;
+			var rgb = hexToRgb(outputHex);
+			var rgba = "rgba("+rgb[0]+","+rgb[1]+","+rgb[2]+", 0.7)";
+			console.log(rgba);
+			return rgba;
 		}
 	};
 });

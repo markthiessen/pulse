@@ -7,7 +7,6 @@ PulseApp.directive('message', ['$emojify', '$modalService', function($emojify, $
 		transclude: false,
 		link: function(scope, elm, attrs){
 			var text = scope.$eval(attrs.text);
-			var imageMatches = text.match(/(https?:\/\/\S*\.(?:png|jpg|gif))/gi);
 			var newString = [];
 
 			function replaceMatchesWithAnchors(matches, images){
@@ -36,6 +35,7 @@ PulseApp.directive('message', ['$emojify', '$modalService', function($emojify, $
 				});
 			}
 
+			var imageMatches = text.match(/(https?:\/\/\S*\.(?:png|jpg|gif))/gi);
 			if(imageMatches)
 				replaceMatchesWithAnchors(imageMatches, true);
 			else{
@@ -47,13 +47,17 @@ PulseApp.directive('message', ['$emojify', '$modalService', function($emojify, $
 			newString.push(text);			
 
 			newString.forEach(function(item){
-				if(typeof(item)=='string')
-					elm.append(angular.element('<span>').text(item));
+				if(typeof(item)=='string'){
+					var span = angular.element('<span>').text(item);
+					$emojify.run(span[0]);
+
+					elm.append(span);
+					
+				}
 				else
 					elm.append(item);
 			});
 
-			$emojify.run(elm[0]);
 
 		}
 	};
