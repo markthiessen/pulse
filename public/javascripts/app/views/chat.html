@@ -2,7 +2,7 @@
 	<div class="col-lg-2 col-md-3 col-sm-3 hidden-xs" style="position:relative;">
 		<ul class="user-list">
 			<li style="position:relative" ng-repeat="user in users track by $id($index)" autocolor="user.name" autofade="user.lastTyped">
-				<i class="glyphicon glyphicon-user glyphicon-white"></i>&nbsp;<span>{{user.name}}</span> 
+				<i class="glyphicon glyphicon-user glyphicon-white"></i>&nbsp;<span class="username">{{user.name}}</span> 
 				<i class="typing glyphicon glyphicon-comment glyphicon-white" typing-watcher="user.lastTyped"></i>
 			</li>
 		</ul>
@@ -14,8 +14,7 @@
 				<div class="content" autocolor="message.user">
 					<message text="message.text"></message>
 					<div class="aftercontent"></div>
-				<span class="timeago" timeago time="message.time">...</span>
-					
+					<span class="timeago" timeago time="message.time">...</span>
 				</div>
 				<a type="button" class="glyphicon glyphicon-heart-empty" onselectstart="return false" style=" text-decoration:none; cursor: pointer;" ng-click="likeMessage(message.id)" ng-class="{nolikes: message.likes==0}"></a>
 					<span ng-show="message.likes>0" style="font-size:10px; font-weight:bold; position:relative; top:-3px;">+{{message.likes}}</span>

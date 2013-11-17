@@ -153,6 +153,9 @@ ul.chat-messages li img {
   white-space: nowrap;
   overflow: hidden;
 }
+.username {
+  margin-left: 8px;
+}
 .typing {
   display: block;
   opacity: 0;
