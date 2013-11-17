@@ -26,16 +26,16 @@
 	<form class="chat-form form-vertical" ng-submit="addMessage()">
 		<div class="form-group">
 			<div class="input-group">
-				<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<span class="input-group-addon" autocolor="user" ><i class="glyphicon glyphicon-user"></i></span>
 				<input class="form-control name-box" type="text" ng-model="user" placeholder="your name"/>
 			</div>
 			</div>
 			<div class="form-group">
 				<div class="input-group">
-					<span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
+					<span class="input-group-addon" autocolor="user" ><i class="glyphicon glyphicon-comment"></i></span>
 					<input class="form-control" type="text" ng-model="message" placeholder="your message" ng-change="notifyTyping()"/>
 					<span class="input-group-btn">
-						<button type="submit" class="btn btn-success">Send</button>	
+						<button type="submit" class="btn btn-default"  autocolor="user">Send</button>	
 					</span>			
 				</div>	
 			</div>			
