@@ -77,7 +77,7 @@ ul.chat-messages li {
 ul.chat-messages li .content {
   background: #2f96b4;
   color: white;
-  margin: 1px;
+  margin: 3px;
   padding: 7px 10px;
   display: inline-block;
   margin-left: 10px;
