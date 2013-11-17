@@ -139,6 +139,8 @@ ul.chat-messages li img {
   padding: 15px 0;
   position: fixed;
   width: inherit;
+  height: calc(100% - 200px);
+  overflow: scroll;
 }
 .user-list li {
   border-radius: 5px;
