@@ -82,18 +82,33 @@ ul.chat-messages{
 	li .content{
 		background:#2f96b4;
 		color:white;
-		margin:3px;
-		padding:8px;
+		margin:1px;
+		padding:7px 10px;
 		display:inline-block;
 		margin-left:10px;
 		position: relative;
-		padding: 8px;
+		min-width:75px;
+
 		a{ color: white; text-decoration:underline;}
+		}
+		.timeago{
+			font-size:8px;
+			margin-left:8px;
+			color:rgba(255,255,255,0.2);
+			position:absolute;
+			bottom: 0px;
+			right:2px;
+			width:100%;
+			text-align:right;
+			text-shadow:none;
+		}
+		.timeago:hover{
+			color:rgba(255,255,255,0.8);
 		}
 	li .aftercontent 
 		{
 			position: absolute;
-			top: 30%;
+			top: 20%;
 			left: -8px;
 			border-style: solid;
 			border-width: 8px 8px 8px 0;
@@ -110,11 +125,7 @@ ul.chat-messages{
 		margin:3px;
 		border-radius:1px;
 	}
-	.timeago{
-		font-size:8px;
-		margin-left:8px;
-		color:#CCC;
-	}
+	
 }
 .autoScrollToggle{
 	float:right;
