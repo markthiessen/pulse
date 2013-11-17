@@ -12,13 +12,17 @@ PulseApp.controller('IndexCtrl', ['$scope', '$rootScope', '$announcementService'
 		var anHourAgo = new Date();
 		anHourAgo.setTime(now.getTime() +(-60*60*1000));
 
+		var aDayAgo = new Date().setTime(now.getTime() + (-24*60*60*1000));
+
 		var messageTime = new Date(Date.parse(message.time));
 		if(messageTime> fifteenMinutesAgo)
 			return 'fresh';
 		else if(messageTime>anHourAgo)
 			return 'old';
-		else
+		else if(messageTime>aDayAgo)
 			return 'stale';
+		else
+			return 'really-stale'
 	};
 
 

@@ -24,17 +24,17 @@ a {
 }
 
 .message{
-	color:white; 
-	text-shadow: 0 1px 1px rgba(0,0,0,0.2);
-	background:#2f96b4;
-	opacity:0.4;
-	padding:25px 15px;
-	margin-bottom:10px;
-	box-shadow:0 1px 2px rgba(0,0,0,0.8);
-	font-weight:bold;
-	font-size:22px;
-	border:2px solid rgba(0,0,0,0.05);
-	text-align:center;
+	color: white;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+	background: rgba(182, 64, 79, 0.87);
+	opacity: 0.4;
+	padding: 15px 15px;
+	margin:2px;
+	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+	font-size: 22px;
+	border: 2px solid rgba(0, 0, 0, 0.05);
+	border-radius:2px;
+	display:inline-block;
 	.timeago{
 		font-size:0.6em;	
 	}	
@@ -44,10 +44,13 @@ a {
 	opacity:1.0;
 }
 .message.old{
-	opacity:0.4;
+	opacity:0.75;
 }
 .message.stale{
-	opacity:0.20;
+	opacity:0.50;
+}
+.message.really-stale{
+	opacity:0.25;
 }
 form{
 	input{
