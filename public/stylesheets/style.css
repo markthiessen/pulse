@@ -77,7 +77,7 @@ ul.chat-messages li {
 ul.chat-messages li .content {
   background: #2f96b4;
   color: white;
-  margin: 3px;
+  margin: 2px;
   padding: 7px 10px;
   display: inline-block;
   margin-left: 10px;
@@ -94,9 +94,8 @@ ul.chat-messages .timeago {
   color: rgba(255, 255, 255, 0.2);
   position: absolute;
   bottom: 0px;
-  right: 2px;
-  width: 100%;
-  text-align: right;
+  left: 2px;
+  text-align: left;
   text-shadow: none;
 }
 ul.chat-messages .timeago:hover {
@@ -104,7 +103,7 @@ ul.chat-messages .timeago:hover {
 }
 ul.chat-messages li .aftercontent {
   position: absolute;
-  top: 20%;
+  top: 5px;
   left: -8px;
   border-style: solid;
   border-width: 8px 8px 8px 0;
@@ -120,6 +119,12 @@ ul.chat-messages li img {
   max-height: 150px;
   margin: 3px;
   border-radius: 1px;
+}
+ul.chat-messages .username {
+  margin: 0;
+  display: inline-block;
+  padding: 5px 0;
+  vertical-align: top;
 }
 .autoScrollToggle {
   float: right;
