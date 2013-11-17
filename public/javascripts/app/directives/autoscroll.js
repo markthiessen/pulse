@@ -25,7 +25,7 @@ PulseApp.directive('autoscroll', ['$timeout', '$document', '$window', function($
 		        atBottom = (st >= scrollHeight -height -150);			
 			});
 
-			scope.$on('destroy', function(e){
+			scope.$on('$destroy', function(e){
                $timeout.cancel(timeout);
             });
 
