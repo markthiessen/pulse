@@ -82,7 +82,7 @@ ul.chat-messages li .content {
   display: inline-block;
   margin-left: 10px;
   position: relative;
-  min-width: 75px;
+  min-width: 85px;
 }
 ul.chat-messages li .content a {
   color: white;
