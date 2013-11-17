@@ -48,7 +48,6 @@ PulseApp.factory('$colorHash', function(){
 		    }
 			var rgb = hexToRgb(outputHex);
 			var rgba = "rgba("+rgb[0]+","+rgb[1]+","+rgb[2]+", 0.7)";
-			console.log(rgba);
 			return rgba;
 		}
 	};
