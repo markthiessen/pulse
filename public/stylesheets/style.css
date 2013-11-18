@@ -145,7 +145,7 @@ ul.chat-messages .username {
   position: fixed;
   width: inherit;
   height: calc(100% - 200px);
-  overflow: scroll;
+  overflow: auto;
 }
 .user-list li {
   border-radius: 5px;
@@ -177,6 +177,7 @@ ul.chat-messages .username {
 .container {
   height: 100%;
   margin-top: 60px;
+  overflow-x: hidden;
 }
 .main-view {
   height: calc(100% - 50px);
