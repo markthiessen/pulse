@@ -10,9 +10,10 @@ PulseApp.factory('$announcementService', ['$socket', '$resource', '$rootScope',
 	var announcementService = {
 		announcements: [],
 		Announcement: restService,
-		add: function(text){
+		add: function(text, broadcast){
 			var announcement = new announcementService.Announcement();
 			announcement.text = text;
+			announcement.broadcast = broadcast;
 			announcement.time = new Date();
 
 			lastMsg = text;
