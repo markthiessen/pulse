@@ -22,6 +22,10 @@ a {
   padding: 0;
   list-style: none;
 }
+.loud {
+  background-color: #5cb85c;
+  color: white;
+}
 .message {
   color: white;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -192,7 +196,6 @@ ul.chat-messages .username {
   -ms-word-break: break-all;
   word-break: break-all;
   /* Non standard for webkit */
-
   word-break: break-word;
   -webkit-hyphens: auto;
   -moz-hyphens: auto;

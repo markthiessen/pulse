@@ -3,6 +3,7 @@ PulseApp.controller('IndexCtrl', ['$scope', '$rootScope', '$announcementService'
 	$rootScope.activeView='Announcements';
 
 	$scope.announcements = $announcementService.announcements;
+	$scope.loud = false;
 
 	$scope.getFreshness = function(message){
 		var now = new Date();
@@ -25,12 +26,17 @@ PulseApp.controller('IndexCtrl', ['$scope', '$rootScope', '$announcementService'
 			return 'really-stale'
 	};
 
+	$scope.toggleVolume = function(){
+		$scope.loud = !$scope.loud;
+	};
+
 
 	var lastMsg = null;
 	$scope.newMessage = '';
 	$scope.postNewMessage = function(){
-		$announcementService.add($scope.newMessage);
+		$announcementService.add($scope.newMessage, $scope.loud);
 		$scope.newMessage='';
+		$scope.loud = false;
 	};
 
 }]);
