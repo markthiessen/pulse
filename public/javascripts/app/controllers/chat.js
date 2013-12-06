@@ -11,7 +11,7 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 		$scope.addMessage = function(){
 			if($scope.message){
 				var message = new $chatService.ChatMessage();
-				message.text = $scope.message;
+				message.text = unicode_replace($scope.message);
 				message.user = $scope.user;
 				message.$save();
 				$scope.message='';
@@ -47,4 +47,12 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 		$scope.likeMessage = function(id){
 			$chatService.likeMessage(id);
 		};
+
+        var unicode_replace = function(str){
+            var unicode = /\\u[0-9][0-9][0-9][0-9]/g;
+
+            return str.replace(unicode,function(code) {
+                return String.fromCharCode(parseInt(str.substring(2), 16));
+            });
+        }
 }]);
