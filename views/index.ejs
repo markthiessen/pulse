@@ -20,7 +20,7 @@
           <a href="#/chat" class="btn btn-default" ng-class="{active: activeView=='Chat'}"><i class="icon-comment"></i>&nbsp;Chat</a>
         </div>
 
-        <div class="pull-right" style="margin:8px 5px; display:none;" ng-class="{visible-md: needsAlertPermissions, visible-lg: needsAlertPermissions">
+        <div class="pull-right" style="margin:8px 5px; display:none;" ng-class="{'visible-md': needsAlertPermissions, 'visible-lg': needsAlertPermissions}">
           <a class="btn btn-warning" ng-click="enableNotifications()">Enable Notifications!</a>
       </div>
   	</div>
