@@ -1,9 +1,10 @@
-PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageInfoService', 
-	function($scope, $rootScope, $chatService, $pageInfoService){
+PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageInfoService', '$sce',
+	function($scope, $rootScope, $chatService, $pageInfoService, $sce){
 		$rootScope.activeView='Chat';
 
 		$scope.chatMessages = $chatService.chatMessages;
 		$scope.users = $chatService.users;
+		$scope.audioSrc = '';
 
 		$scope.user = $rootScope.user;
 		
@@ -11,7 +12,7 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 		$scope.addMessage = function(){
 			if($scope.message){
 				var message = new $chatService.ChatMessage();
-				message.text = $scope.message;
+				message.text = unicode_replace($scope.message);
 				message.user = $scope.user;
 				message.$save();
 				$scope.message='';
@@ -27,8 +28,10 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 		}, true);
 		
 		$scope.$watch('chatMessages', function(newVal){
-			if(newVal.length>0)
+			if(newVal.length>0) {
 				$pageInfoService.enableNewMessageNotification();
+				$scope.audioSrc = $sce.trustAsResourceUrl(newVal[newVal.length-1].audio);
+			}
 		}, true);
 
 		var lastTypingNotification = moment().subtract('s', 3);
@@ -46,5 +49,15 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 
 		$scope.likeMessage = function(id){
 			$chatService.likeMessage(id);
+		};
+
+		var unicode_replace = function(str){
+			var unicode = /\\u[0-9][0-9][0-9][0-9]/g;
+
+			str = str.replace(unicode, function(code){
+				return String.fromCharCode(parseInt(code.substring(2), 16));
+			});
+
+			return str;
 		};
 }]);

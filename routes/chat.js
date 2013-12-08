@@ -1,4 +1,7 @@
-var crypto = require('crypto');
+var crypto = require('crypto'),
+	http = require('http'),
+	settings = require('../settings');
+
 var messages = [], users = [];
 
 var messageCounter = 0;
@@ -18,17 +21,26 @@ exports.add = function(req, res){
 		message.time = new Date();
 		message.id = messageCounter++;
 		message.likes = 0;
+		message.audio = '';
 
 		if(messageCounter>1000)
 			messageCounter=0;
 
-		messages.push(message);
+		var publish = function(m) {
+			messages.push(m);
 
-		setTimeout(function(){
-			purgeOldMessages();
-			notifyCallback(message);
+			setTimeout(function(){
+				purgeOldMessages();
+				notifyCallback(m);
 
-		}, 10);
+			}, 10);
+		}
+
+		if(message.text.indexOf('\u0007') > -1) {
+			broadcast(message, publish);
+		} else {
+			publish(message);
+		}
 	}
 	res.send();
 };
@@ -68,3 +80,35 @@ function purgeOldMessages(){
 	if(messages.length>100)
 		messages.splice(0, 1);
 }
+
+
+
+var broadcast = function(message, complete) {
+
+	payload = JSON.stringify({ "phrase": message.text });
+
+	var options = {
+		host: settings.vocalizer.host,
+		port: settings.vocalizer.port,
+		path: '/api/testvocalize',
+		method: 'POST',
+		headers: {
+			'Content-Type' : 'application/json',
+			'Content-Length' : payload.length
+		}
+	};
+
+	var req = http.request(options, function(res) {
+		res.setEncoding('utf8');
+		res.on('data', function (chunk) {
+			var data = JSON.parse(chunk);
+			message.audio = 'http://' + settings.vocalizer.host + ':' + settings.vocalizer.port + '/api/testvocalize/' + data.id;
+			complete(message);
+		});
+	}).on('error', function(err) {
+		complete(message);
+	});
+
+	req.write(payload);
+	req.end();
+};
