@@ -16,7 +16,11 @@ PulseApp.directive('userComplete', [function(){
 				if(searchString){
 					var user = users[0].name;
 					var caretPosition = doGetCaretPosition(elm[0]);
-					var userSub = user.substr(searchString.length-1, user.length-searchString.length+1);
+
+					var lastTyped = searchString.substr(searchString.length-1, 1);
+
+					var userSub = lastTyped + user.substr(searchString.length, user.length-searchString.length);
+					
 					insertAtCaret(elm[0], userSub);
 					createSelection(elm[0], caretPosition+1, caretPosition+userSub.length);
 				}
