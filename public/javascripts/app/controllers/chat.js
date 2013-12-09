@@ -67,10 +67,15 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 		}
 
 		var unicode_replace = function(str){
-			var unicode = /\\u[0-9][0-9][0-9][0-9]/g;
+			var unicode = /\\u([a-f,0-9]{4})*/ig;
 
 			str = str.replace(unicode, function(code){
-				return String.fromCharCode(parseInt(code.substring(2), 16));
+				return code.substring(2)
+					.match(/.{4}/g)
+					.map(function(segment) {
+						return String.fromCharCode(parseInt(segment, 16));
+					})
+					.join('');
 			});
 
 			return str;
