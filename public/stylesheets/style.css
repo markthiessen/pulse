@@ -8,14 +8,14 @@ a {
 }
 .navbar {
   opacity: 0.9;
-  background: #595959;
+  background: white;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 }
 .navbar .brand {
   margin-left: 0px;
 }
 .brand-inner {
-  color: white;
+  color: #595959;
 }
 .messages {
   margin-bottom: 50px;
@@ -23,8 +23,7 @@ a {
   list-style: none;
 }
 .loud {
-  background-color: #5cb85c;
-  color: white;
+  text-shadow: 0 0 4px #319ED4;
 }
 .message {
   color: white;
@@ -144,19 +143,21 @@ ul.chat-messages .username {
 }
 .user-list {
   list-style: none;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
   margin-left: 0;
-  padding: 15px 0;
+  padding: 0;
   position: fixed;
   width: inherit;
   height: calc(100% - 200px);
   overflow: auto;
+  margin: 0;
 }
 .user-list li {
   border-radius: 5px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   padding: 4px 10px;
   display: block;
-  margin: 5px 5px 5px 0;
+  margin: 5px;
   max-width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -196,6 +197,7 @@ ul.chat-messages .username {
   -ms-word-break: break-all;
   word-break: break-all;
   /* Non standard for webkit */
+
   word-break: break-word;
   -webkit-hyphens: auto;
   -moz-hyphens: auto;
@@ -215,7 +217,7 @@ ul.chat-messages .username {
 .chat-form-wrapper {
   position: fixed;
   bottom: 0;
-  background: #595959;
+  background: white;
   width: 100%;
   z-index: 100;
   padding: 15px;

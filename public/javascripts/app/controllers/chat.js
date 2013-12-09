@@ -28,9 +28,13 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 		}, true);
 		
 		$scope.$watch('chatMessages', function(newVal){
-			if(newVal.length>0) {
+			if(newVal.length) {
 				$pageInfoService.enableNewMessageNotification();
-				$scope.audioSrc = $sce.trustAsResourceUrl(newVal[newVal.length-1].audio);
+				var newMessage = newVal[newVal.length-1];
+				$scope.audioSrc = $sce.trustAsResourceUrl(newMessage.audio);
+
+				if(newMessage.text.toLowerCase().indexOf('@'+$rootScope.user.toLowerCase())>=0)
+					notify(newMessage.text);					
 			}
 		}, true);
 
@@ -50,6 +54,17 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 		$scope.likeMessage = function(id){
 			$chatService.likeMessage(id);
 		};
+
+		function notify(message) {
+			if(window.webkitNotifications){
+			  if (window.webkitNotifications.checkPermission() > 0) {
+			    RequestPermission(notify);
+			  } else {
+			    var notification = window.webkitNotifications.createNotification('/images/icon.png', message, '');
+			    notification.show();
+			  }
+			}
+		}
 
 		var unicode_replace = function(str){
 			var unicode = /\\u[0-9][0-9][0-9][0-9]/g;

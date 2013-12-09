@@ -61,7 +61,6 @@ PulseApp.factory('$chatService', ['$socket', '$resource', '$rootScope',
 		}
 	}
 
-
 	$socket.on('updateMessageLikes', function(data){
 		var message = findMessageById(data.id);
 		if(message){
