@@ -10,7 +10,7 @@
 	</div>
 	<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
 		<ul id="chatMessages" class="chat-messages">
-			<li ng-repeat="message in chatMessages track by $id($index)">
+			<li ng-repeat="message in chatMessages track by message.id">
 				<a type="button" class="glyphicon glyphicon-trash" onselectstart="return false" style=" text-decoration:none; cursor: pointer;" ng-click="deleteMessage(message.id)" ng-show="$parent.isMyMessage(message)"></a>
 				<span class="username">{{message.user}}</span>
 				<div class="content" autocolor="message.user">
