@@ -7,7 +7,7 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 		$scope.audioSrc = '';
 
 		$scope.user = $rootScope.user;
-		
+
 		$scope.message = '';
 		$scope.addMessage = function(){
 			if($scope.message){
@@ -18,15 +18,15 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 				$scope.message='';
 			}
 		};
-		
+
 		$scope.$watch('user', function(newVal){
 			if(newVal){
 				window.localStorage.setItem('pulseUsername', newVal);
-				$rootScope.user = newVal;			
+				$rootScope.user = newVal;
 			}
 			$chatService.updateName(newVal || 'no_name');
 		}, true);
-		
+
 		$scope.$watch('chatMessages', function(newVal){
 			if(newVal.length) {
 				$pageInfoService.enableNewMessageNotification();
@@ -34,7 +34,7 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 				$scope.audioSrc = $sce.trustAsResourceUrl(newMessage.audio);
 
 				if(newMessage.text.toLowerCase().indexOf('@'+$rootScope.user.toLowerCase())>=0)
-					notify(newMessage.text);					
+					notify(newMessage.text);
 			}
 		}, true);
 
@@ -57,12 +57,12 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 
 		function notify(message) {
 			if(window.webkitNotifications){
-			  if (window.webkitNotifications.checkPermission() > 0) {
-			    RequestPermission(notify);
-			  } else {
-			    var notification = window.webkitNotifications.createNotification('/images/icon.png', message, '');
-			    notification.show();
-			  }
+				if (window.webkitNotifications.checkPermission() > 0) {
+					RequestPermission(notify);
+				} else {
+					var notification = window.webkitNotifications.createNotification('/images/icon.png', message, '');
+					notification.show();
+				}
 			}
 		}
 
