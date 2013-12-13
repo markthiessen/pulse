@@ -60,6 +60,15 @@ exports.likeMessage = function(id){
 	return message;
 };
 
+exports.deleteMessage = function(id){
+  var oldLength = messages.length;
+  messages = messages.filter(function(elem){
+    return elem.id != id;
+  });
+
+  return messages.length !== oldLength;
+};
+
 exports.users = function(req, res){
 	res.send(users);
 };

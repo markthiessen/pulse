@@ -18,6 +18,9 @@ PulseApp.factory('$chatService', ['$socket', '$resource', '$rootScope',
 		likeMessage: function(id){
 			$socket.emit('likeMessage', {id: id});
 		},
+		deleteMessage: function(id){
+			$socket.emit('deleteMessage', {id: id});
+		},
 		users: []
 	};
 
@@ -60,11 +63,28 @@ PulseApp.factory('$chatService', ['$socket', '$resource', '$rootScope',
 				return message;
 		}
 	}
+	function findMessageIndex(id){
+		var messages = chatService.chatMessages;
+		for(var i=0; i<messages.length;i++){
+			var message = messages[i];
+			if(message.id==id)
+				return i;
+		}
+		return -1;
+	}
 
 	$socket.on('updateMessageLikes', function(data){
 		var message = findMessageById(data.id);
 		if(message){
 			message.likes = data.likes;
+			$rootScope.$apply();
+		}
+	});
+
+	$socket.on('removeMessage', function(data){
+		var index = findMessageIndex(data.id);
+		if(index > -1){
+			chatService.chatMessages.splice(index,1);
 			$rootScope.$apply();
 		}
 	});

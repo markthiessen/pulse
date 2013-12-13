@@ -1,32 +1,32 @@
-PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageInfoService', '$sce',
-	function($scope, $rootScope, $chatService, $pageInfoService, $sce){
+PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageInfoService', '$unicode', '$sce',
+	function($scope, $rootScope, $chatService, $pageInfoService, $unicode, $sce){
 		$rootScope.activeView='Chat';
 
 		$scope.chatMessages = $chatService.chatMessages;
 		$scope.users = $chatService.users;
 		$scope.audioSrc = '';
 
-		$scope.user = $rootScope.user;
-		
+		$scope.user = $unicode.escape($rootScope.user);
+
 		$scope.message = '';
 		$scope.addMessage = function(){
 			if($scope.message){
 				var message = new $chatService.ChatMessage();
-				message.text = unicode_replace($scope.message);
-				message.user = $scope.user;
+				message.text = $unicode.replace($scope.message);
+				message.user = $rootScope.user;
 				message.$save();
 				$scope.message='';
 			}
 		};
-		
+
 		$scope.$watch('user', function(newVal){
 			if(newVal){
-				window.localStorage.setItem('pulseUsername', newVal);
-				$rootScope.user = newVal;			
+				window.localStorage.setItem('pulseUsername', $unicode.replace(newVal));
+				$rootScope.user = $unicode.replace(newVal);
 			}
-			$chatService.updateName(newVal || 'no_name');
+			$chatService.updateName($unicode.replace(newVal) || 'no_name');
 		}, true);
-		
+
 		$scope.$watch('chatMessages', function(newVal){
 			if(newVal.length) {
 				$pageInfoService.enableNewMessageNotification();
@@ -34,7 +34,7 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 				$scope.audioSrc = $sce.trustAsResourceUrl(newMessage.audio);
 
 				if(newMessage.text.toLowerCase().indexOf('@'+$rootScope.user.toLowerCase())>=0)
-					notify(newMessage.text);					
+					notify(newMessage.text);
 			}
 		}, true);
 
@@ -55,29 +55,23 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 			$chatService.likeMessage(id);
 		};
 
+		$scope.deleteMessage = function(id){
+			$chatService.deleteMessage(id);
+		}
+
+		$scope.isMyMessage = function(message){
+			return message.user == $unicode.replace($scope.user);
+		}
+
 		function notify(message) {
 			if(window.webkitNotifications){
-			  if (window.webkitNotifications.checkPermission() > 0) {
-			    RequestPermission(notify);
-			  } else {
-			    var notification = window.webkitNotifications.createNotification('/images/icon.png', message, '');
-			    notification.show();
-			  }
+				if (window.webkitNotifications.checkPermission() > 0) {
+					RequestPermission(notify);
+				} else {
+					var notification = window.webkitNotifications.createNotification('/images/icon.png', message, '');
+					notification.show();
+				}
 			}
 		}
 
-		var unicode_replace = function(str){
-			var unicode = /\\u([a-f,0-9]{4})*/ig;
-
-			str = str.replace(unicode, function(code){
-				return code.substring(2)
-					.match(/.{4}/g)
-					.map(function(segment) {
-						return String.fromCharCode(parseInt(segment, 16));
-					})
-					.join('');
-			});
-
-			return str;
-		};
 }]);

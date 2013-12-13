@@ -82,6 +82,12 @@ io.sockets.on('connection', function(socket){
 		if(message)
 			io.sockets.emit('updateMessageLikes', {id: message.id, likes: message.likes});	
 	});
+
+	socket.on('deleteMessage', function(data){
+		var messageFound = chat.deleteMessage(data.id);
+		if(messageFound)
+			io.sockets.emit('removeMessage', {id: data.id});
+	});
 });
 
 function broadcastUsers(){	
