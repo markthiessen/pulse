@@ -11,13 +11,13 @@
 	<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
 		<ul id="chatMessages" class="chat-messages">
 			<li ng-repeat="message in chatMessages track by message.id">
-				<a type="button" class="glyphicon glyphicon-trash" onselectstart="return false" style=" text-decoration:none; cursor: pointer;" ng-click="deleteMessage(message.id)" ng-show="$parent.isMyMessage(message)"></a>
 				<span class="username">{{message.user}}</span>
 				<div class="content" autocolor="message.user">
 					<message text="message.text"></message>
 					<div class="aftercontent"></div>
 					<span class="timeago" timeago time="message.time">...</span>
 				</div>
+				<a type="button" class="glyphicon glyphicon-trash" onselectstart="return false" style=" text-decoration:none; cursor: pointer;" ng-click="deleteMessage(message.id)" ng-show="$parent.isMyMessage(message)" title="delete"></a>
 				<a type="button" class="glyphicon glyphicon-heart-empty" onselectstart="return false" style=" text-decoration:none; cursor: pointer;" ng-click="likeMessage(message.id)" ng-class="{nolikes: message.likes==0}"></a>
 					<span ng-show="message.likes>0" style="font-size:10px; font-weight:bold; position:relative; top:-3px;">+{{message.likes}}</span>
 			</li>
