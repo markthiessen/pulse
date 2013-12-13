@@ -55,6 +55,14 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 			$chatService.likeMessage(id);
 		};
 
+		$scope.deleteMessage = function(id){
+			$chatService.deleteMessage(id);
+		}
+
+		$scope.isMyMessage = function(message){
+			return message.user == $unicode.replace($scope.user);
+		}
+
 		function notify(message) {
 			if(window.webkitNotifications){
 				if (window.webkitNotifications.checkPermission() > 0) {
