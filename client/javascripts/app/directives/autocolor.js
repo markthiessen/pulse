@@ -11,6 +11,9 @@ PulseApp.directive('autocolor', ['$colorHash', function($colorHash){
 				}
 				updateColor();
 				scope.$watch(attrs.autocolor, updateColor)
+			}else{
+				elm.children('.aftercontent').hide();
+				elm.children('.timeago').css({'color':'#DDD'});
 			}
 		}
 	};

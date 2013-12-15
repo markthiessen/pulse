@@ -6,12 +6,12 @@ var messages = [], users = [];
 
 var messageCounter = 0;
 
-var notifyCallback=function(){}
+var notifyCallback=function(){};
 exports.setNotifyCallback = function(callback){
 	notifyCallback=callback;
 };
 
-exports.list = function(req, res){  
+exports.list = function(req, res){
   res.send(messages);
 };
 
@@ -34,7 +34,7 @@ exports.add = function(req, res){
 				notifyCallback(m);
 
 			}, 10);
-		}
+		};
 
 		if(message.text.indexOf('\u0007') > -1) {
 			broadcast(message, publish);
@@ -56,7 +56,7 @@ exports.createSystemMessage = function(text){
 
 	messages.push(message);
 
-	return message; 
+	return message;
 };
 
 function findMessageById(id){
