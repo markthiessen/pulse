@@ -45,13 +45,14 @@ exports.add = function(req, res){
 	res.send();
 };
 
-exports.createSystemMessage = function(text){
+exports.createSystemMessage = function(text, data){
 	var message = {
 		id: messageCounter++,
 		text: text,
 		likes: 0,
 		audio: '',
-		time: new Date()
+		time: new Date(),
+		data: data
 	};
 
 	messages.push(message);

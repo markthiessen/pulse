@@ -9,8 +9,8 @@ PulseApp.factory('$chatService', ['$socket', '$resource', '$rootScope',
 	var chatService = {
 		chatMessages: [],
 		ChatMessage: restService,
-		updateName: function(name){
-			$socket.emit('updatename', {username: name});
+		updateName: function(name, frames){
+			$socket.emit('updatename', {username: name, frames: frames});
 		},
 		sendTypingNotification: function(){
 			$socket.emit('typing', {username: name});

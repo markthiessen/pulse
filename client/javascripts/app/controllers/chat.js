@@ -21,15 +21,24 @@ PulseApp.controller('ChatCtrl',
 		};
 
 		var usernameChangeTimeout;
-		$scope.$watch('user', function(newVal){
+		var nameChangeFrames = [];
+		$scope.$watch('user', function(newVal, oldVal){
+
+			if(!nameChangeFrames.length)
+				nameChangeFrames.push(oldVal);
+
+			nameChangeFrames.push(newVal);
+
 			if(newVal){
 				window.localStorage.setItem('pulseUsername', $unicode.replace(newVal));
 				$rootScope.user = $unicode.replace(newVal);
 			}
+
 			$timeout.cancel(usernameChangeTimeout);
 			usernameChangeTimeout = $timeout(function(){
-				$chatService.updateName($unicode.replace(newVal) || 'no_name');
-			}, 1000);
+				$chatService.updateName($unicode.replace(newVal) || 'no_name', nameChangeFrames);
+				nameChangeFrames = [];
+			}, 1500);
 		}, true);
 
 

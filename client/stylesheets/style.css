@@ -30,6 +30,20 @@ a {
 .loud {
   text-shadow: 0 0 4px #319ED4;
 }
+.name-change {
+  height: 30px;
+  line-height: 20px;
+  padding: 5px;
+  margin: 0 25px;
+  overflow: hidden;
+  color: #696969;
+  max-width: 300px;
+}
+.name-change span {
+  border-right: 2px solid #595959;
+  padding-right: 1px;
+  overflow: hidden;
+}
 .message {
   color: white;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);

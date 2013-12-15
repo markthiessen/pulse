@@ -16,6 +16,8 @@
 				<span class="username" ng-show="!message.isSystemMessage">{{message.user}}</span>
 				<div class="content" autocolor="message.user">
 					<message text="message.text"></message>
+					<span class="name-change" ng-show="message.data" name-change-frames frames="message.data">
+					</span>
 					<div class="aftercontent"></div>
 					<span class="timeago" timeago time="message.time">...</span>
 				</div>

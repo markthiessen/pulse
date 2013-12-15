@@ -37,7 +37,7 @@ module.exports = function SocketHandler(server){
 				if(oldname)
 				{
 					io.sockets.emit('newsystemmessage', 
-						chat.createSystemMessage(oldname+ ' updated their name to '+data.username+'.'));
+						chat.createSystemMessage(oldname+ ' updated their name to '+data.username+'.', data.frames));
 				}
 				else{
 					io.sockets.emit('newsystemmessage', chat.createSystemMessage(socket.username+' has joined the chat.'));
