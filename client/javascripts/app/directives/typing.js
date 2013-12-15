@@ -2,16 +2,19 @@ PulseApp.directive('typingWatcher', ['$timeout', function($timeout){
 	return {
 		link: function(scope, elm, attrs){
 
-			var existingTimeout;
+			var timeout;
 			scope.$watch(attrs.typingWatcher, function(newVal){
 				if(newVal){
-					if(existingTimeout)
-						$timeout.cancel(existingTimeout);
+					
+					$timeout.cancel(timeout);
 					elm.addClass('visible');//.show();
-					existingTimeout=$timeout(function(){
+					setTimeout(function() {}, 10);=$timeout(function(){
 						elm.removeClass('visible');
 					},3000);
 				}
+			});
+			scope.$on('$destroy', function(){
+				$timeout.cancel(timeout);
 			});
 		}
 	};	

@@ -12,12 +12,17 @@ PulseApp.directive('timeago', ['$timeout', function($timeout){
 				placement: 'right',
 				container: 'body'
 			});
+			var timeout;
 			function updateTime(){
 				var time = moment(scope.time).fromNow();
 				elm.text(time);
-				$timeout(updateTime, 30000);
+				timeout=$timeout(updateTime, 30000);
 			}	
 			updateTime();
+
+			scope.$on('$destroy', function(){
+				$timeout.cancel(timeout);
+			});
 		}
 	};	
 }]);

@@ -23,6 +23,10 @@ PulseApp.directive('autofade', ['$timeout', function($timeout){
 					existingTimeout=$timeout(setIdle,idleTime);
 				}
 			});
+
+			scope.$on('$destroy', function(){
+				$timeout.cancel(existingTimeout);
+			});
 		}
 	};	
 }]);
