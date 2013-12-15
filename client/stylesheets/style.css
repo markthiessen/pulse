@@ -78,8 +78,7 @@ ul.chat-messages li {
   position: relative;
 }
 ul.chat-messages li .content {
-  background: #2f96b4;
-  color: white;
+  color: #DDD;
   margin: 2px;
   padding: 7px 10px;
   display: inline-block;
@@ -110,7 +109,7 @@ ul.chat-messages li .aftercontent {
   left: -8px;
   border-style: solid;
   border-width: 8px 8px 8px 0;
-  border-color: transparent #2f96b4;
+  border-color: transparent white;
   display: block;
   width: 0;
   z-index: 1;

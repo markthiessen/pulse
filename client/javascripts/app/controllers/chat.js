@@ -1,5 +1,6 @@
-PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageInfoService', '$unicode', '$sce',
-	function($scope, $rootScope, $chatService, $pageInfoService, $unicode, $sce){
+PulseApp.controller('ChatCtrl', 
+	['$scope', '$rootScope', '$chatService', '$pageInfoService', '$unicode', '$sce', '$timeout',
+	function($scope, $rootScope, $chatService, $pageInfoService, $unicode, $sce, $timeout){
 		$rootScope.activeView='Chat';
 
 		$scope.chatMessages = $chatService.chatMessages;
@@ -19,13 +20,19 @@ PulseApp.controller('ChatCtrl', ['$scope', '$rootScope', '$chatService', '$pageI
 			}
 		};
 
+		var usernameChangeTimeout;
 		$scope.$watch('user', function(newVal){
 			if(newVal){
 				window.localStorage.setItem('pulseUsername', $unicode.replace(newVal));
 				$rootScope.user = $unicode.replace(newVal);
 			}
-			$chatService.updateName($unicode.replace(newVal) || 'no_name');
+			$timeout.cancel(usernameChangeTimeout);
+			usernameChangeTimeout = $timeout(function(){
+				$chatService.updateName($unicode.replace(newVal) || 'no_name');
+			}, 1000);
 		}, true);
+
+
 
 		$scope.$watch('chatMessages', function(newVal){
 			if(newVal.length) {

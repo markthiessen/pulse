@@ -18,18 +18,33 @@ module.exports = function SocketHandler(server){
 	var sockets = [];
 	io.sockets.on('connection', function(socket){
 		sockets.push(socket);
-		socket.username = 'anony-mouse_'+sockets.length;
+		socket.username = '';
 		socket.sockid = getNextSocketId();
 
 		socket.on('disconnect', function() {
 			var i = sockets.indexOf(socket);
 			sockets.splice(i, 1);
-			setTimeout(broadcastUsers, 10);
+			process.nextTick(broadcastUsers);
+			io.sockets.emit('newsystemmessage', chat.createSystemMessage(socket.username+' has left the chat.'));
 		});
 
 		socket.on('updatename', function(data){
+			var oldname = socket.username;
 			socket.username = data.username;
-			setTimeout(broadcastUsers, 10);
+
+			if(oldname!=data.username)
+			{	
+				if(oldname)
+				{
+					io.sockets.emit('newsystemmessage', 
+						chat.createSystemMessage(oldname+ ' updated their name to '+data.username+'.'));
+				}
+				else{
+					io.sockets.emit('newsystemmessage', chat.createSystemMessage(socket.username+' has joined the chat.'));
+				}
+
+				process.nextTick(broadcastUsers);
+			}
 		});
 
 		socket.on('typing', function(){
@@ -38,7 +53,6 @@ module.exports = function SocketHandler(server){
 
 		socket.on('likeMessage', function(data){
 			var message = chat.likeMessage(data.id);
-			console.log(message);
 			if(message)
 				io.sockets.emit('updateMessageLikes', {id: message.id, likes: message.likes});
 		});

@@ -45,6 +45,20 @@ exports.add = function(req, res){
 	res.send();
 };
 
+exports.createSystemMessage = function(text){
+	var message = {
+		id: messageCounter++,
+		text: text,
+		likes: 0,
+		audio: '',
+		time: new Date()
+	};
+
+	messages.push(message);
+
+	return message; 
+};
+
 function findMessageById(id){
 	for(var i=0; i<messages.length;i++){
 		var message = messages[i];

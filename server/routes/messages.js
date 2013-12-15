@@ -60,6 +60,7 @@ exports.add = function(req, res){
 	res.send();
 };
 
+
 function purgeOldMessages(){
 	var now = new Date();
 	var anHourAgo = new Date();
