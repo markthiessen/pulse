@@ -1,4 +1,5 @@
-PulseApp.controller('IndexCtrl', ['$scope', '$rootScope', '$announcementService', function($scope, $rootScope, $announcementService){
+PulseApp.controller('IndexCtrl', ['$scope', '$rootScope', '$announcementService', '$timeout', 
+	function($scope, $rootScope, $announcementService, $timeout){
 	
 	$rootScope.activeView='Announcements';
 
@@ -38,5 +39,11 @@ PulseApp.controller('IndexCtrl', ['$scope', '$rootScope', '$announcementService'
 		$scope.newMessage='';
 		$scope.loud = false;
 	};
+
+
+	$timeout(function(){
+		$scope.ready = true;
+
+	});
 
 }]);

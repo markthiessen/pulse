@@ -18,9 +18,14 @@ a {
   color: #595959;
 }
 .messages {
-  margin-bottom: 50px;
   padding: 0;
   list-style: none;
+  position: relative;
+  top: 500px;
+}
+.messages.visible {
+  transition: top 1s;
+  top: 0;
 }
 .loud {
   text-shadow: 0 0 4px #319ED4;
@@ -150,6 +155,7 @@ ul.chat-messages .username {
   height: calc(100% - 200px);
   overflow: auto;
   margin: 0;
+  left: -500px;
 }
 .user-list li {
   border-radius: 5px;
@@ -161,6 +167,11 @@ ul.chat-messages .username {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+.user-list.visible {
+  transition: left 1s;
+  transition-delay: 1s;
+  left: 0;
 }
 .username {
   margin-left: 5px;
@@ -223,12 +234,16 @@ ul.chat-messages .username {
 }
 .chat-form-wrapper {
   position: fixed;
-  bottom: 0;
+  bottom: -300px;
   background: white;
   width: 100%;
   z-index: 100;
   padding: 15px;
   box-shadow: 0 -2px 2px rgba(0, 0, 0, 0.2);
+}
+.chat-form-wrapper.visible {
+  transition: bottom 1s;
+  bottom: 0;
 }
 .container {
   width: auto;

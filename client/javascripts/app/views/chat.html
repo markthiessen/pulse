@@ -1,7 +1,7 @@
 <div class="row chat-view" ng-mousemove="clearNotifications()" autoscroll watch-item="chatMessages" watch-enabled="autoScroll">
     <audio autoplay src="{{audioSrc}}"></audio>
 	<div class="col-lg-2 col-md-3 col-sm-3 hidden-xs" style="position:relative;">
-		<ul class="user-list">
+		<ul class="user-list" ng-class="{visible: true}">
 			<li style="position:relative" ng-repeat="user in users track by $id($index)" autocolor="user.name" autofade="user.lastTyped">
 
 				<span class="user-icon-wrapper"><i class="glyphicon glyphicon-user glyphicon-white"></i></span>&nbsp;
@@ -26,7 +26,7 @@
 		</ul>
 	</div>
 </div>
-<div class="chat-form-wrapper">
+<div class="chat-form-wrapper" ng-class="{visible: true}">
 	<form class="chat-form form-vertical" ng-submit="addMessage()">
 		<div class="form-group">
 			<div class="input-group">

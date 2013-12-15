@@ -14,7 +14,7 @@
 			</form>				
 			<div class="footer"></div>
 		</div>
-		<ul class="messages">
+		<ul class="messages" ng-class="{visible: ready}">
 			<li ng-repeat="announcement in announcements" class="message {{getFreshness(announcement)}}" >
 				<p>
 					{{announcement.text}}
