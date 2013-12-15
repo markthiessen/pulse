@@ -4,6 +4,7 @@
  */
 
 var express = require('express')
+  , settings = require('./settings')
   , routes = require('./routes')
   , messages = require('./routes/messages')
   , chat = require('./routes/chat')
@@ -22,6 +23,20 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
 app.use(express.session());
+
+// load liveReload script only in development mode
+// load before app.router
+app.configure('development', function() {
+  // live reload script
+  var liveReloadPort = settings.liveReload.port || 35729;
+  var excludeList = ['.woff', '.flv'];
+  
+  app.use(require('connect-livereload')({
+    port: liveReloadPort,
+    excludeList: excludeList
+  }));
+});
+
 app.use(app.router);
   app.use(require('less-middleware')({ src: __dirname + '/public' }));
 app.use(express.static(path.join(__dirname, 'public')));

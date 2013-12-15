@@ -1,7 +1,13 @@
 {
-    "vocalizer" : {
-                    "host": "localhost",
-                    "port": 47890
-    }
+	"vocalizer" : {
+	                "host": "localhost",
+	                "port": 47890
+	},
+  "webserver": {
+    "port": "3000"
+  },
+  "liveReload": {
+  	"port" : 35729
+  }
 
 }

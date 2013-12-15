@@ -5,10 +5,22 @@
   "scripts": {
     "start": "node app.js"
   },
+  "main":"app.js",
   "dependencies": {
     "express": "3.2.1",
     "ejs": "*",
     "less-middleware": "*",
     "socket.io": "*"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "matchdep": "~0.1.2",
+    "grunt-contrib-watch": "~0.5.1",
+    "grunt-open": "~0.2.2",
+    "grunt-nodemon": "0.0.8",
+    "grunt-concurrent": "~0.4.2",
+    "connect-livereload": "~0.2.0",
+    "nodeunit": "~0.8.1",
+    "grunt-contrib-nodeunit": "~0.2.1"
   }
 }
