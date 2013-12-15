@@ -9,6 +9,10 @@ var PulseApp = angular.module('PulseApp', ['ngRoute','ngResource'])
 			templateUrl: '/javascripts/app/views/chat.html',
 			controller: 'ChatCtrl'
 		})
+		.when('/admin', {
+			templateUrl: '/javascripts/app/views/admin.html',
+			controller: 'AdminCtrl'
+		})
 		.otherwise({
 			redirectTo:'/'
 		});
