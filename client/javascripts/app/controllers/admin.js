@@ -1,4 +1,4 @@
-PulseApp.controller('AdminCtrl', ['$scope', '$chatService', function($scope, $chatService){
+PulseApp.controller('AdminCtrl', ['$scope', '$rootScope', '$chatService', function($scope, $rootScope, $chatService){
 	$rootScope.activeView='Admin';
 
 	$scope.users = $chatService.users;
