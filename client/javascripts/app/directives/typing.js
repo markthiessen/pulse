@@ -8,7 +8,7 @@ PulseApp.directive('typingWatcher', ['$timeout', function($timeout){
 					
 					$timeout.cancel(timeout);
 					elm.addClass('visible');//.show();
-					setTimeout(function() {}, 10);=$timeout(function(){
+					$timeout(function(){
 						elm.removeClass('visible');
 					},3000);
 				}
