@@ -1,6 +1,6 @@
 var messages = [],
 	http = require('http'),
-	settings = require('../settings');
+	settings = require('../../settings');
 
 var broadcast = function(message) {
 

@@ -1,6 +1,6 @@
 var crypto = require('crypto'),
 	http = require('http'),
-	settings = require('../settings');
+	settings = require('../../settings');
 
 var messages = [], users = [];
 
