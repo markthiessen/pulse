@@ -16,6 +16,8 @@ a {
 }
 .brand-inner {
   color: #595959;
+  font-weight: bold;
+  font-style: italic;
 }
 .messages {
   padding: 0;
