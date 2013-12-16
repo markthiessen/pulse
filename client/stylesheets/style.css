@@ -271,11 +271,15 @@ a.btn-delete:hover {
   z-index: 100;
   padding: 15px;
   box-shadow: 0 -2px 2px rgba(0, 0, 0, 0.2);
-  border-top: 1px solid white;
+  border-top: 2px solid rgba(0, 0, 0, 0.1);
 }
 .chat-form-wrapper .input-group-addon,
 .chat-form-wrapper button {
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+.chat-form-wrapper input {
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  min-height: 36px;
 }
 .chat-form-wrapper.visible {
   transition: bottom 1s;
