@@ -45,18 +45,41 @@ exports.add = function(req, res){
 	res.send();
 };
 
-exports.createSystemMessage = function(text, data){
+exports.createSystemMessage = function(text){
 	var message = {
 		id: messageCounter++,
 		text: text,
 		likes: 0,
 		audio: '',
 		time: new Date(),
-		data: data
+		isSystemMessage:true
 	};
 
 	messages.push(message);
 
+	return message;
+};
+
+exports.createSystemNameChangeMessage = function(oldName, newName, frames){
+	var message = exports.createSystemMessage('');
+	message.type='namechange';
+	message.oldName=oldName;
+	message.newName=newName;
+	message.frames=frames;
+	return message;
+};
+
+exports.createSystemConnectMessage = function(username){
+	var message = exports.createSystemMessage('');
+	message.type='connect';
+	message.username=username;
+	return message;
+};
+
+exports.createSystemDisconnectMessage = function(username){
+	var message = exports.createSystemMessage('');
+	message.type='disconnect';
+	message.username = username;
 	return message;
 };
 

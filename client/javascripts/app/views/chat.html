@@ -15,13 +15,13 @@
 			<li ng-repeat="message in chatMessages track by message.id">
 				<span class="username" ng-show="!message.isSystemMessage">{{message.user}}</span>
 				<div class="content" autocolor="message.user">
-					<message text="message.text"></message>
-					<span class="name-change" ng-show="message.data" name-change-frames frames="message.data">
+					<message message="message"></message>
+					<span class="name-change" ng-show="message.frames" name-change-frames frames="message.frames">
 					</span>
 					<div class="aftercontent"></div>
 					<span class="timeago" timeago time="message.time">...</span>
 				</div>
-				<a type="button" class="glyphicon glyphicon-trash" onselectstart="return false" style=" text-decoration:none; cursor: pointer;" ng-click="deleteMessage(message.id)" ng-show="$parent.isMyMessage(message)" title="delete"></a>
+				<a type="button" class="btn-delete glyphicon glyphicon-trash" onselectstart="return false" style=" text-decoration:none; cursor: pointer;" ng-click="deleteMessage(message.id)" ng-show="$parent.isMyMessage(message)" title="delete"></a>
 				<a type="button" class="glyphicon glyphicon-heart-empty" onselectstart="return false" style=" text-decoration:none; cursor: pointer;" ng-click="likeMessage(message.id)" ng-class="{nolikes: message.likes==0}"></a>
 					<span ng-show="message.likes>0" style="font-size:10px; font-weight:bold; position:relative; top:-3px;">+{{message.likes}}</span>
 			</li>

@@ -40,7 +40,6 @@ PulseApp.factory('$chatService', ['$socket', '$resource', '$rootScope',
 	 });
 
 	$socket.on('newsystemmessage', function(message){
-		message.isSystemMessage = true;
 		chatService.chatMessages.push(message);
 		$rootScope.$apply();
 	})

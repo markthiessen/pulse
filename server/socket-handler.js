@@ -25,7 +25,7 @@ module.exports = function SocketHandler(server){
 			var i = sockets.indexOf(socket);
 			sockets.splice(i, 1);
 			process.nextTick(broadcastUsers);
-			io.sockets.emit('newsystemmessage', chat.createSystemMessage(socket.username+' has left the chat.'));
+			io.sockets.emit('newsystemmessage', chat.createSystemDisconnectMessage(socket.username));
 		});
 
 		socket.on('updatename', function(data){
@@ -37,10 +37,10 @@ module.exports = function SocketHandler(server){
 				if(oldname)
 				{
 					io.sockets.emit('newsystemmessage', 
-						chat.createSystemMessage(oldname+ ' updated their name to '+data.username+'.', data.frames));
+						chat.createSystemNameChangeMessage(oldname, data.username	, data.frames));
 				}
 				else{
-					io.sockets.emit('newsystemmessage', chat.createSystemMessage(socket.username+' has joined the chat.'));
+					io.sockets.emit('newsystemmessage', chat.createSystemConnectMessage(socket.username));
 				}
 
 				process.nextTick(broadcastUsers);
