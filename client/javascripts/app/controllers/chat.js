@@ -1,19 +1,19 @@
 PulseApp.controller('ChatCtrl', 
-	['$scope', '$rootScope', '$chatService', '$pageInfoService', '$unicode', '$sce', '$timeout',
-	function($scope, $rootScope, $chatService, $pageInfoService, $unicode, $sce, $timeout){
+	['$scope', '$rootScope', '$chatService', '$pageInfoService', '$sce', '$timeout',
+	function($scope, $rootScope, $chatService, $pageInfoService, $sce, $timeout){
 		$rootScope.activeView='Chat';
 
 		$scope.chatMessages = $chatService.chatMessages;
 		$scope.users = $chatService.users;
 		$scope.audioSrc = '';
 
-		$scope.user = $unicode.escape($rootScope.user);
+		$scope.user = $rootScope.user;
 
 		$scope.message = '';
 		$scope.addMessage = function(){
 			if($scope.message){
 				var message = new $chatService.ChatMessage();
-				message.text = $unicode.replace($scope.message);
+				message.text = $scope.message;
 				message.user = $rootScope.user;
 				message.$save();
 				$scope.message='';
@@ -30,13 +30,13 @@ PulseApp.controller('ChatCtrl',
 			nameChangeFrames.push(newVal);
 
 			if(newVal){
-				window.localStorage.setItem('pulseUsername', $unicode.replace(newVal));
-				$rootScope.user = $unicode.replace(newVal);
+				window.localStorage.setItem('pulseUsername', newVal);
+				$rootScope.user = newVal;
 			}
 
 			$timeout.cancel(usernameChangeTimeout);
 			usernameChangeTimeout = $timeout(function(){
-				$chatService.updateName($unicode.replace(newVal) || 'no_name', nameChangeFrames);
+				$chatService.updateName(newVal || 'no_name', nameChangeFrames);
 				nameChangeFrames = [];
 			}, 1500);
 		}, true);
@@ -76,7 +76,7 @@ PulseApp.controller('ChatCtrl',
 		}
 
 		$scope.isMyMessage = function(message){
-			return message.user == $unicode.replace($scope.user);
+			return message.user == $scope.user;
 		}
 
 		function notify(message) {
