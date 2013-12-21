@@ -25,18 +25,24 @@ PulseApp.controller('ChatCtrl',
 		$scope.$watch('user', function(newVal, oldVal){
 
 			if(!nameChangeFrames.length)
-				nameChangeFrames.push(oldVal);
+				nameChangeFrames.push(oldVal.name);
 
-			nameChangeFrames.push(newVal);
+			nameChangeFrames.push(newVal.name);
 
 			if(newVal){
-				window.localStorage.setItem('pulseUsername', newVal);
+				window.localStorage.setItem('pulseUsername', newVal.name);
+				window.localStorage.setItem('pulseIcon', newVal.icon);
 				$rootScope.user = newVal;
 			}
 
 			$timeout.cancel(usernameChangeTimeout);
 			usernameChangeTimeout = $timeout(function(){
-				$chatService.updateName(newVal || 'no_name', nameChangeFrames);
+				var newUser = { 
+					'name': newVal.name || 'no_name',
+					'icon': newVal.icon || 0
+				}
+				$chatService.updateUser(newUser, nameChangeFrames);
+
 				nameChangeFrames = [];
 			}, 1500);
 		}, true);
@@ -49,7 +55,7 @@ PulseApp.controller('ChatCtrl',
 				var newMessage = newVal[newVal.length-1];
 				$scope.audioSrc = $sce.trustAsResourceUrl(newMessage.audio);
 
-				if(newMessage.text.toLowerCase().indexOf('@'+$rootScope.user.toLowerCase())>=0)
+				if(newMessage.text.toLowerCase().indexOf('@'+$rootScope.user.name.toLowerCase())>=0)
 					notify(newMessage.text);
 			}
 		}, true);
@@ -76,7 +82,7 @@ PulseApp.controller('ChatCtrl',
 		}
 
 		$scope.isMyMessage = function(message){
-			return message.user == $scope.user;
+			return message.user == $scope.user.name;
 		}
 
 		function notify(message) {
