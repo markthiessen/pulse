@@ -41,12 +41,14 @@ module.exports = function SocketHandler(server){
 				if(olduser.name)
 				{
 					io.sockets.emit('newsystemmessage', 
-						chat.createSystemNameChangeMessage(olduser.name, data.user.name	, data.frames));
+						chat.createSystemNameChangeMessage(olduser.name, data.user.name, data.frames));
 				}
 				else{
 					io.sockets.emit('newsystemmessage', chat.createSystemConnectMessage(socket.user.name));
 				}
+			}
 
+			if(olduser.name!=data.user.name || olduser.icon!=data.user.icon){
 				process.nextTick(broadcastUsers);
 			}
 		});

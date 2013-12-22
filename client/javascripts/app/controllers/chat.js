@@ -69,6 +69,14 @@ PulseApp.controller('ChatCtrl',
 			}
 		}
 
+		$scope.nextIcon = function(){
+			//force integer rollover because Javascript doesn't do it for us
+			if ($scope.user.icon === Number.MAX_VALUE)
+				$scope.user.icon = 0;
+			else
+				$scope.user.icon++;
+		};
+
 		$scope.clearNotifications = function(){
 			$pageInfoService.disableNewMessageNotification();
 		}

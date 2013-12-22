@@ -4,7 +4,7 @@
 		<ul class="user-list" ng-class="{visible: true}">
 			<li style="position:relative" ng-repeat="user in users track by user.id" autocolor="user.name" autofade="user.lastTyped">
 
-				<span class="user-icon-wrapper"><i class="glyphicon glyphicon-user glyphicon-white"></i></span>&nbsp;
+				<span class="user-icon-wrapper"><i user-icon="user.icon" /></span>&nbsp;
 				<span class="username">{{user.name}}</span> 
 				<i class="typing glyphicon glyphicon-comment glyphicon-white" typing-watcher="user.lastTyped"></i>
 			</li>
@@ -32,18 +32,18 @@
 	<form class="chat-form form-vertical" ng-submit="addMessage()">
 		<div class="form-group">
 			<div class="input-group">
-				<span class="input-group-addon" autocolor="user.name" ><i class="glyphicon glyphicon-user"></i></span>
+				<span class="input-group-addon" ng-click="nextIcon()" autocolor="user.name" ><i user-icon="user.icon" /></span>
 				<input class="form-control name-box" type="text" ng-model="user.name" escape-unicode placeholder="your name"/>
 			</div>
 			</div>
 			<div class="form-group">
 				<div class="input-group">
-					<span class="input-group-addon" autocolor="user.name" ><i class="glyphicon glyphicon-comment"></i></span>
+					<span class="input-group-addon" autocolor="user.name"><i class="glyphicon glyphicon-comment"></i></span>
 					<input class="form-control" type="text" ng-model="message" placeholder="your message" ng-change="notifyTyping()" autofocus escape-unicode user-complete users="users"/>
 					<span class="input-group-btn">
-						<button type="submit" class="btn btn-default"  autocolor="user.name">Send</button>	
-					</span>			
-				</div>	
-			</div>			
+						<button type="submit" class="btn btn-default"  autocolor="user.name">Send</button>
+					</span>
+				</div>
+			</div>
 		<form>
 </div>
