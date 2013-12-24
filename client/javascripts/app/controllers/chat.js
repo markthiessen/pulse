@@ -1,19 +1,19 @@
 PulseApp.controller('ChatCtrl', 
-	['$scope', '$rootScope', '$chatService', '$pageInfoService', '$unicode', '$sce', '$timeout',
-	function($scope, $rootScope, $chatService, $pageInfoService, $unicode, $sce, $timeout){
+	['$scope', '$rootScope', '$chatService', '$pageInfoService', '$sce', '$timeout',
+	function($scope, $rootScope, $chatService, $pageInfoService, $sce, $timeout){
 		$rootScope.activeView='Chat';
 
 		$scope.chatMessages = $chatService.chatMessages;
 		$scope.users = $chatService.users;
 		$scope.audioSrc = '';
 
-		$scope.user = $unicode.escape($rootScope.user);
+		$scope.user = $rootScope.user;
 
 		$scope.message = '';
 		$scope.addMessage = function(){
 			if($scope.message){
 				var message = new $chatService.ChatMessage();
-				message.text = $unicode.replace($scope.message);
+				message.text = $scope.message;
 				message.user = $rootScope.user;
 				message.$save();
 				$scope.message='';
@@ -25,18 +25,24 @@ PulseApp.controller('ChatCtrl',
 		$scope.$watch('user', function(newVal, oldVal){
 
 			if(!nameChangeFrames.length)
-				nameChangeFrames.push(oldVal);
+				nameChangeFrames.push(oldVal.name);
 
-			nameChangeFrames.push(newVal);
+			nameChangeFrames.push(newVal.name);
 
 			if(newVal){
-				window.localStorage.setItem('pulseUsername', $unicode.replace(newVal));
-				$rootScope.user = $unicode.replace(newVal);
+				window.localStorage.setItem('pulseUsername', newVal.name);
+				window.localStorage.setItem('pulseIcon', newVal.icon);
+				$rootScope.user = newVal;
 			}
 
 			$timeout.cancel(usernameChangeTimeout);
 			usernameChangeTimeout = $timeout(function(){
-				$chatService.updateName($unicode.replace(newVal) || 'no_name', nameChangeFrames);
+				var newUser = { 
+					'name': newVal.name || 'no_name',
+					'icon': newVal.icon || 0
+				}
+				$chatService.updateUser(newUser, nameChangeFrames);
+
 				nameChangeFrames = [];
 			}, 1500);
 		}, true);
@@ -49,7 +55,7 @@ PulseApp.controller('ChatCtrl',
 				var newMessage = newVal[newVal.length-1];
 				$scope.audioSrc = $sce.trustAsResourceUrl(newMessage.audio);
 
-				if(newMessage.text.toLowerCase().indexOf('@'+$rootScope.user.toLowerCase())>=0)
+				if(newMessage.text.toLowerCase().indexOf('@'+$rootScope.user.name.toLowerCase())>=0)
 					notify(newMessage.text);
 			}
 		}, true);
@@ -62,6 +68,14 @@ PulseApp.controller('ChatCtrl',
 				$chatService.sendTypingNotification();
 			}
 		}
+
+		$scope.nextIcon = function(){
+			//force integer rollover because Javascript doesn't do it for us
+			if ($scope.user.icon === Number.MAX_VALUE)
+				$scope.user.icon = 0;
+			else
+				$scope.user.icon++;
+		};
 
 		$scope.clearNotifications = function(){
 			$pageInfoService.disableNewMessageNotification();
@@ -76,7 +90,7 @@ PulseApp.controller('ChatCtrl',
 		}
 
 		$scope.isMyMessage = function(message){
-			return message.user == $unicode.replace($scope.user);
+			return message.user == $scope.user.name;
 		}
 
 		function notify(message) {
