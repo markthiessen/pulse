@@ -18,7 +18,11 @@ module.exports = function SocketHandler(server){
 	var sockets = [];
 	io.sockets.on('connection', function(socket){
 		sockets.push(socket);
-		socket.username = '';
+		socket.user = {
+			'name': '',
+			'icon': 0
+		}
+    
 		socket.sockid = getNextSocketId();
 
 		socket.on('disconnect', function() {
@@ -28,21 +32,23 @@ module.exports = function SocketHandler(server){
 			io.sockets.emit('newsystemmessage', chat.createSystemDisconnectMessage(socket.username));
 		});
 
-		socket.on('updatename', function(data){
-			var oldname = socket.username;
-			socket.username = data.username;
+		socket.on('updateuser', function(data){
+			var olduser = socket.user;
+			socket.user= data.user;
 
-			if(oldname!=data.username)
+			if(olduser.name!=data.user.name)
 			{	
-				if(oldname)
+				if(olduser.name)
 				{
 					io.sockets.emit('newsystemmessage', 
-						chat.createSystemNameChangeMessage(oldname, data.username	, data.frames));
+						chat.createSystemNameChangeMessage(olduser.name, data.user.name, data.frames));
 				}
 				else{
-					io.sockets.emit('newsystemmessage', chat.createSystemConnectMessage(socket.username));
+					io.sockets.emit('newsystemmessage', chat.createSystemConnectMessage(socket.user.name));
 				}
+			}
 
+			if(olduser.name!=data.user.name || olduser.icon!=data.user.icon){
 				process.nextTick(broadcastUsers);
 			}
 		});
@@ -66,7 +72,7 @@ module.exports = function SocketHandler(server){
 
 	function broadcastUsers(){
 		var users = sockets.map(function(socket){
-			return {name: socket.username, id: socket.sockid};
+			return {name: socket.user.name, icon: socket.user.icon, id: socket.sockid};
 		});
 		io.sockets.emit('users', users);
 	}

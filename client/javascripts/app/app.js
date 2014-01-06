@@ -19,7 +19,10 @@ var PulseApp = angular.module('PulseApp', ['ngRoute','ngResource'])
 }])
 .run(['$rootScope', '$resource', function($rootScope, $resource){
 
-	$rootScope.user= window.localStorage.getItem('pulseUsername') || 'anony-mouse';
+	$rootScope.user = {
+		'name': window.localStorage.getItem('pulseUsername') || 'anony-mouse',
+		'icon': window.localStorage.getItem('pulseIcon') || 0
+	};
 	
 	$rootScope.activeView='';
 
