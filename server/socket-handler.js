@@ -29,7 +29,7 @@ module.exports = function SocketHandler(server){
 			var i = sockets.indexOf(socket);
 			sockets.splice(i, 1);
 			process.nextTick(broadcastUsers);
-			io.sockets.emit('newsystemmessage', chat.createSystemDisconnectMessage(socket.username));
+			io.sockets.emit('newsystemmessage', chat.createSystemDisconnectMessage(socket.user.name));
 		});
 
 		socket.on('updateuser', function(data){
