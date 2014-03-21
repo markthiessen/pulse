@@ -33,7 +33,7 @@ app.configure('development', function() {
 });
 
 app.use(app.router);
-  app.use(require('less-middleware')({ src: __dirname + '/client' }));
+  app.use(require('less-middleware')(__dirname + '/client'));
 app.use(express.static(path.join(__dirname, 'client')));
 
 // development only

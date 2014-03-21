@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A93A18EE-8C0E-4647-9F48-08123D63A04F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>yammer</RootNamespace>
+    <AssemblyName>yammer</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dark\amber.scss" />
+    <None Include="dark\brown.scss" />
+    <None Include="dark\cobalt.scss" />
+    <None Include="dark\crimson.scss" />
+    <None Include="dark\cyan.scss" />
+    <None Include="dark\emerald.scss" />
+    <None Include="dark\green.scss" />
+    <None Include="dark\indigo.scss" />
+    <None Include="dark\lime.scss" />
+    <None Include="dark\magenta.scss" />
+    <None Include="dark\mauve.scss" />
+    <None Include="dark\olive.scss" />
+    <None Include="dark\orange.scss" />
+    <None Include="dark\pink.scss" />
+    <None Include="dark\red.scss" />
+    <None Include="dark\steel.scss" />
+    <None Include="dark\taupe.scss" />
+    <None Include="dark\teal.scss" />
+    <None Include="dark\violet.scss" />
+    <None Include="dark\yellow.scss" />
+    <None Include="dark\_dark.scss" />
+    <None Include="light\amber.scss" />
+    <None Include="light\brown.scss" />
+    <None Include="light\cobalt.scss" />
+    <None Include="light\crimson.scss" />
+    <None Include="light\cyan.scss" />
+    <None Include="light\emerald.scss" />
+    <None Include="light\green.scss" />
+    <None Include="light\indigo.scss" />
+    <None Include="light\lime.scss" />
+    <None Include="light\magenta.scss" />
+    <None Include="light\mauve.scss" />
+    <None Include="light\olive.scss" />
+    <None Include="light\orange.scss" />
+    <None Include="light\pink.scss" />
+    <None Include="light\red.scss" />
+    <None Include="light\steel.scss" />
+    <None Include="light\taupe.scss" />
+    <None Include="light\teal.scss" />
+    <None Include="light\violet.scss" />
+    <None Include="light\yellow.scss" />
+    <None Include="light\_light.scss" />
+    <None Include="_AutoComplete.scss" />
+    <None Include="_LoadingAnim.scss" />
+    <None Include="_Master.scss" />
+    <None Include="_Thread.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dark\amber.css">
+      <DependentUpon>amber.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\brown.css">
+      <DependentUpon>brown.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\cobalt.css">
+      <DependentUpon>cobalt.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\crimson.css">
+      <DependentUpon>crimson.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\cyan.css">
+      <DependentUpon>cyan.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\emerald.css">
+      <DependentUpon>emerald.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\green.css">
+      <DependentUpon>green.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\indigo.css">
+      <DependentUpon>indigo.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\lime.css">
+      <DependentUpon>lime.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\magenta.css">
+      <DependentUpon>magenta.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\mauve.css">
+      <DependentUpon>mauve.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\olive.css">
+      <DependentUpon>olive.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\orange.css">
+      <DependentUpon>orange.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\pink.css">
+      <DependentUpon>pink.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\red.css">
+      <DependentUpon>red.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\steel.css">
+      <DependentUpon>steel.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\taupe.css">
+      <DependentUpon>taupe.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\teal.css">
+      <DependentUpon>teal.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\violet.css">
+      <DependentUpon>violet.scss</DependentUpon>
+    </Content>
+    <Content Include="dark\yellow.css">
+      <DependentUpon>yellow.scss</DependentUpon>
+    </Content>
+    <Content Include="light\amber.css">
+      <DependentUpon>amber.scss</DependentUpon>
+    </Content>
+    <Content Include="light\brown.css">
+      <DependentUpon>brown.scss</DependentUpon>
+    </Content>
+    <Content Include="light\cobalt.css">
+      <DependentUpon>cobalt.scss</DependentUpon>
+    </Content>
+    <Content Include="light\crimson.css">
+      <DependentUpon>crimson.scss</DependentUpon>
+    </Content>
+    <Content Include="light\cyan.css">
+      <DependentUpon>cyan.scss</DependentUpon>
+    </Content>
+    <Content Include="light\emerald.css">
+      <DependentUpon>emerald.scss</DependentUpon>
+    </Content>
+    <Content Include="light\green.css">
+      <DependentUpon>green.scss</DependentUpon>
+    </Content>
+    <Content Include="light\indigo.css">
+      <DependentUpon>indigo.scss</DependentUpon>
+    </Content>
+    <Content Include="light\lime.css">
+      <DependentUpon>lime.scss</DependentUpon>
+    </Content>
+    <Content Include="light\magenta.css">
+      <DependentUpon>magenta.scss</DependentUpon>
+    </Content>
+    <Content Include="light\mauve.css">
+      <DependentUpon>mauve.scss</DependentUpon>
+    </Content>
+    <Content Include="light\olive.css">
+      <DependentUpon>olive.scss</DependentUpon>
+    </Content>
+    <Content Include="light\orange.css">
+      <DependentUpon>orange.scss</DependentUpon>
+    </Content>
+    <Content Include="light\pink.css">
+      <DependentUpon>pink.scss</DependentUpon>
+    </Content>
+    <Content Include="light\red.css">
+      <DependentUpon>red.scss</DependentUpon>
+    </Content>
+    <Content Include="light\steel.css">
+      <DependentUpon>steel.scss</DependentUpon>
+    </Content>
+    <Content Include="light\taupe.css">
+      <DependentUpon>taupe.scss</DependentUpon>
+    </Content>
+    <Content Include="light\teal.css">
+      <DependentUpon>teal.scss</DependentUpon>
+    </Content>
+    <Content Include="light\violet.css">
+      <DependentUpon>violet.scss</DependentUpon>
+    </Content>
+    <Content Include="light\yellow.css">
+      <DependentUpon>yellow.scss</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

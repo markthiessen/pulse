@@ -1,0 +1,13 @@
+
+$background-color: white;
+$foreground-color: #333333;
+$background-overlay-color: transparentize($accent-color, 0.9);
+
+$button-background-color: #ffffff;
+$button-foreground-color: #333333;
+$button-border-color: #cccccc;
+
+@import '../_LoadingAnim';
+@import '../_Thread';
+@import '../_Master';
+@import '../_AutoComplete';
