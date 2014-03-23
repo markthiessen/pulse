@@ -8,20 +8,24 @@ PulseApp.controller('YammerCtrl',
 		$scope.isSingleThread = $scope.threadId > 0;
 
 		$(document).ready(function () {
-			yammerData.connect('#yammer-login', function() {
-				$('#yammer-login').hide();
-				$scope.isAuthenticated = true;
+			if (!$scope.data.thread || !$scope.data.thread.Items) {
+				yammerData.connect('#yammer-login', function () {
+					$('#yammer-login').hide();
+					$scope.isAuthenticated = true;
 
-				if ($scope.isSingleThread)
-					yammerData.refreshThread($scope.threadId);
-				else
-					yammerData.refreshFeed();
-				yammerData.updateNotifications();
-			});
+					if ($scope.isSingleThread)
+						yammerData.refreshThread($scope.threadId);
+					else
+						yammerData.refreshFeed();
+					yammerData.updateNotifications();
+				});
+			}
+			else
+				$scope.isAuthenticated = true;
 		});
 		
 		$scope.$watch('data.thread', function () {
-			if (!$scope.isSingleThread && $scope.data.thread && $scope.data.thread.Items)
+			if (!$scope.isSingleThread && $scope.data.thread && $scope.data.thread.Items && !$scope.data.isPolling)
 				yammerData.startPolling();
 		});
 

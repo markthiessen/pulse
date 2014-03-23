@@ -1,21 +1,3 @@
-html {
-	height: 100%;
-}
-
-body {
-	overflow: auto;
-	height: calc(100% - 60px);
-}
-
-body > .container {
-	height: 100%;
-	overflow: hidden;
-}
-
-.main-view {
-	height: 100%;
-}
-
 .yammer {
 	height: 100%;
 	overflow: hidden;

@@ -7,7 +7,7 @@
 		
 		yammerData.refreshFeed = function () {
 			yammerData.isRefreshing = true;
-			yammerData.newMessageCount = 0;
+			yammerData.setNewMessageCount(0);
 			
 			yammerService.getFullFeed(function (result) {
 				yammerService.realtimeInfo = result.meta.realtime;
@@ -140,7 +140,7 @@
 			processingQueue.queueItemFinishedProcessing(yammerData.addNewReplyQueue, yammerData.processAddNewReplyQueue, delay, yammerData.updateFinished);
 		};
 		yammerData.updateFinished = function () {
-			yammerData.newMessageCount = 0;
+			yammerData.setNewMessageCount(0);
 			yammerData.updates.length = 0;
 			yammerData.isUpdating = false;
 		};
@@ -152,6 +152,7 @@
 		};
 
 		yammerData.startPolling = function () {
+			yammerData.isPolling = true;
 			yammerService.startPolling(function () {
 				yammerData.longPoll();
 			});
@@ -160,7 +161,7 @@
 		yammerData.longPoll = function () {
 			yammerService.longPoll(function (result) {
 				yammerData.updates.splice(0, 0, result);
-				yammerData.newMessageCount += result.messages.length;
+				yammerData.setNewMessageCount(yammerData.newMessageCount + result.messages.length);
 			});
 		};
 
@@ -172,7 +173,7 @@
 			} else
 				yammerData.thread.Items.splice(0, 0, message);
 
-			yammerData.newMessageCount -= 1;
+			yammerData.setNewMessageCount(yammerData.newMessageCount - 1);
 			SetupImages();
 		};
 
@@ -192,6 +193,11 @@
 			if (newest && newest.Replies.length > 0)
 				newest = newest.newestReply;
 			return newest;
+		};
+
+		yammerData.setNewMessageCount = function (count) {
+			yammerData.newMessageCount = count;
+			$rootScope.yammerNewMsgCount = count;
 		};
 
 		return yammerData;
