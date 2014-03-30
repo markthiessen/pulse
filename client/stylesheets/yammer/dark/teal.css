@@ -302,6 +302,8 @@
         margin: 0; }
       .thread .message .body .contents .poll-icon {
         margin: 3px; }
+      .thread .message .body .contents .yammer-object a {
+        text-decoration: underline; }
     .thread .message .body .textContents {
       max-width: 700px;
       max-height: 200px;
@@ -367,7 +369,7 @@
           text-overflow: ellipsis;
           overflow: hidden;
           line-height: 13pt;
-          max-width: 575px;
+          max-width: 535px;
           text-decoration: underline;
           vertical-align: middle; }
         .thread .webLinks .link .caption .title .glyphicon {
@@ -389,7 +391,7 @@
         text-overflow: ellipsis;
         overflow: hidden;
         line-height: 12pt;
-        max-width: 550px; }
+        max-width: 535px; }
 .thread .images {
   clear: both;
   float: left;
@@ -483,8 +485,7 @@
   .thread .commands .pullRight {
     float: right; }
   .thread .commands .disabledPost {
-    color: #333333;
-    text-decoration: underline; }
+    color: #333333; }
   .thread .commands .unread {
     font-weight: bold; }
 

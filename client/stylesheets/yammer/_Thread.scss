@@ -150,6 +150,9 @@
 				.poll-icon {
 					margin: 3px;
 				}
+				.yammer-object a {
+					text-decoration: underline;
+				}
 			}
 			.textContents {
 				max-width: 700px;
@@ -238,7 +241,7 @@
 						text-overflow: ellipsis;
 						overflow: hidden;
 						line-height: 13pt;
-						max-width: 575px;
+						max-width: 535px;
 						text-decoration: underline;
 						vertical-align: middle;
 					}
@@ -265,7 +268,7 @@
 					text-overflow: ellipsis;
 					overflow: hidden;
 					line-height: 12pt;
-					max-width: 550px;
+					max-width: 535px;
 				}
 			}
 		}
@@ -393,7 +396,6 @@
 		}
 		.disabledPost {
 			color: $button-border-color;
-			text-decoration: underline;
 		}
 		.unread {
 			font-weight: bold;
