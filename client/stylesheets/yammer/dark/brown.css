@@ -597,7 +597,6 @@
   .autoComplete .autoCompleteInput .autoCompleteListContainer {
     position: absolute;
     left: 0;
-    top: 23px;
     font-size: 9pt;
     z-index: 99; }
     .autoComplete .autoCompleteInput .autoCompleteListContainer .autoCompleteList {
@@ -630,4 +629,8 @@
         vertical-align: middle;
         float: left;
         margin-right: 5px; }
+      .autoComplete .autoCompleteInput .autoCompleteListContainer .autoCompleteList .loading {
+        margin: 0 0 5px 0; }
+  .autoComplete .autoCompleteInput .autoCompleteListContainer.offset {
+    top: 23px; }
 

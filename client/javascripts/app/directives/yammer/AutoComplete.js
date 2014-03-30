@@ -10,6 +10,7 @@
 			textArea: '@',
 			textAreaRows: '@',
 			onAddLink: '=',
+			isDirty: '=',
 			users: '=',
 			onValueChange: '=',
 			placeholder: '@'
@@ -22,7 +23,7 @@
 						'<span class="autoCompleteInput">' +
 							'<textarea ng-show="textArea" rows="{{textAreaRows}}" ng-model="autoCompleteText" ng-change="autoComplete()" ng-focus="openAutoComplete()" ng-blur="closeAutoComplete()" />' +
 							'<input type="text" placeholder="{{placeholder}}" ng-hide="textArea" ng-model="autoCompleteText" ng-change="autoComplete()" onfocus="$(this).select();" onmouseup="return false;" ng-focus="openAutoComplete()" ng-blur="closeAutoComplete()" />' +
-							'<div class="autoCompleteListContainer" ng-show="isInputFocused && items.length > 0 && !hideAutoCompletes">' +
+							'<div class="autoCompleteListContainer" ng-show="(isInputFocused && items.length > 0 || isSearching) && !hideAutoCompletes" ng-class="types ? \'offset\' :\'\'">' +
 								'<span class="autoCompleteList">'+
 									'<span loading-Anim="" ng-show="isSearching"></span>' +
 									'<div ng-show="!isSearching">'+
@@ -109,9 +110,10 @@
 			};
 			
 			$scope.autoComplete = function () {
+				$scope.isDirty = true;
 				$timeout.cancel($scope.autoCompleteTimer);
-				$scope.autoCompleteTimer = $timeout(function () {
 
+				$scope.autoCompleteTimer = $timeout(function () {
 					var types = $scope.types;
 					var autoCompleteText = $scope.autoCompleteText.trim();
 
@@ -124,9 +126,11 @@
 					if (types && autoCompleteText.length > 0 && (autoCompleteText.trim() != $scope.lastAutoCompleteText || types != $scope.lastAutoCompleteTypes)) {
 						$scope.isSearching = true;
 						$scope.hideAutoCompletes = false;
+						$scope.lastAutoCompleteText = autoCompleteText;
+						$scope.lastAutoCompleteTypes = types;
 						yammerService.autoComplete(autoCompleteText, types, function (result) {
 							$scope.items.length = 0;
-							
+
 							if (result.user) {
 								$.each(result.user, function (i, value) {
 									$scope.items.push({ Type: 'user', Id: value.id, Name: value.full_name, PictureUrl: value.photo, ProfileUrl: value.web_url, AtIdentifier: value.name });
@@ -141,17 +145,17 @@
 								if (autoCompleteText.toLowerCase().match("^[a|c]") || autoCompleteText.trim().length <= 0)
 									$scope.items.push(yammerService.allCompanyGroup);
 
-								$.each(result.group, function(i, value) {
+								$.each(result.group, function (i, value) {
 									$scope.items.push({ Type: 'group', Id: value.id, Name: value.full_name, PictureUrl: value.photo, Description: value.description });
 								});
 							}
-							$scope.isSearching = false;
-							$rootScope.$apply();
+							$scope.autoCompleteFinished();
 						});
-						$scope.lastAutoCompleteText = autoCompleteText;
-						$scope.lastAutoCompleteTypes = types;
-					} else
-						$scope.hideAutoCompletes = !types || autoCompleteText.length <= 0;
+					} else {
+						$scope.hideAutoCompletes = (!types || autoCompleteText.length <= 0) && !$scope.isSearching;
+						if (!$scope.isSearching)
+							$scope.autoCompleteFinished();
+					}
 				}, 500);
 			};
 
@@ -188,12 +192,17 @@
 				yammerService.getOpenGraph(url, function (result) {
 					if (result.site_name && $scope.onAddLink)
 						$scope.onAddLink(result);
-					$scope.isSearching = false;
-					$rootScope.$apply();
+					$scope.autoCompleteFinished();
 				}, function(error) {
-					$scope.isSearching = false;
-					$rootScope.$apply();
+					$scope.autoCompleteFinished();
 				});
+			};
+
+			$scope.autoCompleteFinished = function () {
+				$scope.isSearching = false;
+				if ($scope.isDirty !== undefined)
+					$scope.isDirty = false;
+				$rootScope.$apply();
 			};
 
 			$scope.getTextInput = function() {

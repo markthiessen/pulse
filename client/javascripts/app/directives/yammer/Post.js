@@ -15,12 +15,12 @@
 			'<span class="body">' +
 				'<span class="isNew" ng-show="message.MarkedAsNew"></span>' +
 				'<span ng-class="{\'isNewOffset\' : message.MarkedAsNew}">' +
-					'<a class="profilePic" ng-href="{{message.Author.ProfileUrl}}">' +
+					'<a class="profilePic" target="_blank" ng-href="{{message.Author.ProfileUrl}}">' +
 						'<img ng-src="{{message.Author.PictureUrl}}" />' +
 					'</a>' +
 					'<span class="name">' +
 						'<span>' +
-							'<a ng-href="{{message.Author.ProfileUrl}}">{{message.Author.Name}}</a>' +
+							'<a target="_blank" ng-href="{{message.Author.ProfileUrl}}">{{message.Author.Name}}</a>' +
 							'<span ng-show="message.IsRootMessage || message.NotifiedUsers.length > 0"> to </span>' +
 							'<a ng-href="{{message.Group.Url}}" ng-show="message.IsRootMessage">{{message.Group.Name}}</a' +
 							'><span ng-show="message.NotifiedUsers.length > 0"' +
@@ -46,13 +46,13 @@
 			'<div images-and-links="" message="message"></div>' +
 
 			'<div class="tags" ng-show="message.Tags.length > 0">' +
-				'<a class="tag" ng-repeat="tag in message.Tags" ng-href="{{tag.Link}}">#{{tag.Title}}</a>' +
+				'<a class="tag" ng-repeat="tag in message.Tags" target="_blank" ng-href="{{tag.Link}}">#{{tag.Title}}</a>' +
 			'</div>' +
 
 			'<div class="likedBy" ng-show="message.LikedByUsers.length > 0">' +
 				'<span>Liked by: </span>' +
 				'<span class="you" ng-show="message.IsLikedByCurrentUser">You </span>' +
-				'<a ng-repeat="user in message.LikedByUsers" ng-href="{{user.ProfileUrl}}">{{user.Name}}</a>' +
+				'<a ng-repeat="user in message.LikedByUsers" target="_blank" ng-href="{{user.ProfileUrl}}">{{user.Name}}</a>' +
 				'<span ng-show="message.LikedByNum - message.LikedByUsers.length > 0">and {{message.LikedByNum - message.LikedByUsers.length}} others</span>' +
 			'</div>' +
 

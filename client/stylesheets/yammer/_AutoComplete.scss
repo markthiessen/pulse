@@ -28,7 +28,6 @@
 		.autoCompleteListContainer {
 			position: absolute;
 			left: 0;
-			top: 23px;
 			font-size: 9pt;
 			z-index: 99;
 
@@ -52,7 +51,6 @@
 					white-space: nowrap;
 					text-overflow: ellipsis;
 				}
-
 				.icon {
 					font-size: 16pt;
 					max-width: 25px;
@@ -61,14 +59,19 @@
 					margin-right: 5px;
 					overflow: hidde;
 				}
-
 				img {
 					max-width: 25px;
 					vertical-align: middle;
 					float: left;
 					margin-right: 5px;
 				}
+				.loading {
+					margin: 0 0 5px 0;
+				}
 			}
+		}
+		.autoCompleteListContainer.offset {
+			top: 23px;
 		}
 	}
 }

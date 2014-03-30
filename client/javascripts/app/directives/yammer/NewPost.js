@@ -27,7 +27,7 @@
 					'</span><br/>' +
 					'<span class="date">[Androids insert date here]</span>' +
 					'<span class="contents">' +
-						'<span auto-complete="" text-area="true" text-area-rows="4" items="postAutoCompletes" on-value-change="setPostBody" users="newMessage.Users" on-add-link="addLinkOrImage" />' +
+						'<span auto-complete="" text-area="true" text-area-rows="4" items="postAutoCompletes" on-value-change="setPostBody" users="newMessage.Users" on-add-link="addLinkOrImage" is-dirty="isSearchingPostLink" />' +
 					'</span>' +
 				'</span>' +
 			'</span>' +
@@ -56,9 +56,9 @@
 					'<a href="" ng-click="uploadFile(newMessage)">Attach File</a>' +
 					'<input class="fileInput" type="file" style="display: none;" />' +
 					'<div class="pullRight">' +
-						'<a href="" ng-click="closeNewPost()" ng-show="newMessage.NumberOfImagesUpLoading <= 0 && !newMessage.IsSearchingPostLink">Cancel</a>' +
-						'<span class="disabledPost" ng-hide="(newMessage.PostBody.length > 0 || newMessage.Files && newMessage.Files.length > 0) && newMessage.NumberOfImagesUpLoading <= 0 && !newMessage.IsSearchingPostLink">Post</span>' +
-						'<a class="last" href="" ng-click="post()" ng-show="(newMessage.PostBody.length > 0 || newMessage.Files && newMessage.Files.length > 0) && newMessage.NumberOfImagesUpLoading <= 0 && !newMessage.IsSearchingPostLink">Post</a>' +
+						'<a href="" ng-click="closeNewPost()" ng-show="newMessage.NumberOfImagesUpLoading <= 0 && !isSearchingPostLink">Cancel</a>' +
+						'<span class="disabledPost" ng-hide="(newMessage.PostBody.length > 0 || newMessage.Files && newMessage.Files.length > 0) && newMessage.NumberOfImagesUpLoading <= 0 && !isSearchingPostLink">Post</span>' +
+						'<a class="last" href="" ng-click="post()" ng-show="(newMessage.PostBody.length > 0 || newMessage.Files && newMessage.Files.length > 0) && newMessage.NumberOfImagesUpLoading <= 0 && !isSearchingPostLink">Post</a>' +
 					'</div>' +
 				'</div>' +
 			'</div>' +
@@ -68,6 +68,7 @@
 			$scope.newMessage = { MessageId: 0, Group: yammerService.allCompanyGroup, NumberOfImagesUpLoading: 0, Users: [], Tags: [], Links: [], Images: [], Files: [] };
 			$scope.postAutoCompletes = [];
 			$scope.tagAutoCompletes = [];
+			$scope.isSearchingPostLink = false;
 
 			$scope.setPostBody = function(text) {
 				$scope.newMessage.PostBody = text;
