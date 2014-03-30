@@ -302,6 +302,7 @@
         margin: 0; }
       .thread .message .body .contents .poll-icon {
         margin: 3px; }
+      .thread .message .body .contents a.linkified,
       .thread .message .body .contents .yammer-object a {
         text-decoration: underline; }
     .thread .message .body .textContents {
@@ -539,17 +540,17 @@
   .yammer .enscroll-track.vertical-track.dragging .vertical-handle, .yammer .enscroll-track.vertical-track:hover .vertical-handle {
     width: 7px; }
   .yammer .settingsFlyout {
-    position: absolute;
+    position: fixed;
     top: 20px;
     right: 35px;
     width: 300px;
-    height: calc(100% - 60px);
+    height: calc(100% - 40px);
     padding: 10px;
     background-color: white;
     color: #333333;
     border: 1px solid #f0a30a; }
     .yammer .settingsFlyout h3 {
-      margin-top: 0; }
+      margin: 0 0 25px; }
     .yammer .settingsFlyout .accentColorSelectors {
       display: block;
       margin-top: 20px; }

@@ -61,18 +61,18 @@
 	}
 
 	.settingsFlyout {
-		position: absolute;
+		position: fixed;
 		top: 20px;
 		right: 35px;
 		width: 300px;
-		height: calc(100% - 60px);
+		height: calc(100% - 40px);
 		padding: 10px;
 		background-color: $background-color;
 		color: $foreground-color;
 		border: 1px solid $accent-color;
 
 		h3 {
-			margin-top: 0;
+			margin: 0 0 25px;
 		}
 
 		.accentColorSelectors {

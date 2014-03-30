@@ -6,8 +6,8 @@
 <div class="yammer">
 	<div class="yammerInner">
 		<div class="toolbar">
-			<span id="yammer-login"></span>
-			<span ng-show="isAuthenticated">
+			<span login-button=""></span>
+			<span ng-show="data.isAuthenticated">
 				<button class="postButton" title="Open New Post" ng-disabled="newPostOpen" ng-show="!isSingleThread" ng-click="openNewPost()">New Post</button>
 				<button class="updateButton" title="Get Latest Posts" ng-click="data.updateFeed()" ng-show="data.newMessageCount > 0 && !data.isUpdating && !data.isRefreshing">{{data.newMessageCount}} new message(s)</button>
 				<span class="threadLoading" ng-show="data.isRefreshing || data.isUpdating">Loading<span loading-Anim=""></span></span>
@@ -17,7 +17,7 @@
 				</span>
 				<a class="currentUser" target="_blank" title="Your Profile" ng-href="{{data.currentUser.ProfileUrl}}" ng-class="{'new': yammerData.newNotifications.length > 0}"><img ng-src="{{data.currentUser.PictureUrl}}"/></a>
 				<a class="notifications glyphicon glyphicon-bell" target="_blank" title="Notifications" href="https://www.yammer.com/#/notifications/index?type=notifications"></a>
-				<a class="settings glyphicon glyphicon-cog" href="" ng-click="IsSettingsFlyoutOpen = true"></a>
+				<a settings=""></a>
 			</span>
 		</div>
 		<div class="thread">
@@ -25,16 +25,5 @@
 			<div class="thread" ng-repeat="message in data.thread.Items" post="" message="message" root-list="data.thread.Items" on-post="data.onPost" users="data.users" groups="data.groups" current-user="data.currentUser"></div>
 		</div>
 		<button class="showOlderButton" ng-click="data.showOlder()" ng-show="data.olderAvailable && !data.isRefreshing && !data.isUpdating">Show Older</button>
-	</div>
-	<div class="settingsFlyout" ng-show="IsSettingsFlyoutOpen">
-		<h3>Settings</h3>
-		<input id="lightRadio" type="radio" value="1" name="darkLight" ng-model="settings.theme">
-		<label for="lightRadio">Light</label>
-		<input id="darkRadio" type="radio" value="2" name="darkLight" ng-model="settings.theme">
-		<label for="darkRadio">Dark</label>
-		<div class="accentColorSelectors">
-			<a href="" class="selector" ng-repeat="color in accentColors" ng-style="{'background-color':color}" ng-class="{'current': color == settings.accentColor}" ng-click="setAccentColor(color)"></a>
-		</div>
-		<a href="" class="closeBtn" ng-click="IsSettingsFlyoutOpen = false"><span class="glyphicon glyphicon-remove-circle"></span></a>
 	</div>
 </div>
