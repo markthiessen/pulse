@@ -1,4 +1,4 @@
-PulseApp.directive('settings', function (yammerData) {
+PulseApp.directive('settings', function (yammerData, $cookieStore) {
 	return {
 		restrict: 'A',
 		scope: {},
@@ -47,11 +47,11 @@ PulseApp.directive('settings', function (yammerData) {
 				$('.themeStyleSheet').remove();
 				$('head').append('<link id="themeStyleSheet" rel="stylesheet" type="text/css" href="' + window.location.origin + '/stylesheets/yammer/' + cssFileName + '.css">');
 
-				$.cookie("settings", angular.toJson($scope.settings), { expires: 365, path: '/' });
+				$cookieStore.put("settings", $scope.settings);
 			};
 
 			$(document).ready(function () {
-				var savedSettings = angular.fromJson($.cookie('settings'));
+				var savedSettings = $cookieStore.get('settings');
 				if (savedSettings && savedSettings.theme)
 					$scope.settings = savedSettings;
 

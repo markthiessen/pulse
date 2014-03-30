@@ -1,4 +1,4 @@
-var PulseApp = angular.module('PulseApp', ['ngRoute', 'ngResource', 'ngSanitize'])
+var PulseApp = angular.module('PulseApp', ['ngRoute', 'ngResource', 'ngSanitize', 'ngCookies'])
 .config(['$routeProvider', function($routeProvider){
 	$routeProvider
 		.when('/', {
