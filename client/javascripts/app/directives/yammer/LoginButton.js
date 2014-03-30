@@ -1,4 +1,4 @@
-PulseApp.directive('loginButton', function (yammerData) {
+PulseApp.directive('loginButton', function (yammerData, $rootScope) {
 	return {
 		restrict: 'A',
 		template: '<span id="yammer-login"></span>',
@@ -8,6 +8,7 @@ PulseApp.directive('loginButton', function (yammerData) {
 					yammerData.connect('#yammer-login', function () {
 						elm.hide();
 						yammerData.isAuthenticated = true;
+						$rootScope.$apply();
 					});
 				}
 				else

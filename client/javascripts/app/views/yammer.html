@@ -7,7 +7,7 @@
 	<div class="yammerInner">
 		<div class="toolbar">
 			<span login-button=""></span>
-			<span ng-show="data.isAuthenticated">
+			<span ng-show="data.isAuthenticated === true">
 				<button class="postButton" title="Open New Post" ng-disabled="newPostOpen" ng-show="!isSingleThread" ng-click="openNewPost()">New Post</button>
 				<button class="updateButton" title="Get Latest Posts" ng-click="data.updateFeed()" ng-show="data.newMessageCount > 0 && !data.isUpdating && !data.isRefreshing">{{data.newMessageCount}} new message(s)</button>
 				<span class="threadLoading" ng-show="data.isRefreshing || data.isUpdating">Loading<span loading-Anim=""></span></span>

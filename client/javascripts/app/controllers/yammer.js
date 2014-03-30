@@ -8,7 +8,7 @@ PulseApp.controller('YammerCtrl',
 		$scope.isSingleThread = $scope.threadId > 0;
 
 		$scope.$watch('data.isAuthenticated', function () {
-			if ($scope.data.isAuthenticated && !$scope.data.isRefreshing && !$scope.data.isUpdating && !$scope.data.thread.Items) {
+			if ($scope.data.isAuthenticated === true && !$scope.data.isRefreshing && !$scope.data.isUpdating && !$scope.data.thread.Items) {
 				if ($scope.isSingleThread)
 					yammerData.refreshThread($scope.threadId);
 				else
