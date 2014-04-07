@@ -165,6 +165,8 @@
 		yammerService.longPoll(function (result) {
 			yammerData.updates.splice(0, 0, result);
 			yammerData.setNewMessageCount(yammerData.newMessageCount + result.messages.length);
+		}, function(error){
+			yammerData.startPolling();
 		});
 	};
 

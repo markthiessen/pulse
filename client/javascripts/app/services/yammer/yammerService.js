@@ -98,7 +98,7 @@
 			});
 	};
 
-	yammerService.longPoll = function (success) {
+	yammerService.longPoll = function (success, fail) {
 		$resource(yammerService.realtimeInfo.uri, {}, { query: { method: 'POST', isArray: true } }).query(
 			[{
 				"channel": "/meta/connect",
@@ -117,6 +117,7 @@
 			},
 			function (error) {
 				console.log(error);
+				fail(error);
 			});
 	};
 
