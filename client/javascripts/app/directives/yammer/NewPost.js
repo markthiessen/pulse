@@ -140,8 +140,6 @@
 						$scope.newMessage.Images.splice($.inArray(image, $scope.newMessage.Images), 1);
 						if (image.IsFile)
 							yammerService.removeFile(image.Id);
-						if (!confirmed)
-							SetupImages();
 					}
 				}, 100); // Why is this timeout required???
 			};
@@ -178,7 +176,6 @@
 					else
 						$scope.newMessage.Links.push(item);
 					$rootScope.$apply();
-					SetupImages();
 				}
 			};
 

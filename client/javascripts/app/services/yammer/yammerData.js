@@ -48,7 +48,6 @@
 	yammerData.refreshProcessItem = function (data) {
 		if (!data.value.replied_to_id)
 			yammerData.createThread(data.value, data.threaded_extended, data.references, data.meta);
-		SetupImages();
 		$rootScope.$apply();
 		processingQueue.queueItemFinishedProcessing(yammerData.refreshQueue, yammerData.refreshProcessItem, 100, yammerData.refreshFinished);
 	};
@@ -138,7 +137,6 @@
 		}
 		if (addReplies)
 			yammerMessage.addReplies(data.thread, [data.message], true, data.references, data.meta);
-		SetupImages();
 		$rootScope.$apply();
 		processingQueue.queueItemFinishedProcessing(yammerData.addNewReplyQueue, yammerData.processAddNewReplyQueue, delay, yammerData.updateFinished);
 	};
@@ -179,7 +177,6 @@
 			yammerData.thread.Items.splice(0, 0, message);
 
 		yammerData.setNewMessageCount(yammerData.newMessageCount - 1);
-		SetupImages();
 	};
 
 	yammerData.setLastSeenMessage = function() {

@@ -1,4 +1,4 @@
-﻿PulseApp.directive('imagesAndLinks', function () {
+﻿PulseApp.directive('imagesAndLinks', function ($timeout) {
 	return {
 		restrict: 'A',
 		transclude: true,
@@ -49,6 +49,59 @@
 						'</a>' +
 					'</div>' +
 				'</div>' +
-			'</div>'
+			'</div>',
+		link: function ($scope, elm, attrs) {
+
+			$scope.$watchCollection('message.Images', function () {
+				elm.find(".slides").imagesLoaded(function () {
+					$timeout(function () {
+						var imageElements = elm.find('.images');
+						imageElements.show();
+
+						imageElements.find('.slides').each(function () {
+							var slideSet = $(this);
+							if (slideSet.children('.slide').length > 1) {
+								slideSet.carouFredSel({
+									width: 399,
+									pagination: { container: ".pagination", anchorBuilder: false },
+									auto: {	play: false	}
+								});
+							} else
+								slideSet.trigger('destroy');
+						});
+
+						imageElements.find(".slides .slideImg").fancybox({
+							fitToView: false,
+							type: 'image',
+							beforeLoad: function () {
+								this.title = $(this.element).parent().find('.caption')[0].outerHTML;
+							}
+						});
+
+						// Initialize the prev & next buttons afterwards since they like to disappear otherwise
+						imageElements.find('.slides').each(function () {
+							var slideSet = $(this);
+							slideSet.trigger("configuration", {
+								next: { button: slideSet.parent().parent().find('.nextBtn') },
+								prev: { button: slideSet.parent().parent().find('.previousBtn') }
+							});
+						});
+					}, 1000);
+				});
+			});
+
+			$scope.$watchCollection('message.Links', function () {
+				elm.find(".link a.thumb").fancybox({
+					beforeLoad: function () {
+						this.title = $(this.element).parent().children('.hiddenCaption')[0].outerHTML.replace('style="display: none"', '');
+					}
+				});
+				elm.find(".link a.title").fancybox({
+					beforeLoad: function () {
+						this.title = $(this.element).parent().parent().children('.hiddenCaption')[0].outerHTML.replace('style="display: none"', '');
+					}
+				});
+			});
+		}
 	};
 });

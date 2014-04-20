@@ -128,14 +128,12 @@
 
 			$scope.showMore = function () {
 				yammerMessage.showMore($scope.message, function () {
-					SetupImages();
 					$rootScope.$apply();
 				});
 			};
 
 			$scope.showLess = function () {
 				yammerMessage.showLess($scope.message, function() {
-					SetupImages();
 					$rootScope.$apply();
 				});
 			};
