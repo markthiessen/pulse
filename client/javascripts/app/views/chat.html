@@ -10,7 +10,7 @@
 			</li>
 		</ul>
 	</div>
-	<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12" style="height: 100%">
+	<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 chat-messages-container">
 		<ul id="chatMessages" class="chat-messages" autoscroll>
 			<li ng-repeat="message in chatMessages track by message.id">
 				<span class="username" ng-show="!message.isSystemMessage">{{message.user.name}}</span>
