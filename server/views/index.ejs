@@ -4,17 +4,17 @@
     <title><%= title %></title>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel='stylesheet' href='/glyphicons/css/bootstrap-glyphicons.css' />
-    <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/emojify.css' />
   </head>
   <body ng-app="PulseApp">
   	<div class="navbar navbar-fixed-top">
-  			<div class="navbar-brand">
-  				<div class="brand-inner">
-            <img src="/images/icon.png" style="height:15px;"/>
-  					<span><%= title %></span>
-  				</div>
+  		<div class="navbar-brand">
+			<div class="brand-inner">
+				<img src="/images/icon.png" style="height:15px;"/>
+				<span><%= title %></span>
+			</div>
 		</div>
+		<a class="settings" settings=""></a>
         <div class="btn-group" style="float:right; margin:0 auto;margin:8px;">
           <a href="#/" class="btn btn-default" ng-class="{active: activeView=='Announcements'}"><i class="glyphicon glyphicon-exclamation-sign"></i>&nbsp;Announcements</a>
           <a href="#/chat" class="btn btn-default" ng-class="{active: activeView=='Chat'}"><i class="glyphicon glyphicon-comment"></i>&nbsp;Chat</a>
@@ -31,8 +31,8 @@
           
         </div>
       </div>
-    	<div ng-view class="main-view">
-    	</div>    	
+      <div ng-view class="main-view">
+      </div>
     </div>
     <% include _scripts.ejs %>
   </body>
