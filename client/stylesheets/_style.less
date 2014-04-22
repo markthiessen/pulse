@@ -1,32 +1,46 @@
 html {
-  padding:0;
-  margin:0;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	padding:0;
+	margin:0;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	height: 100%;
+	background-color: @background-color;
 }
 body{
+	overflow: auto;
+	height: calc(~"100% - 60px");
+	background-color: @background-color;
+	color: @foreground-color;
 }
 
 a {
-  color: #00B7FF;
+	color: #00B7FF;
 }
 
 .navbar{
 	opacity:0.9;
 	background:white;
 	box-shadow:0 2px 2px rgba(0,0,0,0.2);
+
+	.brand{margin-left:0px;}
+	.brand-inner{
+		color:#595959;
+		font-weight:bold;
+		font-style:italic;
+	}
+	.settings {
+		display: inline-block;
+		margin-top: 3px;
+		color: @foreground-color;
+		cursor: pointer;
+	}
 }
-.navbar .brand{margin-left:0px;}
-.brand-inner{
-	color:#595959;
-	font-weight:bold;
-	font-style:italic;
-}
+
 .messages{
-	
 	padding:0;
 	list-style:none;
 	position:relative;
-	top:500px;
+	height: calc(~"100% - 51px");
+	overflow: auto;
 
 	&.visible{
 		transition: top 1s;
@@ -103,16 +117,21 @@ input{
 	outline: none;	
 }
 
+.chat-messages-container {
+	height: 100%;
+}
+
 ul.chat-messages{
 	position:relative;
 	margin-top:10px;
-	padding-bottom:150px;
 	list-style:none;
+	height: calc(~"100% - 147px");
+	overflow: auto;
 	li {
 		position:relative;
 	}
 	li .content{
-		color:#DDD;
+		color: @inactive-color;
 		margin:2px;
 		padding:7px 10px;
 		display:inline-block;
@@ -245,13 +264,14 @@ a.btn-delete{
 .container{
 	height:100%;	
 	margin-top: 60px;
-	overflow-x:hidden;
+	overflow: hidden;
 }
 
 .main-view{
-	height:calc(~"100% - 50px");
+	height: 100%;
 }
 .chat-view{
+	height: 100%;
 }
 .name-box{
 	max-width:200px;

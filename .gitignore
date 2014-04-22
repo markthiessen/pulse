@@ -31,3 +31,7 @@ node_modules
 
 # Mac crap
 .DS_Store
+
+# Visual studio user & debug files
+*.suo
+obj/

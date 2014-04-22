@@ -1,4 +1,4 @@
-var PulseApp = angular.module('PulseApp', ['ngRoute','ngResource'])
+var PulseApp = angular.module('PulseApp', ['ngRoute', 'ngResource', 'ngSanitize', 'ngCookies'])
 .config(['$routeProvider', function($routeProvider){
 	$routeProvider
 		.when('/', {
@@ -12,6 +12,10 @@ var PulseApp = angular.module('PulseApp', ['ngRoute','ngResource'])
 		.when('/admin', {
 			templateUrl: '/javascripts/app/views/admin.html',
 			controller: 'AdminCtrl'
+		})
+		.when('/yammer', {
+			templateUrl: '/javascripts/app/views/yammer.html',
+			controller: 'YammerCtrl'
 		})
 		.otherwise({
 			redirectTo:'/'

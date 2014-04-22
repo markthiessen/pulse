@@ -1,0 +1,87 @@
+.yammer {
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+
+	.yammerInner {
+		height: 100%;
+		margin: 0;
+		font-family: Segoe UI;
+		font-size: 14px;
+		position: relative;
+		overflow: auto;
+	}
+
+	a {
+		color: @foreground-color;
+	}
+
+	a.glyphicon {
+		text-decoration: none;
+	}
+
+	.enscroll-track.vertical-track {
+		background: none repeat scroll 0 0 @button-border-color;
+		border-radius: 0;
+		width: 4px;
+		margin-right: 0;
+	}
+	.enscroll-track .vertical-handle {
+		background: none repeat scroll 0 0 @accent-color;
+		border-radius: 0;
+		width: 4px;
+	}
+	.enscroll-track.vertical-track.dragging .vertical-handle, .enscroll-track.vertical-track:hover .vertical-handle {
+		width: 7px;
+	}
+
+	.settingsFlyout {
+		position: fixed;
+		top: 20px;
+		right: 35px;
+		width: 300px;
+		height: calc(~"100% - 40px");
+		padding: 10px;
+		background-color: @background-color;
+		color: @foreground-color;
+		border: 1px solid @accent-color;
+
+		h3 {
+			margin: 0 0 25px;
+		}
+
+		.accentColorSelectors {
+			display: block;
+			margin-top: 20px;
+
+			.selector {
+				display: block;
+				width: 50px;
+				height: 50px;
+				margin: 0 5px 5px 0;
+				float: left;
+				border: 2px solid transparent;
+			}
+			.selector.current {
+				border: 2px solid @foreground-color;
+			}
+		}
+
+		.closeBtn {
+			position: absolute;
+			top: 0;
+			right: 0;
+			margin: -9px -5px 0 0;
+			font-size: 18pt;
+			color: @accent-color;
+			text-decoration: none;
+		}
+	}
+}
+
+.fancybox-title {
+	color: @accent-color;
+	a {
+		color: @accent-color;
+	}
+}
