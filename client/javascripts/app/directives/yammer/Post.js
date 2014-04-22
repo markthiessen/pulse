@@ -141,7 +141,7 @@
 			$scope.openReply = function () {
 				$scope.message.IsReplyOpen = true;
 				$timeout(function () {
-					$("#message" + $scope.message.MessageId + " .post:visible").scrollintoview({ duration: "normal" });
+					$("#message" + $scope.message.MessageId + " .post div:visible").scrollintoview({ duration: "normal" });
 				}, 1);
 			};
 

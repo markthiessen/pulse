@@ -57,8 +57,8 @@
 					'<input class="fileInput" type="file" style="display: none;" />' +
 					'<div class="pullRight">' +
 						'<a href="" ng-click="closeNewPost()" ng-show="newMessage.NumberOfImagesUpLoading <= 0 && !isSearchingPostLink">Cancel</a>' +
-						'<span class="disabledPost" ng-hide="(newMessage.PostBody.length > 0 || newMessage.Files && newMessage.Files.length > 0) && newMessage.NumberOfImagesUpLoading <= 0 && !isSearchingPostLink">Post</span>' +
-						'<a class="last" href="" ng-click="post()" ng-show="(newMessage.PostBody.length > 0 || newMessage.Files && newMessage.Files.length > 0) && newMessage.NumberOfImagesUpLoading <= 0 && !isSearchingPostLink">Post</a>' +
+						'<span class="disabledPost" ng-hide="(newMessage.PostBody.length > 0 || newMessage.Files.length > 0 || newMessage.Links.length > 0 || newMessage.Images.length > 0) && newMessage.NumberOfImagesUpLoading <= 0 && !isSearchingPostLink">Post</span>' +
+						'<a class="last" href="" ng-click="post()" ng-show="(newMessage.PostBody.length > 0 || newMessage.Files.length > 0 || newMessage.Links.length > 0 || newMessage.Images.length > 0) && newMessage.NumberOfImagesUpLoading <= 0 && !isSearchingPostLink">Post</a>' +
 					'</div>' +
 				'</div>' +
 			'</div>' +
