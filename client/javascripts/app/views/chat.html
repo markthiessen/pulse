@@ -26,6 +26,9 @@
 					<span ng-show="message.likes>0" style="font-size:10px; font-weight:bold; position:relative; top:-3px;">+{{message.likes}}</span>
 			</li>
 		</ul>
+		<div class="checkbox-inline showSystemMsg">
+			<label><input type="checkbox" ng-model="showSystemMsg"><span class="text">Sys Msg</span></label>
+		</div>
 	</div>
 </div>
 <div class="chat-form-wrapper" ng-class="{visible: true}">
@@ -44,9 +47,6 @@
 					<button type="submit" class="btn btn-default"  autocolor="user.name">Send</button>
 				</span>
 			</div>
-		</div>
-		<div class="checkbox-inline showSystemMsg">
-			<label><input type="checkbox" ng-model="showSystemMsg"><span class="text">Sys Msg</span></label>
 		</div>
 	</form>
 </div>
