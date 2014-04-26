@@ -112,8 +112,10 @@
 						success(result[0].data.data);
 					}
 					yammerService.longPoll(success);
-				} else
+				} else {
 					console.log(result);
+					fail(result);
+				}
 			},
 			function (error) {
 				console.log(error);
