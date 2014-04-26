@@ -21,7 +21,7 @@
 		</div>
 		<div class="thread">
 			<div class="postThread" ng-if="newPostOpen" new-post="" on-post="data.onPost" current-user="data.currentUser" on-cancel="closeNewPost()" users="data.users" groups="data.groups"></div>
-			<div class="thread" ng-repeat="message in data.thread.Items" post="" message="message" root-list="data.thread.Items" on-post="data.onPost" users="data.users" groups="data.groups" current-user="data.currentUser"></div>
+			<div ng-repeat="message in data.thread.Items" post="" message="message" root-list="data.thread.Items" on-post="data.onPost" users="data.users" groups="data.groups" current-user="data.currentUser"></div>
 		</div>
 		<button class="showOlderButton btn" ng-click="data.showOlder()" ng-show="data.olderAvailable && !data.isRefreshing && !data.isUpdating">Show Older</button>
 	</div>
