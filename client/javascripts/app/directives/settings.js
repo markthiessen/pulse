@@ -1,4 +1,4 @@
-PulseApp.directive('settings', function ($cookieStore) {
+PulseApp.directive('settings', function ($cookieStore, $timeout) {
 	return {
 		restrict: 'A',
 		scope: {},
@@ -14,13 +14,19 @@ PulseApp.directive('settings', function ($cookieStore) {
 			$scope.applyAndSaveThemeSettings = function () {
 				var lightOrDark = $scope.settings.theme == 0 ? 'light' : 'dark';
 
-				$('.yammerStyleSheet').remove();
-				$('head').append('<link id="yammerStyleSheet" rel="stylesheet" type="text/css" href="/stylesheets/yammer/' + lightOrDark + '_yammer.css">');
-
-				$('.mainStyleSheet').remove();
-				$('head').append('<link id="mainStyleSheet" rel="stylesheet" type="text/css" href="/stylesheets/' + lightOrDark + '_style.css">');
+				$scope.updateStyleSheet('yammerStyleSheet', '/stylesheets/yammer/' + lightOrDark + '_yammer.css');
+				$scope.updateStyleSheet('mainStyleSheet', '/stylesheets/' + lightOrDark + '_style.css');
 
 				$cookieStore.put("settings", $scope.settings);
+			};
+
+			$scope.updateStyleSheet = function (name, path) {
+				var styleSheet = $('<link rel="stylesheet" type="text/css" href="' + path + '">');
+				$('head').append(styleSheet);
+				$timeout(function () {
+					$('#' + name).remove();
+					styleSheet.attr('id', name);
+				}, 1000);
 			};
 
 			$(document).ready(function () {
