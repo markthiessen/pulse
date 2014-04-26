@@ -12,7 +12,7 @@
 	</div>
 	<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 chat-messages-container">
 		<ul id="chatMessages" class="chat-messages" autoscroll>
-			<li ng-repeat="message in chatMessages track by message.id">
+			<li ng-repeat="message in chatMessages track by message.id" ng-show="!message.isSystemMessage || showSystemMsg">
 				<span class="username" ng-show="!message.isSystemMessage">{{message.user.name}}</span>
 				<div class="content" autocolor="message.user.name">
 					<message message="message"></message>
@@ -35,15 +35,18 @@
 				<span class="input-group-addon" ng-click="nextIcon()" autocolor="user.name" ><i user-icon="user.icon" /></span>
 				<input class="form-control name-box" type="text" ng-model="user.name" escape-unicode placeholder="your name"/>
 			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon" autocolor="user.name"><i class="glyphicon glyphicon-comment"></i></span>
+				<input class="form-control" type="text" ng-model="message" placeholder="your message" ng-change="notifyTyping()" autofocus escape-unicode user-complete users="users"/>
+				<span class="input-group-btn">
+					<button type="submit" class="btn btn-default"  autocolor="user.name">Send</button>
+				</span>
 			</div>
-			<div class="form-group">
-				<div class="input-group">
-					<span class="input-group-addon" autocolor="user.name"><i class="glyphicon glyphicon-comment"></i></span>
-					<input class="form-control" type="text" ng-model="message" placeholder="your message" ng-change="notifyTyping()" autofocus escape-unicode user-complete users="users"/>
-					<span class="input-group-btn">
-						<button type="submit" class="btn btn-default"  autocolor="user.name">Send</button>
-					</span>
-				</div>
-			</div>
-		<form>
+		</div>
+		<div class="checkbox-inline showSystemMsg">
+			<label><input type="checkbox" ng-model="showSystemMsg"><span class="text">Sys Msg</span></label>
+		</div>
+	</form>
 </div>
