@@ -13,13 +13,15 @@ PulseApp.factory('$chatUserNotifications', ['$rootScope', '$chatService', '$page
 
 		$rootScope.$watch('chatMessages', function (newVal) {
 			if (newVal.length) {
-				$pageInfoService.enableNewMessageNotification();
-				$rootScope.chatHasNewMsg = true;
 				var newMessage = newVal[newVal.length - 1];
-				$rootScope.audioSrc = $sce.trustAsResourceUrl(newMessage.audio);
+				if (!newMessage.isSystemMessage) {
+					$pageInfoService.enableNewMessageNotification();
+					$rootScope.chatHasNewMsg = true;
+					$rootScope.audioSrc = $sce.trustAsResourceUrl(newMessage.audio);
 
-				if (newMessage.text.toLowerCase().indexOf('@' + $rootScope.user.name.toLowerCase()) >= 0)
-					notify(newMessage.text);
+					if (newMessage.text.toLowerCase().indexOf('@' + $rootScope.user.name.toLowerCase()) >= 0)
+						notify(newMessage.text);
+				}
 			}
 		}, true);
 
