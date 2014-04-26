@@ -1,7 +1,7 @@
 PulseApp.controller('YammerCtrl', 
-	['$scope', '$rootScope', '$chatService', '$pageInfoService', '$sce', '$timeout', 'yammerData',
-	function($scope, $rootScope, $chatService, $pageInfoService, $sce, $timeout, yammerData){
-		$rootScope.activeView='Yammer';
+	['$scope', '$rootScope', '$timeout', 'yammerData',
+	function($scope, $rootScope, $timeout, yammerData){
+		$rootScope.activeView = 'Yammer';
 
 		$scope.data = yammerData;
 		$scope.threadId = -1; //TODO
