@@ -15,10 +15,10 @@ PulseApp.directive('settings', function ($cookieStore) {
 				var lightOrDark = $scope.settings.theme == 0 ? 'light' : 'dark';
 
 				$('.yammerStyleSheet').remove();
-				$('head').append('<link id="yammerStyleSheet" rel="stylesheet" type="text/css" href="' + window.location.origin + '/stylesheets/yammer/' + lightOrDark + '_yammer.css">');
+				$('head').append('<link id="yammerStyleSheet" rel="stylesheet" type="text/css" href="/stylesheets/yammer/' + lightOrDark + '_yammer.css">');
 
 				$('.mainStyleSheet').remove();
-				$('head').append('<link id="mainStyleSheet" rel="stylesheet" type="text/css" href="' + window.location.origin + '/stylesheets/' + lightOrDark + '_style.css">');
+				$('head').append('<link id="mainStyleSheet" rel="stylesheet" type="text/css" href="/stylesheets/' + lightOrDark + '_style.css">');
 
 				$cookieStore.put("settings", $scope.settings);
 			};

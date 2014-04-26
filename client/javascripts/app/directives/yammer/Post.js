@@ -141,7 +141,7 @@
 			$scope.openReply = function () {
 				$scope.message.IsReplyOpen = true;
 				$timeout(function () {
-					$("#message" + $scope.message.MessageId + " .post:visible").scrollintoview({ duration: "normal" });
+					$("#message" + $scope.message.MessageId + " .post div:visible").scrollintoview({ duration: "normal" });
 				}, 1);
 			};
 
@@ -156,7 +156,7 @@
 				if (window.confirm("Delete message?")) {
 					yammerService.deleteMessage($scope.message.MessageId, function () {
 						var removeMessage = function (list) {
-							var index = $.inArray(message, list);
+							var index = $.inArray($scope.message, list);
 							if (index >= 0) {
 								list.splice(index, 1);
 								$rootScope.$apply();

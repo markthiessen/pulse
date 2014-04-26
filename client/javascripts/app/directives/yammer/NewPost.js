@@ -57,8 +57,8 @@
 					'<input class="fileInput" type="file" style="display: none;" />' +
 					'<div class="pullRight">' +
 						'<a href="" ng-click="closeNewPost()" ng-show="newMessage.NumberOfImagesUpLoading <= 0 && !isSearchingPostLink">Cancel</a>' +
-						'<span class="disabledPost" ng-hide="(newMessage.PostBody.length > 0 || newMessage.Files && newMessage.Files.length > 0) && newMessage.NumberOfImagesUpLoading <= 0 && !isSearchingPostLink">Post</span>' +
-						'<a class="last" href="" ng-click="post()" ng-show="(newMessage.PostBody.length > 0 || newMessage.Files && newMessage.Files.length > 0) && newMessage.NumberOfImagesUpLoading <= 0 && !isSearchingPostLink">Post</a>' +
+						'<span class="disabledPost" ng-hide="(newMessage.PostBody.length > 0 || newMessage.Files.length > 0 || newMessage.Links.length > 0 || newMessage.Images.length > 0) && newMessage.NumberOfImagesUpLoading <= 0 && !isSearchingPostLink">Post</span>' +
+						'<a class="last" href="" ng-click="post()" ng-show="(newMessage.PostBody.length > 0 || newMessage.Files.length > 0 || newMessage.Links.length > 0 || newMessage.Images.length > 0) && newMessage.NumberOfImagesUpLoading <= 0 && !isSearchingPostLink">Post</a>' +
 					'</div>' +
 				'</div>' +
 			'</div>' +
@@ -77,14 +77,19 @@
 			$scope.post = function () {
 				$scope.newMessage.IsPosting = true;
 
-				var uploadedFileIds = [];
-				$.each($scope.newMessage.Files, function (index, value) { uploadedFileIds.push("uploaded_file:" + value.data.id); });
 				var topicNames = [];
 				$.each($scope.newMessage.Tags, function (index, value) { topicNames.push(value.Name); });
 				
 				var linkUrl = null;
-				if ($scope.newMessage.Links.length > 0)
-					linkUrl = $scope.newMessage.Links[0].Link;
+				var uploadedFileIds = [];
+				var addFileOrLink = function (index, value) {
+					if (value.IsFile)
+						uploadedFileIds.push("uploaded_file:" + value.Id);
+					else
+						linkUrl = value.Link;
+				};
+				$.each($scope.newMessage.Links, addFileOrLink);
+				$.each($scope.newMessage.Images, addFileOrLink);
 
 				var notifyUserIds = "[";
 				var body = $scope.newMessage.PostBody;
@@ -158,7 +163,7 @@
 				if (confirmed || window.confirm("Cancel post?")) {
 					if ($scope.parentMessage)
 						$scope.parentMessage.IsReplyOpen = false;
-					$scope.clearMessage(true);
+					$scope.clearMessage(!confirmed);
 
 					if ($scope.onCancel)
 						$scope.onCancel();
