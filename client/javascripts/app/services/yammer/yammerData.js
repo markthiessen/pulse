@@ -92,7 +92,7 @@
 		yammerService.getThreadNewer(yammerData.getNewestMessage().MessageId, function (result) {
 			var messages = [];
 			$.each(result.messages, function (index, message) {
-				messages.push({ threadId: message.thread_id, message: message, references: update.references, meta: update.meta });
+				messages.push({ threadId: message.thread_id, message: message, references: result.references, meta: result.meta });
 			});
 			for (var i = messages.length - 1; i >= 0; i--) {
 				if (i == messages.length - 1)
