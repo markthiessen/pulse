@@ -36,14 +36,14 @@
 					'<a ng-show="message.IsRootMessage" class="glyphicon glyphicon-link messageLink" target="_blank" ng-href="{{message.Link}}"></a>' +
 					'<span class="contents textContents" ng-class="{\'expanded\': message.CanCollapse}" ng-hide="message.Modules.length > 0" ng-bind-html="message.HtmlContent"></span>' +
 					'<span class="contents" ng-show="message.Modules.length > 0" ng-repeat="module in message.Modules"><span id="module{{module.Id}}" class="module" compile="module.HtmlContent"></span></span>' +
-					'<span class="commands">' +
+					'<span class="commands" ng-show="message.CanExpand || message.CanCollapse">' +
 						'<a href="" ng-show="message.CanExpand" ng-click="expandContents()">Expand</a>' +
 						'<a href="" ng-show="message.CanCollapse" ng-click="collapseContents()">Collapse</a>' +
 					'</span>' +
 				'</span>' +
 			'</span>' +
 
-			'<div images-and-links="" message="message"></div>' +
+			'<div images-and-links="" message="message" ng-show="message.Links.length > 0 || message.Images.length > 0"></div>' +
 
 			'<div class="tags" ng-show="message.Tags.length > 0">' +
 				'<a class="tag" ng-repeat="tag in message.Tags" target="_blank" ng-href="{{tag.Link}}">#{{tag.Title}}</a>' +

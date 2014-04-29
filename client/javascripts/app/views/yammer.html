@@ -15,13 +15,13 @@
 					<span class="glyphicon glyphicon-search"></span>
 					<input type="text" placeholder="Search" ng-keyup="search($event)"/>
 				</span>
-				<a class="currentUser" target="_blank" title="Your Profile" ng-href="{{data.currentUser.ProfileUrl}}" ng-class="{'new': yammerData.newNotifications.length > 0}"><img ng-src="{{data.currentUser.PictureUrl}}"/></a>
-				<a class="notifications glyphicon glyphicon-bell" target="_blank" title="Notifications" href="https://www.yammer.com/#/notifications/index?type=notifications"></a>
+				<a class="currentUser" target="_blank" title="Your Profile" ng-href="{{data.currentUser.ProfileUrl}}"><img ng-src="{{data.currentUser.PictureUrl}}"/></a>
+				<a class="notifications glyphicon glyphicon-bell" ng-class="{'new': data.newNotifications.length > 0}" ng-click="data.newNotifications.length = 0" target="_blank" title="Notifications" href="https://www.yammer.com/#/notifications/index?type=notifications"></a>
 			</span>
 		</div>
 		<div class="thread">
 			<div class="postThread" ng-if="newPostOpen" new-post="" on-post="data.onPost" current-user="data.currentUser" on-cancel="closeNewPost()" users="data.users" groups="data.groups"></div>
-			<div class="thread" ng-repeat="message in data.thread.Items" post="" message="message" root-list="data.thread.Items" on-post="data.onPost" users="data.users" groups="data.groups" current-user="data.currentUser"></div>
+			<div ng-repeat="message in data.thread.Items" post="" message="message" root-list="data.thread.Items" on-post="data.onPost" users="data.users" groups="data.groups" current-user="data.currentUser"></div>
 		</div>
 		<button class="showOlderButton btn" ng-click="data.showOlder()" ng-show="data.olderAvailable && !data.isRefreshing && !data.isUpdating">Show Older</button>
 	</div>

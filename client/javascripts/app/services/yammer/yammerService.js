@@ -112,8 +112,10 @@
 						success(result[0].data.data);
 					}
 					yammerService.longPoll(success);
-				} else
+				} else {
 					console.log(result);
+					fail(result);
+				}
 			},
 			function (error) {
 				console.log(error);
@@ -184,7 +186,7 @@
 	};
 
 	yammerService.post = function (body, groupId, replyToMessageId, attachements, notifyUsers, linkUrl, topicNames, success) {
-		var data = { body: HtmlEncode(body), group_id: groupId, replied_to_id: replyToMessageId, attached_objects: attachements, cc: notifyUsers, og_url: linkUrl };
+		var data = { body: body, group_id: groupId, replied_to_id: replyToMessageId, attached_objects: attachements, cc: notifyUsers, og_url: linkUrl };
 
 		if (topicNames) {
 			for (var i = 0; i < topicNames.length; i++) {

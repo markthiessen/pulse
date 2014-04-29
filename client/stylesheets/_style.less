@@ -118,14 +118,32 @@ input{
 }
 
 .chat-messages-container {
-	height: 100%;
+	height: calc(~"100% - 135px");
+	position: relative;
+
+	.showSystemMsg {
+		position: absolute;
+		bottom: 0;
+		right: 35px;
+		padding: 2px 2px 0 2px;
+		font-size: 8pt;
+		input {
+			min-height: 0;
+			display: inline-block;
+			vertical-align: middle;
+			margin: 3px 2px 0 0;
+		}
+		.text {
+			display: inline-block;
+			vertical-align: middle;
+		}
+	}
 }
 
 ul.chat-messages{
 	position:relative;
-	margin-top:10px;
 	list-style:none;
-	height: calc(~"100% - 147px");
+	height: 100%;
 	overflow: auto;
 	li {
 		position:relative;

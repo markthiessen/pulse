@@ -1,6 +1,6 @@
 ﻿PulseApp.factory('yammerData', function ($rootScope, $timeout, yammerService, yammerMessage, processingQueue) {
 	var yammerData = {
-		thread: {}, newMessageCount: 0, updates: [], users: yammerService.users, groups: yammerService.groups,
+		thread: {}, newMessageCount: 0, users: yammerService.users, groups: yammerService.groups,
 		refreshQueue: {}, addNewReplyQueue: {},	isAuthenticated: {}
 	};
 
@@ -89,19 +89,21 @@
 		};
 		markAsRead(yammerData.thread.Items);
 
-		var messages = [];
-		$.each(yammerData.updates, function (index, update) {
-			$.each(update.messages, function (i, message) {
-				messages.push({ threadId: message.thread_id, message: message, references: update.references, meta: update.meta });
+		yammerService.getThreadNewer(yammerData.getNewestMessage().MessageId, function (result) {
+			var messages = [];
+			$.each(result.messages, function (index, message) {
+				messages.push({ threadId: message.thread_id, message: message, references: result.references, meta: result.meta });
 			});
+			for (var i = messages.length - 1; i >= 0; i--) {
+				if (i == messages.length - 1)
+					messages[i].isLast = true;
+				processingQueue.addItem(yammerData.addNewReplyQueue, messages[i]);
+				processingQueue.startQueueIfNeeded(yammerData.addNewReplyQueue, yammerData.processAddNewReplyQueue, yammerData.updateFinished);
+			}
+			yammerData.updateNotifications();
+			if (messages.length <= 0)
+				yammerData.isUpdating = false;
 		});
-		for (var i = messages.length - 1; i >= 0; i--) {
-			if (i == messages.length - 1)
-				messages[i].isLast = true;
-			processingQueue.addItem(yammerData.addNewReplyQueue, messages[i]);
-			processingQueue.startQueueIfNeeded(yammerData.addNewReplyQueue, yammerData.processAddNewReplyQueue, yammerData.updateFinished);
-		}
-		yammerData.updateNotifications();
 	};
 	yammerData.processAddNewReplyQueue = function (data) {
 		data.thread = FirstOrDefault(yammerData.thread.Items, function (e) { return e.ThreadId == data.threadId; });
@@ -142,13 +144,13 @@
 	};
 	yammerData.updateFinished = function () {
 		yammerData.setNewMessageCount(0);
-		yammerData.updates.length = 0;
 		yammerData.isUpdating = false;
 	};
 
 	yammerData.updateNotifications = function () {
 		yammerService.getNotifications(function (result) {
 			yammerData.newNotifications = $.grep(result.items, function (i) { return i.unseen; });
+			$rootScope.$apply();
 		});
 	};
 
@@ -161,7 +163,6 @@
 
 	yammerData.longPoll = function () {
 		yammerService.longPoll(function (result) {
-			yammerData.updates.splice(0, 0, result);
 			yammerData.setNewMessageCount(yammerData.newMessageCount + result.messages.length);
 		}, function(error){
 			yammerData.startPolling();

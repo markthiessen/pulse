@@ -17,7 +17,7 @@
 		<a class="settings" settings=""></a>
         <div class="btn-group" style="float:right; margin:0 auto;margin:8px;">
           <a href="#/" class="btn btn-default" ng-class="{active: activeView=='Announcements'}"><i class="glyphicon glyphicon-exclamation-sign"></i>&nbsp;Announcements</a>
-          <a href="#/chat" class="btn btn-default" ng-class="{active: activeView=='Chat'}"><i class="glyphicon glyphicon-comment"></i>&nbsp;Chat</a>
+          <a href="#/chat" class="btn btn-default" ng-class="{active: activeView=='Chat'}"><i class="glyphicon glyphicon-comment"></i>&nbsp;Chat<span ng-show="chatHasNewMsg">*</span></a>
 		  <a href="#/yammer" class="btn btn-default" ng-class="{active: activeView=='Yammer'}"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;Yammer<span ng-show="yammerNewMsgCount > 0">*</span></a>
         </div>
 

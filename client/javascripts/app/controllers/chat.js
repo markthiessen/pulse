@@ -1,11 +1,10 @@
 PulseApp.controller('ChatCtrl', 
-	['$scope', '$rootScope', '$chatService', '$pageInfoService', '$sce', '$timeout',
-	function($scope, $rootScope, $chatService, $pageInfoService, $sce, $timeout){
+	['$scope', '$rootScope', '$chatUserNotifications', '$chatService', '$timeout',
+	function ($scope, $rootScope, $chatUserNotifications, $chatService, $timeout) {
 		$rootScope.activeView='Chat';
 
 		$scope.chatMessages = $chatService.chatMessages;
 		$scope.users = $chatService.users;
-		$scope.audioSrc = '';
 
 		$scope.user = $rootScope.user;
 
@@ -49,17 +48,6 @@ PulseApp.controller('ChatCtrl',
 
 
 
-		$scope.$watch('chatMessages', function(newVal){
-			if(newVal.length) {
-				$pageInfoService.enableNewMessageNotification();
-				var newMessage = newVal[newVal.length-1];
-				$scope.audioSrc = $sce.trustAsResourceUrl(newMessage.audio);
-
-				if(newMessage.text.toLowerCase().indexOf('@'+$rootScope.user.name.toLowerCase())>=0)
-					notify(newMessage.text);
-			}
-		}, true);
-
 		var lastTypingNotification = moment().subtract('s', 3);
 		$scope.notifyTyping = function(){
 			var threeSecondsAgo = moment().subtract('s', 3);
@@ -78,7 +66,7 @@ PulseApp.controller('ChatCtrl',
 		};
 
 		$scope.clearNotifications = function(){
-			$pageInfoService.disableNewMessageNotification();
+			$chatUserNotifications.clearNotifications();
 		}
 
 		$scope.likeMessage = function(id){
@@ -92,16 +80,4 @@ PulseApp.controller('ChatCtrl',
 		$scope.isMyMessage = function(message){
 			return message.user == $scope.user.name;
 		}
-
-		function notify(message) {
-			if(window.webkitNotifications){
-				if (window.webkitNotifications.checkPermission() > 0) {
-					RequestPermission(notify);
-				} else {
-					var notification = window.webkitNotifications.createNotification('/images/icon.png', message, '');
-					notification.show();
-				}
-			}
-		}
-
 }]);
