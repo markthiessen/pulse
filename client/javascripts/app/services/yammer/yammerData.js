@@ -150,6 +150,7 @@
 	yammerData.updateNotifications = function () {
 		yammerService.getNotifications(function (result) {
 			yammerData.newNotifications = $.grep(result.items, function (i) { return i.unseen; });
+			$rootScope.$apply();
 		});
 	};
 

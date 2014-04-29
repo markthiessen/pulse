@@ -15,8 +15,8 @@
 					<span class="glyphicon glyphicon-search"></span>
 					<input type="text" placeholder="Search" ng-keyup="search($event)"/>
 				</span>
-				<a class="currentUser" target="_blank" title="Your Profile" ng-href="{{data.currentUser.ProfileUrl}}" ng-class="{'new': yammerData.newNotifications.length > 0}"><img ng-src="{{data.currentUser.PictureUrl}}"/></a>
-				<a class="notifications glyphicon glyphicon-bell" target="_blank" title="Notifications" href="https://www.yammer.com/#/notifications/index?type=notifications"></a>
+				<a class="currentUser" target="_blank" title="Your Profile" ng-href="{{data.currentUser.ProfileUrl}}"><img ng-src="{{data.currentUser.PictureUrl}}"/></a>
+				<a class="notifications glyphicon glyphicon-bell" ng-class="{'new': data.newNotifications.length > 0}" ng-click="data.newNotifications.length = 0" target="_blank" title="Notifications" href="https://www.yammer.com/#/notifications/index?type=notifications"></a>
 			</span>
 		</div>
 		<div class="thread">
