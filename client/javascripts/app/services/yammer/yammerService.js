@@ -3,7 +3,7 @@
 	var yammerService = {
 		pollingCounter: 1,
 		allCompanyGroup: { Id: -1, Name: 'All Company', PictureUrl: '', Description: '' },
-		baseYammerServiceUrl: 'https://www.yammer.com/api/v1/',
+		baseYammerServiceUrl: 'https://api.yammer.com/api/v1/',
 		baseYammerFilesUrl: 'https://files.yammer.com/v2/',
 		baseYammerUrl: 'https://www.yammer.com/',
 		users: [],
