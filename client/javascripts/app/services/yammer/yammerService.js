@@ -265,7 +265,7 @@
 
 	yammerService.getNotifications = function(success) {
 		yam.request({
-			url: yammerService.baseYammerServiceUrl + "streams/notifications.json",
+			url: yammerService.baseYammerServiceUrl + "streams/notifications.json?mark_seen=true&inbox_supported_client=false",
 			method: "GET",
 			success: function(result) { success(result); },
 			error: function(result) { console.log(result); }
