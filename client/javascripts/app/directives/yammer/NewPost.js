@@ -80,7 +80,7 @@
 				var topicNames = [];
 				$.each($scope.newMessage.Tags, function (index, value) { topicNames.push(value.Name); });
 				
-				var linkUrl = null;
+				var linkUrl = undefined;
 				var uploadedFileIds = [];
 				var addFileOrLink = function (index, value) {
 					if (value.IsFile)
@@ -101,8 +101,8 @@
 					notifyUserIds = notifyUserIds.substr(0, notifyUserIds.length - 1);
 				notifyUserIds += "]";
 
-				var repliedToMessageId = $scope.parentMessage ? $scope.parentMessage.MessageId : null;
-				var groupId = $scope.newMessage.Group.Id >= 0 ? $scope.newMessage.Group.Id : null;
+				var repliedToMessageId = $scope.parentMessage ? $scope.parentMessage.MessageId : undefined;
+				var groupId = $scope.newMessage.Group.Id >= 0 ? $scope.newMessage.Group.Id : undefined;
 
 				yammerService.post(body, groupId, repliedToMessageId, uploadedFileIds, notifyUserIds, linkUrl, topicNames, function (result) {
 					$scope.onPost(result, $scope.parentMessage);
@@ -114,29 +114,33 @@
 			};
 
 			$scope.uploadFile = function () {
-				var fileInput = $scope.parentMessage ? $('#message' + $scope.parentMessage.MessageId + ' .fileInput') : $('.postThread .fileInput');
+				$scope.getFileInput().trigger('click');
+			};
 
-				fileInput.change(function () {
-					if (fileInput[0].files.length > 0) {
-						$scope.newMessage.NumberOfImagesUpLoading++;
-						var fileInfo = { IsUploading: true, UploadedPercent: 0 };
-						$scope.newMessage.Files.push(fileInfo);
+			$scope.getFileInput = function() {
+				return $scope.parentMessage ? $('#message' + $scope.parentMessage.MessageId + ' .fileInput') : $('.postThread .fileInput');
+			};
+
+			$scope.fileInputChanged = function () {
+				var fileInput = $scope.getFileInput();
+				if (fileInput[0].files.length > 0) {
+					$scope.newMessage.NumberOfImagesUpLoading++;
+					var fileInfo = { IsUploading: true, UploadedPercent: 0 };
+					$scope.newMessage.Files.push(fileInfo);
+					$rootScope.$apply();
+
+					yammerService.uploadFile(fileInput[0].files[0], function (progress) {
+						fileInfo.UploadedPercent = Math.ceil((progress.loaded / progress.total) * 100);
 						$rootScope.$apply();
+					}, function (result) {
+						$scope.newMessage.NumberOfImagesUpLoading--;
+						$scope.newMessage.Files.splice($.inArray(fileInfo, $scope.newMessage.Files), 1);
+						$scope.addLinkOrImage($.parseJSON(result), true);
+					});
 
-						yammerService.uploadFile(fileInput[0].files[0], function (progress) {
-							fileInfo.UploadedPercent = Math.ceil((progress.loaded / progress.total) * 100);
-							$rootScope.$apply();
-						}, function (result) {
-							$scope.newMessage.NumberOfImagesUpLoading--;
-							$scope.newMessage.Files.splice($.inArray(fileInfo, $scope.newMessage.Files), 1);
-							$scope.addLinkOrImage($.parseJSON(result), true);
-						});
-
-						fileInput.replaceWith(fileInput.clone());
-					}
-				});
-
-				fileInput.trigger('click');
+					fileInput.replaceWith(fileInput.clone());
+					$scope.getFileInput().change($scope.fileInputChanged);
+				}
 			};
 
 			$scope.removeImage = function (image, confirmed) {
@@ -197,6 +201,8 @@
 				$scope.newMessage.Tags.length = 0;
 				$scope.newMessage.Users.length = 0;
 			};
+
+			$scope.getFileInput().change($scope.fileInputChanged);
 		}
 	};
 });

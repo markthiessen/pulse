@@ -3,7 +3,7 @@
 	var yammerService = {
 		pollingCounter: 1,
 		allCompanyGroup: { Id: -1, Name: 'All Company', PictureUrl: '', Description: '' },
-		baseYammerServiceUrl: 'https://www.yammer.com/api/v1/',
+		baseYammerServiceUrl: 'https://api.yammer.com/api/v1/',
 		baseYammerFilesUrl: 'https://files.yammer.com/v2/',
 		baseYammerUrl: 'https://www.yammer.com/',
 		users: [],
@@ -265,7 +265,7 @@
 
 	yammerService.getNotifications = function(success) {
 		yam.request({
-			url: yammerService.baseYammerServiceUrl + "streams/notifications.json",
+			url: yammerService.baseYammerServiceUrl + "streams/notifications.json?mark_seen=true&inbox_supported_client=false",
 			method: "GET",
 			success: function(result) { success(result); },
 			error: function(result) { console.log(result); }

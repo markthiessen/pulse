@@ -46,7 +46,7 @@
 			};
 
 			$scope.resetValueIfNeeded();
-
+			
 			$scope.$watch('autoCompleteText', function () {
 				if ($scope.onValueChange)
 					$scope.onValueChange($scope.autoCompleteText);
@@ -110,7 +110,8 @@
 			};
 			
 			$scope.autoComplete = function () {
-				$scope.isDirty = true;
+				if ($scope.isDirty !== undefined)
+					$scope.isDirty = true;
 				$timeout.cancel($scope.autoCompleteTimer);
 
 				$scope.autoCompleteTimer = $timeout(function () {
