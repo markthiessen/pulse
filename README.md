@@ -15,4 +15,5 @@ Features:
 - chat room with support for images, links, emojis, and more
 - Yammer wrapper with fully threaded conversations, to enable:
 	- register your app http://developer.yammer.com/introduction/#gs-registerapp
-	- add data-app-id="&lt;yourAppsClientId&gt;" to &lt;script src="https://assets.yammer.com/platform/yam.js" &gt;&lt;/script&gt; in server\views\_scripts.ejs
+	- set the Javascript Origins for your app under Basic Info to your server url (https://www.yammer.com/client_applications)
+	- set yammer.clientId to your Yammer Client Id in settings.json
