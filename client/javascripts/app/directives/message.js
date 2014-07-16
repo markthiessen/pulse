@@ -1,3 +1,83 @@
+(function(){
+
+function MessageProcessor($emojify) {
+
+  function isImageLink(link) {
+    var imageRegEx = /(https?:\/\/\S*\.(?:png|jpg|gif))/gi;
+    var matches = link.match(imageRegEx)
+    return matches !== null && matches.length > 0;
+  }
+
+  function imageLinkToElm(link) {
+    return angular.element('<a>').attr({'href':'#'})
+            .html(
+              angular.element('<img class="img-polaroid">').attr('src', link).attr('onerror', "this.src='/images/notfound.jpg'")
+            ).click(function(e){
+              e.preventDefault();
+              $modalService.showInModal(angular.element(this).children()[0], link);
+            });
+  }
+
+  function linkToElm(link) {
+    return angular.element('<a>').attr({'href':link,'target':'_blank'}).text(link);
+  }
+
+  function processStrings(elems, func) {
+      var newElems = [];
+
+      elems.forEach(function(item){
+        if(typeof(item)=='string'){
+          if(item !== ''){
+            newElems = newElems.concat(func(item));
+          }
+        } else {
+          newElems.push(item);
+        }
+      });
+
+      return newElems;
+  }
+
+  return {
+    replaceLinks : function (elems){
+      return processStrings(elems, function(str){
+        var newElems = [];
+
+        var urlMatches= str.match(/(https?:\/\/\S*)/gi);
+        if (urlMatches) {
+          urlMatches.forEach(function(match){
+            var index = str.indexOf(match);
+            if(index >=0){
+              var elm = null;
+              if (isImageLink(match)) {
+                elm = imageLinkToElm(match);
+              } else {
+                elm = linkToElm(match);
+              }
+              newElems.push(str.substr(0, index));
+              newElems.push(elm);
+
+              str = str.substr(index+match.length);
+            }
+          });
+        }
+
+        newElems.push(str);
+
+        return newElems;
+      });
+    },
+    replaceEmoji : function (elems){
+      return processStrings(elems, function(str){
+        var span = angular.element('<span>').text(str);
+        $emojify.run(span[0]);
+
+        return [span];
+      });
+    }
+  };
+};
+
 PulseApp.directive('message', ['$emojify', '$modalService', function($emojify, $modalService){
 
 	return {
@@ -10,7 +90,6 @@ PulseApp.directive('message', ['$emojify', '$modalService', function($emojify, $
 		transclude: false,
 		link: function(scope, elm, attrs){
 
-			var text = scope.message.text;
 			var message = scope.message;
 			if(message.isSystemMessage){
 				var systemMessagePrefix = '## ';
@@ -36,58 +115,18 @@ PulseApp.directive('message', ['$emojify', '$modalService', function($emojify, $
 				elm.parent().addClass('system');
 			}
 			else{
+        var messageProcessor = new MessageProcessor($emojify);
 
-				var newString = [];
+        var elems = messageProcessor.replaceLinks([message.text]);
+        elems =  messageProcessor.replaceEmoji(elems);
 
-				function replaceMatchesWithAnchors(matches, images){
-					matches.forEach(function(match){
-						var index = text.indexOf(match);
-						if(index>=0){
-							newString.push(text.substr(0, index));
-							if(images){
-								newString.push(
-									angular.element('<a>').attr({'href':'#'})
-										.html(
-											angular.element('<img class="img-polaroid">').attr('src', match).attr('onerror', 'this.src="/images/notfound.jpg"')
-										).click(function(e){
-											e.preventDefault();
-											$modalService.showInModal(angular.element(this).children()[0], match);
-										})
-								);
-							}
-							else{
-								newString.push(
-									angular.element('<a>').attr({'href':match,'target':'_blank'}).text(match)
-								);
-							}
-							text = text.substr(index+match.length);
-						}
-					});
-				}
-
-				var imageMatches = text.match(/(https?:\/\/\S*\.(?:png|jpg|gif))/gi);
-				if(imageMatches)
-					replaceMatchesWithAnchors(imageMatches, true);
-				else{
-					var urlMatches= text.match(/(https?:\/\/\S*)/gi);
-					if(urlMatches)
-						replaceMatchesWithAnchors(urlMatches, false);
-				}
-
-				newString.push(text);			
-
-				newString.forEach(function(item){
-					if(typeof(item)=='string'){
-						var span = angular.element('<span>').text(item);
-						$emojify.run(span[0]);
-						elm.append(span);
-					}
-					else
-						elm.append(item);
-				});
+        elems.forEach(function(item){
+          elm.append(item);
+        });
 			}
 
 		}
 	};
 
 }]);
+})();
