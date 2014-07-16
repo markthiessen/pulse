@@ -1,10 +1,17 @@
 (function(){
 
-function MessageProcessor($emojify) {
+function MessageProcessor($emojify, $modalService) {
+  var urlRegEx = /(https?:\/\/\S*)/gi;
+  var imageRegEx = /(https?:\/\/\S*\.(?:png|jpg|gif))/gi;
+  var youTubeRegEx = /(?:https?:\/\/)?(?:www\.)?(?:(?:(?:youtube.com\/watch\?[^?]*v=|youtu.be\/)([\w\-]+))(?:#t=(\d+))?(?:[^\s?]+)?)/;
 
   function isImageLink(link) {
-    var imageRegEx = /(https?:\/\/\S*\.(?:png|jpg|gif))/gi;
     var matches = link.match(imageRegEx)
+    return matches !== null && matches.length > 0;
+  }
+
+  function isYouTubeLink(link) {
+    var matches = link.match(youTubeRegEx)
     return matches !== null && matches.length > 0;
   }
 
@@ -21,6 +28,19 @@ function MessageProcessor($emojify) {
   function linkToElm(link) {
     return angular.element('<a>').attr({'href':link,'target':'_blank'}).text(link);
   }
+
+  function youTubeLinkToElm(link) {
+    var matches = link.match(youTubeRegEx);
+    var id = link.match(youTubeRegEx)[1];
+
+    var start = 0;
+    if (matches.length > 2)
+      start = link.match(youTubeRegEx)[2];
+
+    var url = '//www.youtube.com/embed/' + id + '?start=' + start;
+    return angular.element('<iframe width="427" height="255" frameborder="0" allowfullscreen></iframe>').attr('src', url);
+  }
+
 
   function processStrings(elems, func) {
       var newElems = [];
@@ -43,7 +63,7 @@ function MessageProcessor($emojify) {
       return processStrings(elems, function(str){
         var newElems = [];
 
-        var urlMatches= str.match(/(https?:\/\/\S*)/gi);
+        var urlMatches= str.match(urlRegEx);
         if (urlMatches) {
           urlMatches.forEach(function(match){
             var index = str.indexOf(match);
@@ -51,6 +71,8 @@ function MessageProcessor($emojify) {
               var elm = null;
               if (isImageLink(match)) {
                 elm = imageLinkToElm(match);
+              } else if (isYouTubeLink(match)) {
+                elm = youTubeLinkToElm(match);
               } else {
                 elm = linkToElm(match);
               }
@@ -115,7 +137,7 @@ PulseApp.directive('message', ['$emojify', '$modalService', function($emojify, $
 				elm.parent().addClass('system');
 			}
 			else{
-        var messageProcessor = new MessageProcessor($emojify);
+        var messageProcessor = new MessageProcessor($emojify, $modalService);
 
         var elems = messageProcessor.replaceLinks([message.text]);
         elems =  messageProcessor.replaceEmoji(elems);
