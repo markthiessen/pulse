@@ -8,6 +8,8 @@
   },
   "liveReload": {
   	"port" : 35729
+  },
+  "yammer": {
+  	"clientId" : "yourClientId"
   }
-
 }
