@@ -1,13 +1,24 @@
 ﻿PulseApp.factory('yammerData', function ($rootScope, $timeout, yammerService, yammerMessage, processingQueue) {
 	var yammerData = {
 		thread: {}, newMessageCount: 0, users: yammerService.users, groups: yammerService.groups,
-		refreshQueue: {}, addNewReplyQueue: {},	isAuthenticated: {}
+		refreshQueue: {}, addNewReplyQueue: {},	isAuthenticated: {}, networks: {}
 	};
 
 	yammerData.connect = function (loginButton, success) {
 		yammerService.connect(loginButton, success);
 	};
-		
+
+	yammerData.getAvalibleNetworks = function () {
+		yammerService.getNetworkAccessTokens(function(result) {
+			yammerData.networks = result;
+		});
+	};
+
+	yammerData.setCurrentNetwork = function (accessToken) {
+		yammerService.setAccessToken(accessToken);
+		yammerData.refreshFeed();
+	};
+	
 	yammerData.refreshFeed = function () {
 		yammerData.isRefreshing = true;
 		yammerData.setNewMessageCount(0);

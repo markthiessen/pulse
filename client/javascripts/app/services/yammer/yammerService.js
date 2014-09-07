@@ -14,11 +14,25 @@
 		yam.connect.loginButton(loginButton, function (resp) {
 			if (resp.authResponse) {
 				yammerService.authToken = resp.access_token.token;
-				success();
+				success(resp);
 			}
 		});
 	};
-	//yam.platform.request(url, method, data);	https://assets.yammer.com/assets/platform_js_sdk.js
+
+	yammerService.getNetworkAccessTokens = function (success) {
+		yam.request({
+			url: yammerService.baseYammerServiceUrl + "oauth/tokens.json",
+			method: "GET",
+			success: function (result) { success(result); },
+			error: function (error) { console.log(error); }
+		});
+	};
+
+	yammerService.setAccessToken = function(accessToken) {
+		yam.platform.setAuthToken(accessToken);
+		yammerService.authTokenChanged = true;
+	};
+	
 	yammerService.getFullFeed = function(success) {
 		yam.request({
 			url: yammerService.baseYammerServiceUrl + "messages/my_all.json?threaded=extended&exclude_own_messages_from_unseen=true",
@@ -108,10 +122,14 @@
 			}],
 			function (result) {
 				if (result.length > 0 && result[result.length - 1].successful) {
-					if (result[0].data && result[0].data.data && result[0].data.data.messages) {
-						success(result[0].data.data);
+					if (yammerService.authTokenChanged) {
+						yammerService.authTokenChanged = false;
+						fail(null);
+					} else {
+						if (result[0].data && result[0].data.data && result[0].data.data.messages)
+							success(result[0].data.data);
+						yammerService.longPoll(success, fail);
 					}
-					yammerService.longPoll(success);
 				} else {
 					console.log(result);
 					fail(result);
@@ -195,7 +213,7 @@
 		}
 
 		yam.request({
-			url: yammerService.baseYammerServiceUrl + "messages.json",
+			url: yammerService.baseYammerServiceUrl + "messages",
 			method: "POST",
 			data: data,
 			success: function (result) {
