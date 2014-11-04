@@ -26,7 +26,7 @@ PulseApp.factory('$modalService', ['$rootScope', '$document',
 		return {
 		    showInModal: function (elm, url, isGifV) {
 		        if (isGifV) {
-		            var link = angular.element('<video autoplay="" loop="" muted="" preload="" title="Drag to Resize" class="imgurgifvVid" style="max-width: 560px;">' +
+		            var link = angular.element('<video autoplay="" loop="" muted="" preload="" class="imgurgifvVid" style="max-width: 560px;">' +
                         '<source src="' + url + '.webm" type="video/webm" class="imgurgifvwebmsrc">' +
                         '<source src="' + url + '.mp4" type="video/mp4" class="imgurgifvmp4src"></video>')
 		        } else {

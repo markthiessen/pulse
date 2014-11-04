@@ -51,7 +51,7 @@ function MessageProcessor($emojify, $modalService) {
       var matches = link.match(gifvRegEx);
       var url = matches[0];
 
-      return angular.element('<video autoplay="" loop="" muted="" preload="" title="Drag to Resize" class="imgurgifvVid">' +
+      return angular.element('<video autoplay="" loop="" muted="" preload="" class="imgurgifvVid">' +
           '<source src="' + url + '.webm" type="video/webm" class="imgurgifvwebmsrc">'+
           '<source src="' + url + '.mp4" type="video/mp4" class="imgurgifvmp4src"></video>')
           .click(function (e) {
