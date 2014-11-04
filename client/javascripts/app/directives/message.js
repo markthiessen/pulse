@@ -4,6 +4,7 @@ function MessageProcessor($emojify, $modalService) {
   var urlRegEx = /(https?:\/\/\S*)/gi;
   var imageRegEx = /(https?:\/\/\S*\.(?:png|jpg|gif))/gi;
   var youTubeRegEx = /(?:https?:\/\/)?(?:www\.)?(?:(?:(?:youtube.com\/watch\?[^?]*v=|youtu.be\/)([\w\-]+))(?:#t=(\d+))?(?:[^\s?]+)?)/;
+  var gifvRegEx = /(?:https?:\/\/)?(?:i\.)?imgur.com\S*(?=\.(?:gif))/gi;
 
   function isImageLink(link) {
     var matches = link.match(imageRegEx)
@@ -13,6 +14,11 @@ function MessageProcessor($emojify, $modalService) {
   function isYouTubeLink(link) {
     var matches = link.match(youTubeRegEx)
     return matches !== null && matches.length > 0;
+  }
+
+  function isGifvLink(link) {
+      var matches = link.match(gifvRegEx)
+      return matches !== null && matches.length > 0;
   }
 
   function imageLinkToElm(link) {
@@ -31,14 +37,27 @@ function MessageProcessor($emojify, $modalService) {
 
   function youTubeLinkToElm(link) {
     var matches = link.match(youTubeRegEx);
-    var id = link.match(youTubeRegEx)[1];
+    var id = matches[1];
 
     var start = 0;
     if (matches.length > 2)
-      start = link.match(youTubeRegEx)[2];
+      start = matches[2];
 
     var url = '//www.youtube.com/embed/' + id + '?start=' + start;
     return angular.element('<iframe width="427" height="255" frameborder="0" allowfullscreen></iframe>').attr('src', url);
+  }
+
+  function gifvLinkToElm(link) {
+      var matches = link.match(gifvRegEx);
+      var url = matches[0];
+
+      return angular.element('<video autoplay="" loop="" muted="" preload="" title="Drag to Resize" class="imgurgifvVid">' +
+          '<source src="' + url + '.webm" type="video/webm" class="imgurgifvwebmsrc">'+
+          '<source src="' + url + '.mp4" type="video/mp4" class="imgurgifvmp4src"></video>')
+          .click(function (e) {
+              e.preventDefault();
+              $modalService.showInModal(angular.element(this).children()[0], url, true);
+          });
   }
 
 
@@ -69,12 +88,14 @@ function MessageProcessor($emojify, $modalService) {
             var index = str.indexOf(match);
             if(index >=0){
               var elm = null;
-              if (isImageLink(match)) {
-                elm = imageLinkToElm(match);
+              if (isGifvLink(match)) {
+                  elm = gifvLinkToElm(match);
+              } else if (isImageLink(match)) {
+                  elm = imageLinkToElm(match);
               } else if (isYouTubeLink(match)) {
-                elm = youTubeLinkToElm(match);
+                  elm = youTubeLinkToElm(match);
               } else {
-                elm = linkToElm(match);
+                  elm = linkToElm(match);
               }
               newElems.push(str.substr(0, index));
               newElems.push(elm);
