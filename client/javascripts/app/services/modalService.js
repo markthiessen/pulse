@@ -24,9 +24,15 @@ PulseApp.factory('$modalService', ['$rootScope', '$document',
   		angular.element('.modal-backdrop').hide();
   	});
 		return {
-			showInModal: function(elm, link){
-				var link = angular.element('<a>').attr({'href':link, 'target':'_blank'}).css({'cursor':'pointer'});
-				link.append(angular.element(elm).clone());
+		    showInModal: function (elm, url, isGifV) {
+		        if (isGifV) {
+		            var link = angular.element('<video autoplay="" loop="" muted="" preload="" class="imgurgifvVid" style="max-width: 560px;">' +
+                        '<source src="' + url + '.webm" type="video/webm" class="imgurgifvwebmsrc">' +
+                        '<source src="' + url + '.mp4" type="video/mp4" class="imgurgifvmp4src"></video>')
+		        } else {
+		            var link = angular.element('<a>').attr({ 'href': url, 'target': '_blank' }).css({ 'cursor': 'pointer' });
+		        }
+		        link.append(angular.element(elm).clone());
 
 				modal.find('.modal-body').html(link);
 				modal.modal({backdrop:true});
