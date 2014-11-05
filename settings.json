@@ -10,6 +10,14 @@
   	"port" : 35729
   },
   "yammer": {
-  	"clientId" : "yourClientId"
+  	"clientId" : "[your yammer app client id]"
+  },
+  "session": {
+    "useAzureAuth": false,
+    "secret": "[your secret]",
+    "realm": "[your realm]",
+    "identityProviderUrl": "[your identity provider]",
+    "identityMetadata":"[your identity metadata location]",
+    "logoutUrl": "[your logout url]"
   }
 }
