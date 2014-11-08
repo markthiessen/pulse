@@ -5,20 +5,26 @@ function MessageProcessor($emojify, $modalService) {
   var imageRegEx = /(https?:\/\/\S*\.(?:png|jpg|gif))/gi;
   var youTubeRegEx = /(?:https?:\/\/)?(?:www\.)?(?:(?:(?:youtube.com\/watch\?[^?]*v=|youtu.be\/)([\w\-]+))(?:#t=(\d+))?(?:[^\s?]+)?)/;
   var gifvRegEx = /(?:https?:\/\/)?(?:i\.)?imgur.com\S*(?=\.(?:gif))/gi;
+  var gfycatRegEx = /(?=(?:https?:\/\/)?(?:zippy\.|giant\.)?)gfycat.com\S*/gi;
 
   function isImageLink(link) {
-    var matches = link.match(imageRegEx)
+    var matches = link.match(imageRegEx);
     return matches !== null && matches.length > 0;
   }
 
   function isYouTubeLink(link) {
-    var matches = link.match(youTubeRegEx)
+    var matches = link.match(youTubeRegEx);
     return matches !== null && matches.length > 0;
   }
 
   function isGifvLink(link) {
       var matches = link.match(gifvRegEx)
       return matches !== null && matches.length > 0;
+  }
+
+  function isGfycatLink(link) {
+    var matches = link.match(gfycatRegEx);
+    return matches !== null && matches.length > 0;
   }
 
   function imageLinkToElm(link) {
@@ -51,9 +57,20 @@ function MessageProcessor($emojify, $modalService) {
       var matches = link.match(gifvRegEx);
       var url = matches[0];
 
-      return angular.element('<video autoplay="" loop="" muted="" preload="" class="imgurgifvVid">' +
-          '<source src="' + url + '.webm" type="video/webm" class="imgurgifvwebmsrc">'+
-          '<source src="' + url + '.mp4" type="video/mp4" class="imgurgifvmp4src"></video>')
+    return html5VidToElm(url);
+  }
+
+  function gfycatLinkToElm(link) {
+    var matches = link.match(gfycatRegEx);
+    var url = "https://zippy." + matches[0];
+
+    return html5VidToElm(url);
+  }
+
+  function html5VidToElm(url) {
+      return angular.element('<a href="#"><video autoplay="" loop="" muted="" preload="">' +
+          '<source src="' + url + '.webm" type="video/webm">'+
+          '<source src="' + url + '.mp4" type="video/mp4"></video></a>')
           .click(function (e) {
               e.preventDefault();
               $modalService.showInModal(angular.element(this).children()[0], url, true);
@@ -90,6 +107,8 @@ function MessageProcessor($emojify, $modalService) {
               var elm = null;
               if (isGifvLink(match)) {
                   elm = gifvLinkToElm(match);
+              } else if (isGfycatLink(match)) {
+                  elm = gfycatLinkToElm(match);
               } else if (isImageLink(match)) {
                   elm = imageLinkToElm(match);
               } else if (isYouTubeLink(match)) {
