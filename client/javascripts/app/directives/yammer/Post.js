@@ -162,12 +162,12 @@
 								$rootScope.$apply();
 							} else {
 								$.each(list, function (i, value) {
-									removeMessage(value.Replies, $scope.message);
+									removeMessage(value.Replies);
 								});
 							}
 						};
 
-						removeMessage($scope.rootList, $scope.message);
+						removeMessage($scope.rootList);
 					});
 				}
 			};

@@ -54,7 +54,7 @@
 				'<span loading-Anim="" ng-show="newMessage.IsPosting"></span>' +
 				'<div ng-hide="newMessage.IsPosting">' +
 					'<a href="" ng-click="uploadFile(newMessage)">Attach File</a>' +
-					'<input class="fileInput" type="file" style="display: none;" />' +
+					'<input class="fileInput" type="file" multiple="multiple" accept="" style="display: none;" />' +
 					'<div class="pullRight">' +
 						'<a href="" ng-click="closeNewPost()" ng-show="newMessage.NumberOfImagesUpLoading <= 0 && !isSearchingPostLink">Cancel</a>' +
 						'<span class="disabledPost" ng-hide="(newMessage.PostBody.length > 0 || newMessage.Files.length > 0 || newMessage.Links.length > 0 || newMessage.Images.length > 0) && newMessage.NumberOfImagesUpLoading <= 0 && !isSearchingPostLink">Post</span>' +
@@ -91,15 +91,16 @@
 				$.each($scope.newMessage.Links, addFileOrLink);
 				$.each($scope.newMessage.Images, addFileOrLink);
 
-				var notifyUserIds = "[";
+				var notifyUserIds;
 				var body = $scope.newMessage.PostBody;
 				$.each($scope.newMessage.Users, function (index, value) {
+					if (!notifyUserIds)
+						notifyUserIds = "";
 					notifyUserIds += "[user:" + value.Id + "],";
 					body = body.split(value.Name).join("@" + value.AtIdentifier);
 				});
-				if (notifyUserIds.length > 1)
-					notifyUserIds = notifyUserIds.substr(0, notifyUserIds.length - 1);
-				notifyUserIds += "]";
+				if (notifyUserIds)
+					notifyUserIds = "[" + notifyUserIds.substr(0, notifyUserIds.length - 1) + "]";
 
 				var repliedToMessageId = $scope.parentMessage ? $scope.parentMessage.MessageId : undefined;
 				var groupId = $scope.newMessage.Group.Id >= 0 ? $scope.newMessage.Group.Id : undefined;
