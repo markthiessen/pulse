@@ -24,7 +24,7 @@ var PulseApp = angular.module('PulseApp', ['ngRoute', 'ngResource', 'ngSanitize'
 .run(['$rootScope', '$resource', function($rootScope, $resource){
 
 	$rootScope.user = {
-		'name': window.localStorage.getItem('pulseUsername') || 'anony-mouse',
+		'name': window.localStorage.getItem('pulseUsername') || actualUserName,
 		'icon': window.localStorage.getItem('pulseIcon') || 0
 	};
 	
