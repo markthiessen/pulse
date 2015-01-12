@@ -1,0 +1,20 @@
+{
+	"vocalizer" : {
+	                "host": "#{vocalizer.host}",
+	                "port": #{vocalizer.port}
+	},
+  "webserver": {
+    "port": "#{webserver.port}"
+  },
+  "yammer": {
+  	"clientId" : "#{yammer.clientId}"
+  },
+  "session": {
+    "useAzureAuth": #{session.useAzureAuth},
+    "secret": "#{session.secret}",
+    "realm": "#{session.realm}",
+    "identityProviderUrl": "#{session.identityProviderUrl}",
+    "identityMetadata":"#{session.identityMetadata}",
+    "logoutUrl": "#{session.identityMetadata}"
+  }
+}

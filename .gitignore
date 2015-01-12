@@ -35,3 +35,8 @@ node_modules
 # Visual studio user & debug files
 *.suo
 obj/
+
+# Nuget
+nuget.exe
+*.nupkg
+

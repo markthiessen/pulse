@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>pulse</id>
+    <title>pulse chat server</title>
+    <version>1.0.0</version>
+    <authors>DevFacto</authors>
+    <owners>DevFacto</owners>
+    <licenseUrl>http://devfacto.com</licenseUrl>
+    <projectUrl>http://devfacto.com</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Internal DevFacto Web App</description>
+  </metadata>
+	<files>
+		<file src="client\**\*.*" target="client"/>
+		<file src="node_modules\**\*.*" target="node_modules"/>
+		<file src="server\**\*.*" target="server"/>
+		<file src="app.js" target="app.js"/>
+		<file src="settings.release.json" target="settings.json"/>
+		<file src="web.config" target="web.config"/>
+	</files>
+</package>
