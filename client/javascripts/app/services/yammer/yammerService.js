@@ -14,13 +14,28 @@
 		yam.connect.loginButton(loginButton, function (resp) {
 			if (resp.authResponse) {
 				yammerService.authToken = resp.access_token.token;
-				success();
+				success(resp);
 			}
 		});
 	};
-	//yam.platform.request(url, method, data);	https://assets.yammer.com/assets/platform_js_sdk.js
+
+	yammerService.getNetworkAccessTokens = function (success) {
+		yam.platform.request({
+			url: yammerService.baseYammerServiceUrl + "oauth/tokens.json",
+			method: "GET",
+			success: function (result) { success(result); },
+			error: function (error) { console.log(error); }
+		});
+	};
+
+	yammerService.setAccessToken = function(accessToken) {
+		yam.platform.setAuthToken(accessToken);
+		yammerService.authToken = accessToken;
+		yammerService.authTokenChanged = true;
+	};
+	
 	yammerService.getFullFeed = function(success) {
-		yam.request({
+		yam.platform.request({
 			url: yammerService.baseYammerServiceUrl + "messages/my_all.json?threaded=extended&exclude_own_messages_from_unseen=true",
 			method: "GET",
 			success: function(result) { success(result); },
@@ -29,7 +44,7 @@
 	};
 
 	yammerService.getThread = function (threadId, success) {
-		yam.request({
+		yam.platform.request({
 			url: yammerService.baseYammerServiceUrl + "messages/in_thread/" + threadId + ".json?threaded=extended",
 			method: "GET",
 			success: function (result) { success(result); },
@@ -38,7 +53,7 @@
 	};
 
 	yammerService.getThreadOlder = function(oldestMessageId, success) {
-		yam.request({
+		yam.platform.request({
 			url: yammerService.baseYammerServiceUrl + "messages.json?threaded=extended&older_than=" + oldestMessageId,
 			method: "GET",
 			success: function(result) { success(result); },
@@ -47,7 +62,7 @@
 	};
 
 	yammerService.getThreadNewer = function (newestMessageId, success) {
-		yam.request({
+		yam.platform.request({
 			url: yammerService.baseYammerServiceUrl + "messages.json?newer_than=" + newestMessageId,
 			method: "GET",
 			success: function (result) { success(result); },
@@ -108,10 +123,14 @@
 			}],
 			function (result) {
 				if (result.length > 0 && result[result.length - 1].successful) {
-					if (result[0].data && result[0].data.data && result[0].data.data.messages) {
-						success(result[0].data.data);
+					if (yammerService.authTokenChanged) {
+						yammerService.authTokenChanged = false;
+						fail(null);
+					} else {
+						if (result[0].data && result[0].data.data && result[0].data.data.messages)
+							success(result[0].data.data);
+						yammerService.longPoll(success, fail);
 					}
-					yammerService.longPoll(success);
 				} else {
 					console.log(result);
 					fail(result);
@@ -124,7 +143,7 @@
 	};
 
 	yammerService.getMessage = function(messageId, success) {
-		yam.request({
+		yam.platform.request({
 			url: yammerService.baseYammerServiceUrl + "messages/" + messageId + ".json",
 			method: "GET",
 			success: function(result) { success(result); }
@@ -132,7 +151,7 @@
 	};
 
 	yammerService.unfollowMessage = function (threadId, success) {
-		yam.request({
+		yam.platform.request({
 			url: yammerService.baseYammerServiceUrl + "threads/" + threadId + "/follow.json",
 			method: "DELETE",
 			error: function () { success(); }
@@ -140,15 +159,16 @@
 	};
 
 	yammerService.deleteMessage = function (messageId, success) {
-		yam.request({
+		yam.platform.request({
 			url: yammerService.baseYammerServiceUrl + "messages/" + messageId,
 			method: "DELETE",
-			error: function () { success(); }
+			success: function () { success(); },
+			error: function (error) { console.log(error); }
 		});
 	};
 	
 	yammerService.likeMessage = function (messageId, success) {
-		yam.request({
+		yam.platform.request({
 			url: yammerService.baseYammerServiceUrl + "messages/liked_by/current.json?message_id=" + messageId,
 			method: "POST",
 			error: function() { success(); }
@@ -156,7 +176,7 @@
 	};
 	
 	yammerService.unlikeMessage = function (messageId, success) {
-		yam.request({
+		yam.platform.request({
 			url: yammerService.baseYammerServiceUrl + "messages/liked_by/current.json?message_id=" + messageId,
 			method: "DELETE",
 			error: function () { success(); }
@@ -164,7 +184,7 @@
 	};
 	
 	yammerService.showMore = function (threadId, olderThanMessageId, success) {
-		yam.request({
+		yam.platform.request({
 			url: yammerService.baseYammerServiceUrl + "messages/in_thread/" + threadId + ".json?older_than=" + olderThanMessageId,
 			method: "GET",
 			success: function (result) { success(result); },
@@ -177,7 +197,7 @@
 	};
 
 	yammerService.getUser = function (userId, success) {
-		yam.request({
+		yam.platform.request({
 			url: yammerService.baseYammerServiceUrl + "users/" + userId + ".json",
 			method: "GET",
 			success: function (result) { success(result); },
@@ -194,7 +214,7 @@
 			}
 		}
 
-		yam.request({
+		yam.platform.request({
 			url: yammerService.baseYammerServiceUrl + "messages.json",
 			method: "POST",
 			data: data,
@@ -209,7 +229,7 @@
 	};
 
 	yammerService.autoComplete = function (text, types, success) {
-		yam.request({
+		yam.platform.request({
 			url: yammerService.baseYammerServiceUrl + "autocomplete/ranked",
 			method: "GET",
 			data: { prefix: text, models: types },
@@ -223,7 +243,7 @@
 	};
 
 	yammerService.getOpenGraph = function(url, success, error) {
-		yam.request({
+		yam.platform.request({
 			url: yammerService.baseYammerServiceUrl + "open_graph_objects/update",
 			method: "PUT",
 			data: { url: url },
@@ -249,7 +269,8 @@
 			success(request.responseText);
 		}, false);
 
-		request.open('POST', yammerService.baseYammerFilesUrl + 'files?access_token=' + yammerService.authToken);
+		request.open('POST', yammerService.baseYammerFilesUrl + 'files');
+		request.setRequestHeader("Authorization", "Bearer " + yammerService.authToken);
 		
 		var data = new FormData();
 		data.append('file', file);
@@ -257,14 +278,14 @@
 	};
 	
 	yammerService.removeFile = function (fileId) {
-		yam.request({
+		yam.platform.request({
 			url: yammerService.baseYammerServiceUrl + "uploaded_files/" + fileId,
 			method: "DELETE"
 		});
 	};
 
 	yammerService.getNotifications = function(success) {
-		yam.request({
+		yam.platform.request({
 			url: yammerService.baseYammerServiceUrl + "streams/notifications.json?mark_seen=true&inbox_supported_client=false",
 			method: "GET",
 			success: function(result) { success(result); },
@@ -273,7 +294,7 @@
 	};
 	
 	yammerService.setLastSeenMessage = function(messageId) {
-		yam.request({
+		yam.platform.request({
 			url: yammerService.baseYammerServiceUrl + "messages/last_seen",
 			data: { message_id: messageId },
 			method: "POST"

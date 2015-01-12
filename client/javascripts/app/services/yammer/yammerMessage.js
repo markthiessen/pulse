@@ -85,11 +85,11 @@
 				Description: value.description ? value.description.split("\n").join(" ") : '',
 				Link: value.web_url,
 				HostUrl: value.host_url,
-				PictureUrl: value.preview_url ? value.preview_url : (value.thumbnail_url ? value.thumbnail_url : (value.image ? value.image : (isImage ? value.web_url : null))),
+				PictureUrl: value.preview_url && value.type == "image" ? value.preview_url : (value.thumbnail_url ? value.thumbnail_url : (value.image ? value.image : (isImage ? value.web_url : null))),
 				EmbeddedUrl: value.web_url.indexOf(yammerMessage.youtubeUrlIdetifier) >= 0 ? yammerMessage.youtubeEmbedUrl.replace("{0}", GetParameterByName(value.web_url, yammerMessage.youtubeVideoIdParam)) : '',
 			};
 
-			if (value.large_preview_url != null || value.web_url != null && isImage)
+			if (value.large_preview_url != null && value.type == "image" || value.web_url != null && isImage)
 				item.type = 'image';
 			else
 				item.type = 'link';
@@ -255,12 +255,14 @@
 		if( parent == null )
 		{
 			var messageReference = FirstOrDefault(references, function (e) { return e.id == message.RepliedToMessageId; });
-			parentToAdd = { MessageId: messageReference.id, ThreadId: messageReference.thread_id, PubDate: Date.parse(messageReference.created_at), AuthorId: messageReference.sender_id, Replies: [] };
-			parentToAdd.Replies.push(message);
-			yammerMessage.markAsNewIfNeeded(rootMessage, parentToAdd, markAsNew);
+			if (messageReference) {
+				parentToAdd = { MessageId: messageReference.id, ThreadId: messageReference.thread_id, PubDate: Date.parse(messageReference.created_at), AuthorId: messageReference.sender_id, Replies: [] };
+				parentToAdd.Replies.push(message);
+				yammerMessage.markAsNewIfNeeded(rootMessage, parentToAdd, markAsNew);
 
-			processingQueue.addItem(yammerMessage.getMessageQueue, { message: message, isNew: parentToAdd.MarkedAsNew, references: references, meta: meta, parentToAdd: parentToAdd, rootMessage: rootMessage });
-			processingQueue.startQueueIfNeeded(yammerMessage.getMessageQueue, yammerMessage.updateMessage);
+				processingQueue.addItem(yammerMessage.getMessageQueue, { message: message, isNew: parentToAdd.MarkedAsNew, references: references, meta: meta, parentToAdd: parentToAdd, rootMessage: rootMessage });
+				processingQueue.startQueueIfNeeded(yammerMessage.getMessageQueue, yammerMessage.updateMessage);
+			}
 		}
 		else {
 			if (!FirstOrDefault(parent.Replies, function(r) { return r.MessageId == message.MessageId; }))
