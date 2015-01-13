@@ -123,9 +123,10 @@ exports.renameUser = function(req, res){
 	res.send();
 };
 
-function purgeOldMessages(){
-	if(messages.length>100)
-		messages.splice(0, 1);
+function purgeOldMessages() {
+    var numToDelete = messages.length - 100;
+	if(numToDelete>0)
+		messages.splice(0, numToDelete);
 }
 
 
