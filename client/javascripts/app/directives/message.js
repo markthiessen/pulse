@@ -18,7 +18,7 @@ function MessageProcessor($emojify, $modalService) {
   }
 
   function isGifvLink(link) {
-      var matches = link.match(gifvRegEx)
+      var matches = link.match(gifvRegEx);
       return matches !== null && matches.length > 0;
   }
 
@@ -57,26 +57,27 @@ function MessageProcessor($emojify, $modalService) {
       var matches = link.match(gifvRegEx);
       var url = matches[0];
 
-    return html5VidToElm(url);
-  }
-
-  function gfycatLinkToElm(link) {
-    var matches = link.match(gfycatRegEx);
-    var url = "https://zippy." + matches[0];
-
-    return html5VidToElm(url);
-  }
-
-  function html5VidToElm(url) {
       return angular.element('<a href="#"><video autoplay="" loop="" muted="" preload="">' +
-          '<source src="' + url + '.webm" type="video/webm">'+
+          '<source src="' + url + '.webm" type="video/webm">' +
           '<source src="' + url + '.mp4" type="video/mp4"></video></a>')
           .click(function (e) {
               e.preventDefault();
-              $modalService.showInModal(angular.element(this).children()[0], url, true);
+              $modalService.showHtml5InModal(angular.element(this).children()[0], url + ".webm", url + ".mp4");
           });
   }
 
+  function gfycatLinkToElm(link) {
+      var sIndex = link.indexOf("gfycat.com/") + 11;
+      var eIndex = link.lastIndexOf(".");
+      var gfycatName;
+      if (eIndex > sIndex) {
+          gfycatName = link.substring(sIndex, eIndex);
+      } else {
+          gfycatName = link.substring(sIndex);
+      }
+
+      return angular.element('<span>Loading ' + gfycatName + ' ...</span>');
+  }
 
   function processStrings(elems, func) {
       var newElems = [];
@@ -140,7 +141,7 @@ function MessageProcessor($emojify, $modalService) {
   };
 };
 
-PulseApp.directive('message', ['$emojify', '$modalService', function($emojify, $modalService){
+PulseApp.directive('message', ['$emojify', '$modalService', '$http', function($emojify, $modalService, $http){
 
 	return {
 		restrict: 'E',
@@ -175,19 +176,37 @@ PulseApp.directive('message', ['$emojify', '$modalService', function($emojify, $
 					elm.append(oldName).append(' has updated their name to ').append(newName);
 				}
 				elm.parent().addClass('system');
-			}
-			else{
-        var messageProcessor = new MessageProcessor($emojify, $modalService);
+	        } else {
+	            var messageProcessor = new MessageProcessor($emojify, $modalService);
 
-        var elems = messageProcessor.replaceLinks([message.text]);
-        elems =  messageProcessor.replaceEmoji(elems);
+	            var elems = messageProcessor.replaceLinks([message.text]);
+	            elems = messageProcessor.replaceEmoji(elems);
 
-        elems.forEach(function(item){
-          elm.append(item);
-        });
-			}
+	            elems.forEach(function (item) {
+	                if (item.text().indexOf("Loading ") === 0) {
+	                    var gfycatName = item.text().split(' ')[1];
+	                    $http.get("http://gfycat.com/cajax/get/" + gfycatName).success((function(item) {
+	                        return function(data) {
+	                            //elm.append(angular.element("<span>" + data.gfyItem.webmUrl + "</span>"));
+	                            item.replaceWith(gfycatVideo(data.gfyItem.webmUrl, data.gfyItem.mp4Url));
+	                        }
+	                    })(item));
+	                }
+	                elm.append(item);
+	            });
+	        }
 
-		}
+	        function gfycatVideo(webmUrl, mp4Url) {
+	            return angular.element('<a href="#"><video autoplay="" loop="" muted="" preload="">' +
+                    '<source src="' + webmUrl + '" type="video/webm">' +
+                    '<source src="' + mp4Url + '" type="video/mp4"></video></a>')
+                    .click(function (e) {
+                        e.preventDefault();
+                        $modalService.showHtml5InModal(angular.element(this).children()[0], webmUrl, mp4Url);
+                    });
+	        }
+	        
+	    }
 	};
 
 }]);
