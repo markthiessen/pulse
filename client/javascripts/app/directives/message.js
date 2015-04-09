@@ -195,10 +195,10 @@ PulseApp.directive('message', ['$emojify', '$modalService', '$http', function($e
 	            });
 	        }
 
-			function gfycatVideo(webmUrl, mp4Url) {
-			    //convert http links to https
-			    webmUrl = "https" + webmUrl.substr(4);
-			    mp4Url = "https" + mp4Url.substr(4);
+                function gfycatVideo(webmUrl, mp4Url) {
+                    //convert http links to https
+                    webmUrl = "https" + webmUrl.substr(4);
+                    mp4Url = "https" + mp4Url.substr(4);
 
 	            return angular.element('<a href="#"><video autoplay="" loop="" muted="" preload="">' +
                     '<source src="' + webmUrl + '" type="video/webm">' +
