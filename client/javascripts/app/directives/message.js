@@ -185,9 +185,8 @@ PulseApp.directive('message', ['$emojify', '$modalService', '$http', function($e
 	            elems.forEach(function (item) {
 	                if (item.text().indexOf("Loading ") === 0) {
 	                    var gfycatName = item.text().split(' ')[1];
-	                    $http.get("http://gfycat.com/cajax/get/" + gfycatName).success((function(item) {
+	                    $http.get("https://gfycat.com/cajax/get/" + gfycatName).success((function(item) {
 	                        return function(data) {
-	                            //elm.append(angular.element("<span>" + data.gfyItem.webmUrl + "</span>"));
 	                            item.replaceWith(gfycatVideo(data.gfyItem.webmUrl, data.gfyItem.mp4Url));
 	                        }
 	                    })(item));
@@ -196,7 +195,11 @@ PulseApp.directive('message', ['$emojify', '$modalService', '$http', function($e
 	            });
 	        }
 
-	        function gfycatVideo(webmUrl, mp4Url) {
+                function gfycatVideo(webmUrl, mp4Url) {
+                    //convert http links to https
+                    webmUrl = "https" + webmUrl.substr(4);
+                    mp4Url = "https" + mp4Url.substr(4);
+
 	            return angular.element('<a href="#"><video autoplay="" loop="" muted="" preload="">' +
                     '<source src="' + webmUrl + '" type="video/webm">' +
                     '<source src="' + mp4Url + '" type="video/mp4"></video></a>')
