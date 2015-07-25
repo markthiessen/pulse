@@ -3,7 +3,7 @@
 		imageExtensions: [".jpg", ".bmp", ".gif", ".png", ".jpeg", ".jpe", ".jfif", ".tiff", ".tif", ".tga", ".dds", ".ico", ".svg"],
 		youtubeUrlIdetifier: "www.youtube",
 		youtubeVideoIdParam: "v",
-		youtubeEmbedUrl: "http://www.youtube.com/embed/{0}?autoplay=1",
+		youtubeEmbedUrl: "https://www.youtube.com/embed/{0}?autoplay=1",
 		getMessageQueue: {}
 	};
 
@@ -82,9 +82,10 @@
 			item = {
 				Id: value.id,
 				Title: value.name ? value.name : value.web_url,
-				Description: value.description ? value.description.split("\n").join(" ") : '',
+				Description: (value.description ? value.description.split("\n").join(" ") : '') + (value.comment ? ' ' + value.comment.split("\n").join(" ") : ''),
 				Link: value.web_url,
 				HostUrl: value.host_url,
+				LargePictureUrl: value.download_url && value.type == "image" ? value.download_url : (value.thumbnail_url ? value.thumbnail_url : (value.image ? value.image : (isImage ? value.web_url : null))),
 				PictureUrl: value.preview_url && value.type == "image" ? value.preview_url : (value.thumbnail_url ? value.thumbnail_url : (value.image ? value.image : (isImage ? value.web_url : null))),
 				EmbeddedUrl: value.web_url.indexOf(yammerMessage.youtubeUrlIdetifier) >= 0 ? yammerMessage.youtubeEmbedUrl.replace("{0}", GetParameterByName(value.web_url, yammerMessage.youtubeVideoIdParam)) : '',
 			};
