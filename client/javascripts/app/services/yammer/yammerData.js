@@ -16,22 +16,25 @@
 
 	yammerData.setCurrentNetwork = function (accessToken) {
 		yammerService.setAccessToken(accessToken);
-		yammerData.refreshFeed();
 	};
 	
 	yammerData.refreshFeed = function () {
-		yammerData.isRefreshing = true;
-		yammerData.setNewMessageCount(0);
-			
-		yammerService.getFullFeed(function (result) {
-			yammerService.realtimeInfo = result.meta.realtime;
-			yammerData.refresh(result, true);
-		});
+		if (!yammerData.isRefreshing) {
+			yammerData.isRefreshing = true;
+			yammerData.setNewMessageCount(0);
+
+			yammerService.getFullFeed(function(result) {
+				yammerService.realtimeInfo = result.meta.realtime;
+				yammerData.refresh(result, true);
+			});
+		}
 	};
 
 	yammerData.refreshThread = function (threadId) {
-		yammerData.isRefreshing = true;
-		yammerService.getThread(threadId, function (result) { yammerData.refresh(result, true); });
+		if (!yammerData.isRefreshing) {
+			yammerData.isRefreshing = true;
+			yammerService.getThread(threadId, function(result) { yammerData.refresh(result, true); });
+		}
 	};
 
 	yammerData.showOlder = function () {

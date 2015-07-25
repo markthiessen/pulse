@@ -1,37 +1,39 @@
 PulseApp.controller('YammerCtrl', 
-	['$scope', '$rootScope', '$timeout', 'yammerData',
-	function($scope, $rootScope, $timeout, yammerData){
+	['$scope', '$rootScope', '$timeout', '$location', 'yammerData',
+	function($scope, $rootScope, $timeout, $location, yammerData){
 		$rootScope.activeView = 'Yammer';
-
 		$scope.data = yammerData;
-		$scope.threadId = -1; //TODO
-		$scope.isSingleThread = $scope.threadId > 0;
 
 		$scope.$watch('data.isAuthenticated', function () {
 			if ($scope.data.isAuthenticated === true && !$scope.data.isRefreshing && !$scope.data.isUpdating && !$scope.data.thread.Items) {
-				if ($scope.isSingleThread)
-					yammerData.refreshThread($scope.threadId);
+				if ($scope.getIsSingleThread())
+					yammerData.refreshThread($scope.getSinglePostThreadId());
 				else {
-					yammerData.refreshFeed();
 					yammerData.getAvalibleNetworks();
+					yammerData.refreshFeed();
 				}
 				yammerData.updateNotifications();
 			}
 		});
 		
 		$scope.$watch('data.thread', function () {
-			if (!$scope.isSingleThread && $scope.data.thread && $scope.data.thread.Items && !$scope.data.isPolling)
+			if (!$scope.getIsSingleThread() && $scope.data.thread && $scope.data.thread.Items && !$scope.data.isPolling)
 				yammerData.startPolling();
 		});
 
 		$scope.$watchCollection('[data.isRefreshing, data.isUpdating]', function () {
-			if (!$scope.isSingleThread && $scope.data.thread && $scope.data.thread.Items && !$scope.data.isRefreshing && !$scope.data.isUpdating)
+			if (!$scope.getIsSingleThread() && $scope.data.thread && $scope.data.thread.Items && !$scope.data.isRefreshing && !$scope.data.isUpdating)
 				yammerData.setLastSeenMessage();
 		});
 
 		$scope.$watch('data.currentNetworkToken', function (newValue, oldValue) {
 			if (oldValue && newValue) {
 				$scope.data.setCurrentNetwork($scope.data.currentNetworkToken);
+
+				if ($scope.getIsSingleThread())
+					yammerData.refreshThread($scope.getSinglePostThreadId());
+				else
+					yammerData.refreshFeed();
 			}
 		});
 
@@ -49,5 +51,18 @@ PulseApp.controller('YammerCtrl',
 
 		$scope.closeNewPost = function() {
 			$scope.newPostOpen = false;
+		};
+
+		$scope.getIsSingleThread = function() {
+			return $scope.isSingleThread = $scope.getSinglePostThreadId() ? true : false;
+		};
+
+		$scope.getSinglePostThreadId = function() {
+			return $location.search().threadId;
+		};
+		
+		$scope.showAllPosts = function () {
+			$scope.data.thread.Items = null;
+			$location.search('threadId', null);
 		};
 }]);
