@@ -80,6 +80,35 @@
 	}
 }
 
+.fancybox-wrap {
+	width: calc(~"100% - 40px") !important;
+	height: calc(~"100% - 62px") !important;
+	.fancybox-skin {
+		height: 100% !important;
+		.fancybox-outer {
+			height: 100%;
+			overflow: auto;
+			.fancybox-inner {
+				cursor: zoom-in;
+				height: 100% !important;
+				width: 100% !important;
+				&.zoom {
+					cursor: zoom-out;
+					height: auto !important;
+					width: auto !important;
+				}
+				img {
+					width: auto;
+					height: auto;
+					margin: 0 auto;
+				}
+			}
+			.fancybox-nav {
+				width: 30%;
+			}
+		}
+	}
+}
 .fancybox-title {
 	color: @accent-color;
 	a {
